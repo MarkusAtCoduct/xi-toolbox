@@ -12,11 +12,10 @@ export default function ListTemplate(props) {
 				</Typography>
                 {props.listItems ??
                 <ol>
-                    
                         {listItems.map((item) => (
                             <li>
                                 <Typography GutterBottom sx={{ fontSize:"14px",  fontWeight: "400", textAlign:"left"}}>
-                                {item || "no body set"}
+                                {item || "no body set TEST"}
                                 </Typography>
                             </li>
                         ))}
