@@ -1,0 +1,50 @@
+*{
+    font-family: 'Roboto', sans-serif;
+}
+body{
+    background: linear-gradient(90deg, rgba(239,241,238,1) 0%, rgba(239,241,238,1) 50%, rgba(225,227,224,1) 50%, rgba(225,227,224,1) 100%);
+}
+
+.disableTransition{
+    transition: none
+}
+
+
+ol{
+    padding-left: 24px;
+}
+
+
+.MuiButton-contained{
+    border-radius: 100px;
+}
+
+.MuiButton-outlined{
+    border-radius: 100px;
+    border-width: 2px;
+}
+.MuiButton-outlined:hover{
+    border-width: 2px;
+}
+
+.MuiChip-root{
+    border-radius: 8px;
+    background-Color: #FFDAD6;
+    font-Size: 14px;
+    font-Weight: 500;
+}
+
+
+.MuiTabs-indicator{
+    height: 4px;
+}
+
+.MuiCardContent-root:last-child{
+    padding-bottom: 16px;
+}
+
+
+.MuiAccordion-root.Mui-expanded.phase{
+    background-color: #757875;
+    box-shadow: none;
+}
