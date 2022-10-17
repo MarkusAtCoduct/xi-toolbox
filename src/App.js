@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useState, useCallback } from "react";
+
 
 import "./App.css";
 import MainNav from "./components/MainNav";
@@ -14,6 +16,9 @@ import MethodSetCreator from "./pages/methodSetCreator";
 import MyProfile from "./pages/MyProfile";
 import Register from "./pages/Register";
 import { StyledEngineProvider } from '@mui/material/styles';
+
+
+import { DragDropContext } from 'react-beautiful-dnd';
 
 
 const theme = createTheme({
@@ -42,8 +47,35 @@ const theme = createTheme({
 });
 
 function App() {
+
+  // using useCallback is optional
+  const onBeforeCapture = useCallback(() => {
+    /*...*/
+  }, []);
+  const onBeforeDragStart = useCallback(() => {
+    /*...*/
+  }, []);
+  const onDragStart = useCallback(() => {
+    /*...*/
+  }, []);
+  const onDragUpdate = useCallback(() => {
+    /*...*/
+  }, []);
+  const onDragEnd = useCallback(() => {
+    // the only one that is required
+  }, []);
+
+
 	return (
+		
 		<ThemeProvider theme={theme}>
+			  <DragDropContext
+  onBeforeCapture={onBeforeCapture}
+  onBeforeDragStart={onBeforeDragStart}
+  onDragStart={onDragStart}
+  onDragUpdate={onDragUpdate}
+  onDragEnd={onDragEnd}
+  >
 			<StyledEngineProvider injectFirst>
 			<div className="App">
 				<MainNav />
@@ -63,6 +95,7 @@ function App() {
 				</Routes>
 			</div>
 			</StyledEngineProvider>
+			</DragDropContext>
 		</ThemeProvider>
 	);
 }

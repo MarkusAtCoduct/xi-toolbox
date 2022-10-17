@@ -31,6 +31,9 @@ ol{
     border-radius: 8px;
     background-Color: #FFDAD6;
     font-Size: 14px;
+    
+}
+.MuiChip-label{
     font-Weight: 500;
 }
 
@@ -47,4 +50,16 @@ ol{
 .MuiAccordion-root.Mui-expanded.phase{
     background-color: #757875;
     box-shadow: none;
+}
+
+.MuiDivider-root::before, .MuiDivider-root::after {
+    border-color: #FF5454;
+    border-width: 2px;
+}
+
+.StepperCircle{
+    width: 100%;
+    height: 100%;
+    border-radius: 16px; 
+    background-color: #FF5454;
 }

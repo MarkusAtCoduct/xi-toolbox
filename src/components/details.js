@@ -8,6 +8,7 @@ import ChipList from "./ChipList";
 import { Container, Stack, Rating } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import ListTemplate from "./ListTemplate";
+import MethodList from "./MethodList";
 import Modal from "@mui/material/Modal";
 import MilitaryTech from "@mui/icons-material/MilitaryTechOutlined";
 import Paragraph from "./Paragraph";
@@ -17,7 +18,8 @@ const style = {
 	position: "absolute",
 	top: "50%",
 	left: "50%",
-	transform: "translate(-50%, -50%)",
+	maxWidth: "1200px",
+	transform: "translate(-50%, -50%)"
 };
 
 export default function Details(props) {
@@ -28,24 +30,23 @@ export default function Details(props) {
 
 	return (
 		<>
-		
 			<Stack direction="row"	justifyContent="flex-end"	alignItems="flex-end">
 			<Button onClick={handleOpen}>Details</Button>
 			</Stack>
-				<Container >
+				
 				<Modal
 					open={open}
 					onClose={handleClose}
 					aria-labelledby="modal-modal-title"
 					aria-describedby="modal-modal-description">
 					<Grid container>
-						<Grid xs={10} sx={style}>
+
+						<Grid xs={12} sx={style}>
 							<Card elevation={2} sx={{ borderRadius: "16px" }}>
 								<CardContent>
-									<Container>
 										<CardFunctions />
 
-										<Box>
+										<Box >
 											<Typography
 												sx={{
 													fontSize: 28,
@@ -118,6 +119,7 @@ export default function Details(props) {
 														body={props.whenToUse || "placeholder"}
 													/>
 													<ListTemplate heading="How to conduct" />
+													<MethodList heading="Methods used"/>
 												</Stack>
 											</Grid>
 											<Grid md={4}>
@@ -149,14 +151,12 @@ export default function Details(props) {
 												Add to my Toolbox
 											</Button>
 										</Stack>
-									</Container>
 								</CardContent>
 							</Card>
 						</Grid>
 					</Grid>
 					
 				</Modal>
-				</Container>
 				</>
 		
 	);
