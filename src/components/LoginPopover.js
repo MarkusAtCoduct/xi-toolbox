@@ -1,9 +1,8 @@
-import * as React from "react";
-
 import { Box, Stack, Typography, Divider } from "@mui/material";
 import Popover from '@mui/material/Popover';
-
 import AdjustIcon from '@mui/icons-material/Adjust';
+
+import * as React from "react";
 
 
 export default function LoginPopover(props) {

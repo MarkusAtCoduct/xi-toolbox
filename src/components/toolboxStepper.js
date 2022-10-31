@@ -1,10 +1,10 @@
-import * as React from "react";
-
 import { Box, Stack, Typography, Divider } from "@mui/material";
 import AdjustIcon from '@mui/icons-material/Adjust';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import RadioButtonCheckedRoundedIcon from '@mui/icons-material/RadioButtonCheckedRounded';
 import CircleIcon from '@mui/icons-material/Circle';
+
+import * as React from "react";
 
 
 export default function ToolboxStepper(props) {

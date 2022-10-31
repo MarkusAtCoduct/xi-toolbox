@@ -1,15 +1,14 @@
-import * as React from "react";
-
-import { Chip, Container } from "@mui/material";
-import { Box, Typography } from "@mui/material";
+import { Chip, Container, Box, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
+
+import * as React from "react";
 
 const listItems = ["helllom", "fjnflds"]
 
 export default function ReviewList(props) {
 	return (
 		<Box mt={2}>
-				<Typography GutterBottom sx={{ fontSize:"22px",  fontWeight: "900", textAlign:"left"}}>
+				<Typography gutterBottom sx={{ fontSize:"22px",  fontWeight: "900", textAlign:"left"}}>
 					{props.heading || "no heading set"}
 				</Typography>
                 {props.listItems ??

@@ -1,0 +1,21 @@
+{
+    "name":"",
+    "password": "",
+    "email": "",
+    "gender": "",
+
+    "badges":[],
+    "methods":[],
+    "methodsets":[],
+    "comments":[],
+
+    "role": "",
+    "industry": "",
+    "occupation": "",
+
+    "experience": 0,
+    
+    "link": "",
+    "description": ""
+
+}

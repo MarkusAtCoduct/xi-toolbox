@@ -1,4 +1,3 @@
-import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
@@ -10,6 +9,8 @@ import { Stack } from "@mui/system";
 import Select from "@mui/material/Select";
 import { Typography, Button, Card, CardContent } from "@mui/material";
 import TextField from "@mui/material/TextField";
+
+import * as React from "react";
 
 
 export default function RegistrationForm(props) {

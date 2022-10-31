@@ -1,19 +1,34 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardFunctions from "./CardFunctions";
 import Chip from "@mui/material/Chip";
-import Details from "./details";
 import Grid from "@mui/material/Unstable_Grid2";
 import MilitaryTech from "@mui/icons-material/MilitaryTechOutlined";
 import Rating from "@mui/material/Rating";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+import { Typography, Stack } from "@mui/material";
 
+import * as React from "react";
+
+import { useAtom } from "jotai";
+
+import { phaseAtom } from "../atoms/phaseAtom";
+
+import CardFunctions from "./CardFunctions";
+import MethodList from "./MethodList";
+import Details from "./details";
 
 export default function BasicCard(props) {
 	const [value, setValue] = React.useState(2);
+	const [phaseItems, setPhaseItems] = useAtom(phaseAtom)
+
+
+	const handleAdd = () => {
+		let tmp = {...props.data}
+		const tmpItems = [...phaseItems] 
+		tmp.id = tmp.id + Math.random()
+		tmpItems.push(tmp)
+		setPhaseItems(tmpItems)
+	}
 
 	return (
 		<Card
@@ -26,7 +41,7 @@ export default function BasicCard(props) {
 			}}
 		>
 			<CardContent>
-				<CardFunctions type='Method' />
+				<CardFunctions add={handleAdd} type={props.type}  />
 				<Box>
 					<Stack direction='row' alignItems='flex-end' justifyContent='space-between'>
 						<Typography sx={{ fontSize: 28, fontWeight: "900", textAlign: "left" }}>{props.header || "Placeholder"}</Typography>
@@ -88,8 +103,8 @@ export default function BasicCard(props) {
 							</Typography>
 						</Box>
 					</Stack>
-
-					<Grid container spacing={2} direction='row' justifyContent='space-around'>
+					{props.type == "method"
+					?<Grid container spacing={2} direction='row' justifyContent='space-around'>
 						<Grid xs={6}>
 							<Stack direction='column' justifyContent='center' alignItems='flex-start' spacing={1}>
 								<Typography sx={{ fontSize: 11, fontWeight: "500", color: "#757875" }}>Input</Typography>
@@ -117,7 +132,10 @@ export default function BasicCard(props) {
 							</Stack>
 						</Grid>
 					</Grid>
-					<Details />
+					:<MethodList heading="Methods used"/>
+					}
+					
+					<Details data={props}/>
 				</Box>
 			</CardContent>
 		</Card>

@@ -1,25 +1,28 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import Grid from "@mui/material/Unstable_Grid2/Grid2";
+import MilitaryTech from "@mui/icons-material/MilitaryTechOutlined";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
+import { Container, Rating, Stack } from "@mui/material";
+
+import * as React from "react";
+
 import CardFunctions from "./CardFunctions";
 import ChipList from "./ChipList";
-import { Container, Stack, Rating } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import ListTemplate from "./ListTemplate";
 import MethodList from "./MethodList";
-import Modal from "@mui/material/Modal";
-import MilitaryTech from "@mui/icons-material/MilitaryTechOutlined";
 import Paragraph from "./Paragraph";
-import Typography from "@mui/material/Typography";
 
 const style = {
 	position: "absolute",
 	top: "50%",
 	left: "50%",
-	maxWidth: "1200px",
-	transform: "translate(-50%, -50%)"
+	maxWidth: "1100px",
+	transform: "translate(-50%, -50%)",
+	
 };
 
 export default function Details(props) {
@@ -44,7 +47,7 @@ export default function Details(props) {
 						<Grid xs={12} sx={style}>
 							<Card elevation={2} sx={{ borderRadius: "16px" }}>
 								<CardContent>
-										<CardFunctions />
+										<CardFunctions type={props.data.type}/>
 
 										<Box >
 											<Typography
@@ -53,7 +56,7 @@ export default function Details(props) {
 													fontWeight: "900",
 													textAlign: "left",
 												}}>
-												{props.header || "Placeholder"}
+												{props.data.header || "Placeholder"}
 											</Typography>
 										</Box>
 
@@ -67,7 +70,7 @@ export default function Details(props) {
 												size="small"
 												name="simple-controlled"
 												sx={{ color: "#757875", float: "left" }}
-												value={value | props.value}
+												value={value | props.data.value}
 												onChange={(event, newValue) => {
 													setValue(newValue);
 												}}
@@ -81,8 +84,8 @@ export default function Details(props) {
 													float: "right",
 													color: "#757875",
 												}}>
-												{props.ratings | 253} Ratings | {props.questions | 36}{" "}
-												answered Questions | By: {props.author || "Placeholder"}{" "}
+												{props.data.ratings | 253} Ratings | {props.data.questions | 36}{" "}
+												answered Questions | By: {props.data.author || "Placeholder"}{" "}
 											</Typography>
 											<MilitaryTech color="primary" />
 										</Stack>
@@ -94,13 +97,13 @@ export default function Details(props) {
                                             spacing={4}
 											color="#757875">
 											<Typography sx={{ fontWeight: "bold" }}>
-												{props.price || 6500} €
+												{props.data.price || 6500} €
 											</Typography>
 											<Typography sx={{ fontWeight: "bold" }}>
-												{props.time || 15} Tage
+												{props.data.time || 15} Tage
 											</Typography>
 											<Typography sx={{ fontWeight: "bold" }}>
-												{props.MethodType || "placeholder"}
+												{props.data.type || "placeholder"}
 											</Typography>
 										</Stack>
 
@@ -110,16 +113,19 @@ export default function Details(props) {
 													<Paragraph
 														heading="Description"
 														body={
-															props.description ||
+															props.data.description ||
 															"A market analysis is the process of conducting thorough research on a specific market. Businesses typically use market analysis to determine whether a new product can perform well in a market or if it needs adjustment before being presented to consumers"
 														}
 													/>
 													<Paragraph
 														heading="When to use"
-														body={props.whenToUse || "placeholder"}
+														body={props.data.whenToUse || "placeholder"}
 													/>
 													<ListTemplate heading="How to conduct" />
-													<MethodList heading="Methods used"/>
+													{props.data.type == "method"
+													?null
+													:<MethodList heading="Methods used"/>}
+													
 												</Stack>
 											</Grid>
 											<Grid md={4}>
@@ -128,6 +134,7 @@ export default function Details(props) {
 													<ChipList heading="Output" />
 													<ListTemplate heading="Advantages" />
 													<ListTemplate heading="Disadvantages" />
+													
 													<ChipList heading="Methods of same output" />
 												</Stack>
 											</Grid>

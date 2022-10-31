@@ -1,5 +1,6 @@
-import * as React from "react";
 import { Box, Typography } from "@mui/material";
+
+import * as React from "react";
 
 
 export default function Heading(props) {

@@ -1,24 +1,26 @@
-import * as React from "react";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
-import { Box } from "@mui/system";
 import Chip from "@mui/material/Chip";
-import { Droppable } from 'react-beautiful-dnd';
 import MuiAccordion from "@mui/material/Accordion";
-import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
+import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import Stack from "@mui/material/Stack";
-import Stepper from '@mui/material/Stepper';
-import StepContent from '@mui/material/StepContent';
-import { styled } from "@mui/material/styles";
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import ToolboxStepper from "./toolboxStepper";
 import Typography from "@mui/material/Typography";
+import { Button} from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { Box } from "@mui/system";
 
-import DropList from "./DropList";
+import * as React from "react";
 
+import { useAtom } from "jotai";
 
+import { phaseAtom } from "../atoms/phaseAtom";
 
+import { Droppable } from "./Droppable";
+import SmallCard from "./SmallCardTemplate";
+import { Sortable } from "./Sortable";
+import ToolboxStepper from "./toolboxStepper";
 
 const Accordion = styled((props) => (
 	<MuiAccordion disableGutters elevation={2} sx={{ borderRadius: "16px", backgroundColor: "none"}} square {...props} />
@@ -64,7 +66,7 @@ const AccordionSummary = styled((props) => (
 
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 	padding: "0px",
-	paddingBottom: "64px",
+	paddingBottom: "32px",
 	backgroundColor: "#C4C7C4",
 	borderRadius: "0 0 16px 16px", 
 }));
@@ -72,25 +74,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 export default function Phase(props) {
 
-/*
-	const [activeStep, setActiveStep] = React.useState(0);
-
-	const handleNext = () => {
-	  setActiveStep((prevActiveStep) => prevActiveStep + 1);
-	};
-  
-	const handleBack = () => {
-	  setActiveStep((prevActiveStep) => prevActiveStep - 1);
-	};
-  
-	const handleReset = () => {
-	  setActiveStep(0);
-	};
-
-	*/
-
-
-
+	const [phaseItems, setPhaseItems] = useAtom(phaseAtom);
 
 	const [expanded, setExpanded] = React.useState();
 
@@ -99,7 +83,10 @@ export default function Phase(props) {
 
 	 };
 
-
+	 const handleSave =() =>{
+		console.log(phaseItems)
+		setPhaseItems([])
+	 }
 
 		return (
 			<>
@@ -137,12 +124,43 @@ export default function Phase(props) {
 							My Toolbox
 						</Typography>
 						<Stack direction='column'>
+
+						<SortableContext items={phaseItems} strategy={verticalListSortingStrategy}>
+							
+	
+						<Droppable id={props.id}>
+							{phaseItems.map(method =>
+									<Stack key={method.id || "placeholder"} direction={"row"} pr={3} pl={3} spacing={2} mb={1}>
+											<ToolboxStepper></ToolboxStepper>
+											<Sortable removable id={method.id}>
+												<SmallCard id={method.id} header={method.header}></SmallCard>
+											</Sortable>
+										</Stack>
+										
+										)}
 						<Stack direction={"row"} pr={3} pl={3} spacing={2}>
-								<ToolboxStepper first></ToolboxStepper>
-								<DropList dropId="4234"></DropList>
-							</Stack>
+							<ToolboxStepper></ToolboxStepper>
+							
+								<Box sx={{width: "270px",minHeight: "140px", borderRadius: "16px", border: "dashed 2px #FFF"}}>
+								<Typography pl={3} mb={3} sx={{ fontWeight: "400", fontSize: "32px", color: "#fff" }} align='center'>
+									Drop Methods here
+								</Typography>
+								</Box>
 						</Stack>
+
+						</Droppable>
+						</SortableContext>
+						
+						</Stack>
+						<Button variant="contained" color="primary"
+							size="large"
+							sx={{ borderRadius: "100px", marginTop:"32px" }}
+							disableElevation
+							onClick={handleSave}>
+						  Save Methodset
+						</Button>
 					</AccordionDetails>
+					
 				</Accordion>
 			</>
 		)

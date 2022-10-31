@@ -1,19 +1,17 @@
-import AdbIcon from '@mui/icons-material/Adb';
+import AdbIcon from "@mui/icons-material/Adb";
 import AppBar from "@mui/material/AppBar";
-import Avatar from '@mui/material/Avatar';
+import Avatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import Typography from "@mui/material/Typography";
+import useScrollTrigger from "@mui/material/useScrollTrigger";
 import { Button } from "@mui/material";
 import { Container } from "@mui/system";
+
+import * as React from "react";
+
 import { Link } from "react-router-dom";
-import React from "react";
-import Stack from '@mui/material/Stack';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
-import Typography from '@mui/material/Typography';
-import useScrollTrigger from '@mui/material/useScrollTrigger';
-
-
-
-
 
 function ElevationScroll(props) {
 	const { children, window } = props;
@@ -43,6 +41,7 @@ export default function MainNav(props) {
 
 	
 	const [value, setValue] = React.useState(0);
+	const isloggedin = true
 
 	const handleChange = (event, newValue) => {
 	  setValue(newValue);
@@ -76,16 +75,22 @@ export default function MainNav(props) {
 								textDecoration: "none",
 							}}
 						>
-							LOGO
+							ToolBox
 						</Typography>
 					</Stack>
 					<Tabs value={value} onChange={handleChange}>
-						<LinkTab path="/createSet" label="Methods Library" />
+						<LinkTab label="Home" path="/home" />
+						<LinkTab label="Methods Library" path="/createSet" />
 						<LinkTab label="How it works" href="/trash" />
 						<LinkTab label="About us" href="/spam" />
-						<LinkTab label="My Profile" path="/myProfile" />
+						{isloggedin
+						?<LinkTab label="My Profile" path="/myProfile" />
+						:null}
+						
 					</Tabs>
 					<Stack direction="row" spacing={2}>
+					{!isloggedin
+					?<>
 					<Button variant="outlined" sx={{borderRadius: "16px"}} disableElevation>
 						Log In
 					</Button>
@@ -93,10 +98,14 @@ export default function MainNav(props) {
 						Register
 					</Button>
 					
+					</>
+					:<Avatar src="/broken-image.jpg" sx={{ width: "38", height: "38" }} />}	
+					
 					</Stack>
 
 					
-					<Avatar src="/broken-image.jpg" sx={{ width: "38", height: "38" }} />
+					
+					
 				</Stack>
 			</Container>
 		</AppBar>

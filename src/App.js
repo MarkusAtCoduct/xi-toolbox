@@ -1,24 +1,34 @@
-import * as React from "react";
-import { useState, useCallback } from "react";
+import * as React from "react"
 
+import "./App.css"
+import MainNav from "./components/MainNav"
+import { createTheme } from "@mui/material/styles"
+import { ThemeProvider } from "@emotion/react"
 
-import "./App.css";
-import MainNav from "./components/MainNav";
-import { createTheme } from "@mui/material/styles";
-import { ThemeProvider } from "@emotion/react";
+import { Routes, Route } from "react-router-dom"
 
-
-import { Routes, Route } from "react-router-dom";
-
-import Layout from "./pages/Layout";
+import Layout from "./pages/Layout"
 import Methods from "./pages/Methods"
-import MethodSetCreator from "./pages/methodSetCreator";
-import MyProfile from "./pages/MyProfile";
-import Register from "./pages/Register";
-import { StyledEngineProvider } from '@mui/material/styles';
+import MethodSetCreator from "./pages/methodSetCreator"
+import MyProfile from "./pages/MyProfile"
+import Register from "./pages/Register"
+import { StyledEngineProvider } from "@mui/material/styles"
 
+import { DndContext } from "@dnd-kit/core"
 
-import { DragDropContext } from 'react-beautiful-dnd';
+import { useAtom } from "jotai"
+
+import { methodAtom } from "./atoms/methodAtom"
+import { phaseAtom } from "./atoms/phaseAtom"
+import { activeAtom } from "./atoms/activeAtom"
+import { arrayMove} from "@dnd-kit/sortable"
+import { 
+	PointerSensor,
+	useSensor,
+	useSensors} from '@dnd-kit/core';
+
+import Footer from "./components/Footer"
+import Home from "./pages/Home"
 
 
 const theme = createTheme({
@@ -44,60 +54,83 @@ const theme = createTheme({
 			contrastText: "#FF5454",
 		},
 	},
-});
+})
+
+
+
 
 function App() {
+	const [methods, setMethods] = useAtom(methodAtom)
+	const [phaseItems, setPhaseItems] = useAtom(phaseAtom)
+	const [activeId, setActiveId] = useAtom(activeAtom)
 
-  // using useCallback is optional
-  const onBeforeCapture = useCallback(() => {
-    /*...*/
-  }, []);
-  const onBeforeDragStart = useCallback(() => {
-    /*...*/
-  }, []);
-  const onDragStart = useCallback(() => {
-    /*...*/
-  }, []);
-  const onDragUpdate = useCallback(() => {
-    /*...*/
-  }, []);
-  const onDragEnd = useCallback(() => {
-    // the only one that is required
-  }, []);
 
+
+	
+	const handleDragEnd = (data) => {
+		const { over, active } = data
+
+		if(!over){
+			return
+		}
+		const Index = methods.findIndex(({id}) => id === active.id);
+		const test = phaseItems.findIndex(({id}) => id === active.id);
+		const newIndex = phaseItems.findIndex(({id}) => id === over.id);
+
+		 if(active.data.current?.sortable){
+			setPhaseItems(arrayMove(phaseItems, test, newIndex))
+		 }
+		else if(methods[Index].container != over?.id){
+			let tmp = {...methods[Index]}
+			tmp.id = tmp.id + Math.random()//"_Phase"
+			setPhaseItems([...phaseItems, tmp])
+		}
+		setActiveId(null)
+	}
+
+	const handleDragStart = (event) => {
+		const { active } = event
+
+		setActiveId(active.id)
+	}
+
+
+
+const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      }
+    }),
+  );
 
 	return (
-		
 		<ThemeProvider theme={theme}>
-			  <DragDropContext
-  onBeforeCapture={onBeforeCapture}
-  onBeforeDragStart={onBeforeDragStart}
-  onDragStart={onDragStart}
-  onDragUpdate={onDragUpdate}
-  onDragEnd={onDragEnd}
-  >
-			<StyledEngineProvider injectFirst>
-			<div className="App">
-				<MainNav />
+			<DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} sensors={sensors}>
+				<StyledEngineProvider injectFirst>
+					<div className='App'>
+						<MainNav />
 
-				<Routes>
-					<Route path="/" element={<Layout />}>
-						<Route path="/methods" element={<Methods />} />
-						<Route path="/createSet" element={<MethodSetCreator />} />
-						<Route path="/myProfile" element={<MyProfile />} />
-						<Route path="/Register" element={<Register />} />
-						{/*
+						<Routes>
+							<Route path='/' element={<Layout />}>
+								<Route path='/home' element={<Home />}/>
+								<Route path='/methods' element={<Methods />} />
+								<Route path='/createSet' element={<MethodSetCreator />} />
+								<Route path='/myProfile' element={<MyProfile />} />
+								<Route path='/Register' element={<Register />} />
+								{/*
 
 						 <Route path="contact" element={<Contact />} />
           				<Route path="*" element={<NoPage />} />
   						*/}
-					</Route>
-				</Routes>
-			</div>
-			</StyledEngineProvider>
-			</DragDropContext>
+							</Route>
+						</Routes>
+						<Footer/>
+					</div>
+				</StyledEngineProvider>
+			</DndContext>
 		</ThemeProvider>
-	);
+	)
 }
 
-export default App;
+export default App

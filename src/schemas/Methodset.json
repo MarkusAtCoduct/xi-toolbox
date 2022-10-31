@@ -1,0 +1,21 @@
+{
+    "name":"",
+    "creator":"",
+    
+    "time":0, 
+    "price":0,
+
+    "brief":"",
+    "description":"",
+
+    "input":[],
+    "output":[],
+
+    "rating":2.5,
+    "numRatings":0,
+
+    "references":[],
+    "methods":[],
+    "recommendedPhases":[],
+    "comments":[]
+}
