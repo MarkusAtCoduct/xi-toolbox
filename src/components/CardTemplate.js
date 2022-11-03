@@ -11,6 +11,7 @@ import * as React from "react";
 
 import { useAtom } from "jotai";
 
+import { phaseAccordionAtom } from "../atoms/phaseAccordionAtom";
 import { phaseAtom } from "../atoms/phaseAtom";
 
 import CardFunctions from "./CardFunctions";
@@ -20,14 +21,20 @@ import Details from "./details";
 export default function BasicCard(props) {
 	const [value, setValue] = React.useState(2);
 	const [phaseItems, setPhaseItems] = useAtom(phaseAtom)
+	const [expanded] = useAtom(phaseAccordionAtom);
+
 
 
 	const handleAdd = () => {
+		if(expanded){
 		let tmp = {...props.data}
-		const tmpItems = [...phaseItems] 
-		tmp.id = tmp.id + Math.random()
+		const tmpItems = [...phaseItems]
+
+		tmp.id = String(Math.random())
+		tmp.container = expanded
 		tmpItems.push(tmp)
 		setPhaseItems(tmpItems)
+	}return
 	}
 
 	return (
@@ -103,7 +110,7 @@ export default function BasicCard(props) {
 							</Typography>
 						</Box>
 					</Stack>
-					{props.type == "method"
+					{props.type === "method"
 					?<Grid container spacing={2} direction='row' justifyContent='space-around'>
 						<Grid xs={6}>
 							<Stack direction='column' justifyContent='center' alignItems='flex-start' spacing={1}>

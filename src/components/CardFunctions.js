@@ -40,7 +40,7 @@ export default function CardFunctions(props) {
 							<EditOutlinedIcon />
 						</IconButton>
 						<IconButton
-							onClick={props.add}
+							onClick={() => {props.add()}}
 							color="primary"
 							aria-label="add to phase"
 							size="medium"

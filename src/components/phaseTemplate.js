@@ -15,6 +15,7 @@ import * as React from "react";
 
 import { useAtom } from "jotai";
 
+import { phaseAccordionAtom } from "../atoms/phaseAccordionAtom";
 import { phaseAtom } from "../atoms/phaseAtom";
 
 import { Droppable } from "./Droppable";
@@ -76,7 +77,7 @@ export default function Phase(props) {
 
 	const [phaseItems, setPhaseItems] = useAtom(phaseAtom);
 
-	const [expanded, setExpanded] = React.useState();
+	const [expanded, setExpanded] = useAtom(phaseAccordionAtom);
 
 	const handleChange = (panel) => (event, newExpanded) => {
 	 	setExpanded(newExpanded ? panel : false);
@@ -84,13 +85,20 @@ export default function Phase(props) {
 	 };
 
 	 const handleSave =() =>{
-		console.log(phaseItems)
+		const methodset = []
+		phaseItems.forEach(element => {
+			if (element.container === props.id){
+				methodset.push(element)
+			}else{
+				return
+			}
+		});
+		console.table(methodset)
 		setPhaseItems([])
 	 }
-
 		return (
 			<>
-				<Accordion expanded={expanded === "panel1"} className='phase disableTransition' onChange={handleChange("panel1")} square={true}>
+				<Accordion expanded={expanded === props.id} className='phase disableTransition' onChange={handleChange(props.id)} square={true}>
 					<AccordionSummary className='disableTransition' aria-controls='panel1d-content' id='panel1d-header'>
 						<Stack direction='row' spacing={3} alignItems='center'>
 							<Stack direction='column' spacing={0} alignItems='center'>
@@ -130,14 +138,17 @@ export default function Phase(props) {
 	
 						<Droppable id={props.id}>
 							{phaseItems.map(method =>
-									<Stack key={method.id || "placeholder"} direction={"row"} pr={3} pl={3} spacing={2} mb={1}>
+							<div key={method.id}>
+							{method.container === props.id
+								?	<Stack direction={"row"} pr={3} pl={3} spacing={2} mb={1}>
 											<ToolboxStepper></ToolboxStepper>
 											<Sortable removable id={method.id}>
 												<SmallCard id={method.id} header={method.header}></SmallCard>
 											</Sortable>
-										</Stack>
-										
-										)}
+									</Stack>
+								:null}
+								</div>
+							)}
 						<Stack direction={"row"} pr={3} pl={3} spacing={2}>
 							<ToolboxStepper></ToolboxStepper>
 							

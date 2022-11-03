@@ -7,6 +7,8 @@ import Heading from "../components/Heading";
 import Filter from "../components/filter";
 import hp from "../images/Homepage.png"
 
+
+
 export default function Methods() {
   return (
     <>

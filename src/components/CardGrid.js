@@ -1,3 +1,6 @@
+import { DragOverlay} from '@dnd-kit/core';
+import {snapCenterToCursor} from '@dnd-kit/modifiers';
+
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Box from "@mui/material/Box";
@@ -9,11 +12,14 @@ import * as React from "react";
 
 import { useAtom } from "jotai";
 
+import { activeAtom } from '../atoms/activeAtom';
 import { methodAtom } from "../atoms/methodAtom";
 
 import CardItem from "./CardTemplate";
 import {Draggable} from './Draggable';
 import {Droppable} from './Droppable';
+import SmallCard from './SmallCardTemplate';
+
 
 
 
@@ -24,6 +30,8 @@ const cards2 = ["drei", "vier"];
 
 export default function CardGrid(props) {
   const [methods] = useAtom(methodAtom);
+  const [activeId, setActiveId] = useAtom(activeAtom);
+
 
 
   return (
@@ -53,6 +61,11 @@ export default function CardGrid(props) {
 
         </Grid>
           </Droppable>
+          <DragOverlay  style={{width: 270}} modifiers={[snapCenterToCursor]}>
+        {activeId ? (
+          <SmallCard header={methods[activeId-1].header}></SmallCard> 
+        ): null}
+      </DragOverlay>
 
         {/*<DropList droppableId="methoddrop_1" isDropDisabled={false} methods={state.methods}/>
         <DropList droppableId="methoddrop_2" isDropDisabled={true} methods={cards2}/>*/}

@@ -29,6 +29,7 @@ import {
 
 import Footer from "./components/Footer"
 import Home from "./pages/Home"
+import { phaseAccordionAtom } from "./atoms/phaseAccordionAtom"
 
 
 const theme = createTheme({
@@ -63,6 +64,8 @@ function App() {
 	const [methods, setMethods] = useAtom(methodAtom)
 	const [phaseItems, setPhaseItems] = useAtom(phaseAtom)
 	const [activeId, setActiveId] = useAtom(activeAtom)
+	const [expanded] = useAtom(phaseAccordionAtom);
+
 
 
 
@@ -81,16 +84,33 @@ function App() {
 			setPhaseItems(arrayMove(phaseItems, test, newIndex))
 		 }
 		else if(methods[Index].container != over?.id){
-			let tmp = {...methods[Index]}
-			tmp.id = tmp.id + Math.random()//"_Phase"
-			setPhaseItems([...phaseItems, tmp])
+			var tmp = {...methods[Index]}
+			const tmpItems = [...phaseItems]
+
+			if(tmp.type === "methodset"){
+				tmp.methods.forEach(element => {
+					element.id = String(Math.random())
+					element.container = expanded
+				});
+				tmpItems.push(...tmp.methods) 
+				setPhaseItems(tmpItems)
+				
+
+			}else{
+				tmp.id = String(Math.random())
+				tmp.container = expanded
+				tmpItems.push(tmp) 
+		
+				setPhaseItems(tmpItems)
+			}
+			console.log("Items: ",phaseItems)
+			
 		}
 		setActiveId(null)
 	}
 
 	const handleDragStart = (event) => {
 		const { active } = event
-
 		setActiveId(active.id)
 	}
 
