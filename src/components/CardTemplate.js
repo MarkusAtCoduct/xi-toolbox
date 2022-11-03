@@ -39,12 +39,12 @@ export default function BasicCard(props) {
 
 	return (
 		<Card
+		className={props.type}
 			elevation={3}
 			sx={{
 				padding: "8px",
 				borderRadius: "16px",
 				maxWidth: "344px",
-				maxHeight: "340",
 			}}
 		>
 			<CardContent>

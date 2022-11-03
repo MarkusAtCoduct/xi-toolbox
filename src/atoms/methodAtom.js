@@ -38,4 +38,9 @@ export const methodAtom = atom([
     header: "storyboard",
     container: "recommendedMethodContainer",
     type: "method"
+    },
+    {id: "5",
+    header: "oneMoreMethod",
+    container: "recommendedMethodContainer",
+    type: "method"
     }])

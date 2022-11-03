@@ -1,5 +1,4 @@
 import {useDraggable} from '@dnd-kit/core';
-import {snapCenterToCursor} from '@dnd-kit/modifiers';
 
 import React from 'react';
 

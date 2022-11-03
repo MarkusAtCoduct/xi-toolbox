@@ -20,6 +20,9 @@ import {Draggable} from './Draggable';
 import {Droppable} from './Droppable';
 import SmallCard from './SmallCardTemplate';
 
+import Masonry from 'react-masonry-css'
+
+
 
 
 
@@ -42,28 +45,69 @@ export default function CardGrid(props) {
         </AccordionSummary>
         <Stack direction="row">
           <Droppable id="recommendedMethodContainer">
-          <Grid container
-        columnSpacing={3}
-        spacing={2}
-        justifyContent="center"
-        alignItems="flex-start"
-        >
-        {methods.map(method =>
-             <Grid item key={method.id} mb={1} mr={-1} xs={props.columns || 3}>
+          <Masonry
+  breakpointCols={2}
+  className="my-masonry-grid"
+  columnClassName="my-masonry-grid_column">
+  {methods.map(method =>
+        <div>
+            {method.type === "method"
+             ?<Grid className="method" item key={method.id} mb={1} mr={-1} xs={props.columns || 3}>
+                  {method.container === "recommendedMethodContainer" || method.container === null 
+                  ? <Draggable key={method.id} id={method.id}>
+                    <CardItem className="method" data={method} type={method.type} header={method.header}></CardItem>
+                    </Draggable>
+                  : null}
+            </Grid>
+            :<Grid className="methodset" item key={method.id} mb={1} mr={-1} xs={props.columns || 3}>
                   {method.container === "recommendedMethodContainer" || method.container === null 
                   ? <Draggable key={method.id} id={method.id}>
                     <CardItem data={method} type={method.type} header={method.header}></CardItem>
                     </Draggable>
                   : null}
             </Grid>
+            }
+          </div>
+          
+        )}
+</Masonry>
+            {/*
+          <Grid container
+          data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 200 }'
+          className='grid'
+        columnSpacing={3}
+        spacing={2}
+        justifyContent="center"
+        alignItems="flex-start"
+        >
+        {methods.map(method =>
+        <>
+            {method.type === "method"
+             ?<Grid className="grid-item" item key={method.id} mb={1} mr={-1} xs={props.columns || 3}>
+                  {method.container === "recommendedMethodContainer" || method.container === null 
+                  ? <Draggable key={method.id} id={method.id}>
+                    <CardItem data={method} type={method.type} header={method.header}></CardItem>
+                    </Draggable>
+                  : null}
+            </Grid>
+            :<Grid className="grid-item grid-item--height2" item key={method.id} mb={1} mr={-1} xs={props.columns || 3}>
+                  {method.container === "recommendedMethodContainer" || method.container === null 
+                  ? <Draggable key={method.id} id={method.id}>
+                    <CardItem data={method} type={method.type} header={method.header}></CardItem>
+                    </Draggable>
+                  : null}
+            </Grid>
+            }
+          </>
           
         )}
 
         </Grid>
+        */}
           </Droppable>
           <DragOverlay  style={{width: 270}} modifiers={[snapCenterToCursor]}>
         {activeId ? (
-          <SmallCard header={methods[activeId-1].header}></SmallCard> 
+          <SmallCard header={methods[activeId-1]?.header || "Placeholder"}></SmallCard> 
         ): null}
       </DragOverlay>
 
