@@ -35,11 +35,11 @@ body{
     display: -webkit-box; /* Not needed if autoprefixing */
     display: -ms-flexbox; /* Not needed if autoprefixing */
     display: flex;
-    margin-left: -24px; /* gutter size offset */
+    margin-left: -16px; /* gutter size offset */
     width: auto;
   }
   .my-masonry-grid_column {
-    padding-left: 32px; /* gutter size */
+    padding-left: 24px; /* gutter size */
     background-clip: padding-box;
   }
 
@@ -49,7 +49,7 @@ body{
   }
 
   .methodset{
-    height: 702px;
+    height: 705px;
   }
 
   .method{
@@ -119,4 +119,19 @@ ol{
 .phaseDrop{
     width: 270px;
     
+}
+
+.circle{
+  min-height: 8px;
+  min-width: 8px;
+  background-color: #FF5454;
+  border: solid 6px  #C4C7C4;
+  outline: solid 4px #ffffff;
+  border-radius: 24px;
+  z-index: 3;
+}
+
+.circlePlaceholder{
+  min-height: 20px;
+  min-width: 20px;
 }

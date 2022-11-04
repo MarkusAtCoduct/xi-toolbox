@@ -14,6 +14,7 @@ import { useAtom } from "jotai";
 
 import { activeAtom } from '../atoms/activeAtom';
 import { methodAtom } from "../atoms/methodAtom";
+import { phaseAtom } from '../atoms/phaseAtom';
 
 import CardItem from "./CardTemplate";
 import {Draggable} from './Draggable';
@@ -34,6 +35,7 @@ const cards2 = ["drei", "vier"];
 export default function CardGrid(props) {
   const [methods] = useAtom(methodAtom);
   const [activeId, setActiveId] = useAtom(activeAtom);
+  const [phaseItems] = useAtom(phaseAtom);
 
 
 
@@ -50,18 +52,18 @@ export default function CardGrid(props) {
   className="my-masonry-grid"
   columnClassName="my-masonry-grid_column">
   {methods.map(method =>
-        <div>
+        <div key={method.id}>
             {method.type === "method"
              ?<Grid className="method" item key={method.id} mb={1} mr={-1} xs={props.columns || 3}>
                   {method.container === "recommendedMethodContainer" || method.container === null 
-                  ? <Draggable key={method.id} id={method.id}>
+                  ? <Draggable key={method.id} data={method} id={method.id}>
                     <CardItem className="method" data={method} type={method.type} header={method.header}></CardItem>
                     </Draggable>
                   : null}
             </Grid>
             :<Grid className="methodset" item key={method.id} mb={1} mr={-1} xs={props.columns || 3}>
                   {method.container === "recommendedMethodContainer" || method.container === null 
-                  ? <Draggable key={method.id} id={method.id}>
+                  ? <Draggable data={method} key={method.id} id={method.id}>
                     <CardItem data={method} type={method.type} header={method.header}></CardItem>
                     </Draggable>
                   : null}
@@ -105,11 +107,12 @@ export default function CardGrid(props) {
         </Grid>
         */}
           </Droppable>
-          <DragOverlay  style={{width: 270}} modifiers={[snapCenterToCursor]}>
+        <DragOverlay  dropAnimation={null}
+        style={{width: 270}} modifiers={[snapCenterToCursor]}>
         {activeId ? (
-          <SmallCard header={methods[activeId-1]?.header || "Placeholder"}></SmallCard> 
+          <SmallCard header={methods[activeId-1]?.header || phaseItems[activeId-1]?.header}></SmallCard> 
         ): null}
-      </DragOverlay>
+        </DragOverlay>
 
         {/*<DropList droppableId="methoddrop_1" isDropDisabled={false} methods={state.methods}/>
         <DropList droppableId="methoddrop_2" isDropDisabled={true} methods={cards2}/>*/}

@@ -39,22 +39,25 @@ export default function BasicCard(props) {
 
 	return (
 		<Card
-		className={props.type}
+		className={props.data.type}
 			elevation={3}
 			sx={{
 				padding: "8px",
 				borderRadius: "16px",
 				maxWidth: "344px",
+				height: "352px"
 			}}
+
+			style={props.drag ? {filter: "grayscale(100%)", backgroundColor: "#e2e2e2"} : null}
 		>
 			<CardContent>
-				<CardFunctions add={handleAdd} type={props.type}  />
+				<CardFunctions add={handleAdd} type={props.data.type}  />
 				<Box>
 					<Stack direction='row' alignItems='flex-end' justifyContent='space-between'>
-						<Typography sx={{ fontSize: 28, fontWeight: "900", textAlign: "left" }}>{props.header || "Placeholder"}</Typography>
+						<Typography sx={{ fontSize: 28, fontWeight: "900", textAlign: "left" }}>{props.data.header || "Placeholder"}</Typography>
 						<Stack direction='row' alignItems='flex-end'>
 							<Typography gutterBottom sx={{ fontSize: 11, fontWeight: "500", paddingTop: "5px" }}>
-								{props.author || "Placeholder"}
+								{props.data.author || "Placeholder"}
 							</Typography>
 							<MilitaryTech color='primary' />
 						</Stack>
@@ -67,7 +70,7 @@ export default function BasicCard(props) {
 							size='small'
 							name='simple-controlled'
 							sx={{ color: "#757875", float: "left" }}
-							value={value | props.value}
+							value={value | props.data.value}
 							onChange={(event, newValue) => {
 								setValue(newValue)
 							}}
@@ -82,14 +85,14 @@ export default function BasicCard(props) {
 								color: "#757875",
 							}}
 						>
-							{props.ratings | 253} Ratings | {props.questions | 36} answered Questions
+							{props.data.ratings | 253} Ratings | {props.data.questions | 36} answered Questions
 						</Typography>
 					</Stack>
 
 					<Stack direction='row' justifyContent='space-between' alignItems='center' color='#000000'>
-						<Typography sx={{ fontWeight: "bold" }}>{props.price || 6500} €</Typography>
-						<Typography sx={{ fontWeight: "bold" }}>{props.time || 15} Tage</Typography>
-						<Typography sx={{ fontWeight: "bold" }}>{props.MethodType || "placeholder"}</Typography>
+						<Typography sx={{ fontWeight: "bold" }}>{props.data.price || 6500} €</Typography>
+						<Typography sx={{ fontWeight: "bold" }}>{props.data.time || 15} Tage</Typography>
+						<Typography sx={{ fontWeight: "bold" }}>{props.data.MethodType || "placeholder"}</Typography>
 					</Stack>
 					<Stack direction='column' justifyContent='flex-start' alignItems='flex-start' mt={1}>
 						<Typography sx={{ fontSize: 11, fontWeight: "500", color: "#757875" }}>Brief</Typography>
@@ -106,11 +109,11 @@ export default function BasicCard(props) {
 									overflow: "hidden",
 								}}
 							>
-								{props.brief || "lorem Ipsum dolor sit amet fsadgfsalknasdlökfn asdg afdfga sfasg ag fdadf saf asf asf agasgAGHTSH"}
+								{props.data.brief || "lorem Ipsum dolor sit amet fsadgfsalknasdlökfn asdg afdfga sfasg ag fdadf saf asf asf agasgAGHTSH"}
 							</Typography>
 						</Box>
 					</Stack>
-					{props.type === "method"
+					{props.data.type === "method"
 					?<Grid container spacing={2} direction='row' justifyContent='space-around'>
 						<Grid xs={6}>
 							<Stack direction='column' justifyContent='center' alignItems='flex-start' spacing={1}>
@@ -121,7 +124,7 @@ export default function BasicCard(props) {
 										fontSize: 14,
 										fontWeight: "500",
 									}}
-									label={props.input || "Input"}
+									label={props.data.input || "Input"}
 								/>
 							</Stack>
 						</Grid>
@@ -134,7 +137,7 @@ export default function BasicCard(props) {
 										fontSize: 14,
 										fontWeight: "500",
 									}}
-									label={props.output || "Output"}
+									label={props.data.output || "Output"}
 								/>
 							</Stack>
 						</Grid>

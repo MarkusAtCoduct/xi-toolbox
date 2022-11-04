@@ -1,10 +1,12 @@
-import * as React from "react";
 import { Container } from "@mui/system";
-import Filter from "../components/filter";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import Heading from "../components/Heading";
+
+import * as React from "react";
+
 import MethodCards from "../components/CardGrid";
+import Heading from "../components/Heading";
 import PhaseSelector from "../components/PhaseSelector";
+import Filter from "../components/filter";
 
 
 
@@ -17,7 +19,7 @@ export default function MethodSetCreator() {
 				<Grid container spacing={2} mt={0}>
 					<Grid item xs={4} sx={{backgroundColor: "#EFF1EE"}} >
 						<Heading heading={"Cross Innovation Process"} />
-                    	<PhaseSelector />
+                    	<PhaseSelector/>
                     </Grid>
 					<Grid item xs={8} sx={{backgroundColor: "#E1E3E0"}}>
 						<Heading heading={"Methods & Method Sets Library"} />

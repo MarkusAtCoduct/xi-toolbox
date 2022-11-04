@@ -21,7 +21,7 @@ import { phaseAtom } from "../atoms/phaseAtom";
 import { Droppable } from "./Droppable";
 import SmallCard from "./SmallCardTemplate";
 import { Sortable } from "./Sortable";
-import ToolboxStepper from "./toolboxStepper";
+import ToolboxStepperPhase from "./toolboxStepperPhase";
 
 const Accordion = styled((props) => (
 	<MuiAccordion disableGutters elevation={2} sx={{ borderRadius: "16px", backgroundColor: "none"}} square {...props} />
@@ -80,6 +80,10 @@ export default function Phase(props) {
 	const [expanded, setExpanded] = useAtom(phaseAccordionAtom);
 
 	const handleChange = (panel) => (event, newExpanded) => {
+		
+		// const section = document.querySelector("#"+props.id);
+		// console.log(section)
+  		// section.scrollIntoView( { behavior: 'smooth', block: 'start' } );
 	 	setExpanded(newExpanded ? panel : false);
 
 	 };
@@ -98,7 +102,7 @@ export default function Phase(props) {
 	 }
 		return (
 			<>
-				<Accordion expanded={expanded === props.id} className='phase disableTransition' onChange={handleChange(props.id)} square={true}>
+				<Accordion id={props.id} expanded={expanded === props.id} className='phase disableTransition' onChange={handleChange(props.id)} square={true}>
 					<AccordionSummary className='disableTransition' aria-controls='panel1d-content' id='panel1d-header'>
 						<Stack direction='row' spacing={3} alignItems='center'>
 							<Stack direction='column' spacing={0} alignItems='center'>
@@ -137,12 +141,12 @@ export default function Phase(props) {
 							
 	
 						<Droppable id={props.id}>
-							{phaseItems.map(method =>
+							{phaseItems.map((method, index) =>
 							<div key={method.id}>
 							{method.container === props.id
 								?	<Stack direction={"row"} pr={3} pl={3} spacing={2} mb={1}>
-											<ToolboxStepper></ToolboxStepper>
-											<Sortable removable id={method.id}>
+											<ToolboxStepperPhase index={index}></ToolboxStepperPhase>
+											<Sortable id={method.id}>
 												<SmallCard id={method.id} header={method.header}></SmallCard>
 											</Sortable>
 									</Stack>
@@ -150,7 +154,10 @@ export default function Phase(props) {
 								</div>
 							)}
 						<Stack direction={"row"} pr={3} pl={3} spacing={2}>
-							<ToolboxStepper></ToolboxStepper>
+							{phaseItems.length > 0
+							?<ToolboxStepperPhase empty last></ToolboxStepperPhase>
+							:<ToolboxStepperPhase empty ></ToolboxStepperPhase>}
+							
 							
 								<Box sx={{width: "270px",minHeight: "140px", borderRadius: "16px", border: "dashed 2px #FFF"}}>
 								<Typography pl={3} mb={3} sx={{ fontWeight: "400", fontSize: "32px", color: "#fff" }} align='center'>
