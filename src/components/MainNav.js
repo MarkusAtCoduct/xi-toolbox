@@ -12,6 +12,7 @@ import { Container } from "@mui/system";
 import * as React from "react";
 
 import { Link } from "react-router-dom";
+import Login from "./login"
 
 function ElevationScroll(props) {
 	const { children, window } = props;
@@ -39,13 +40,13 @@ function LinkTab(props) {
 
 export default function MainNav(props) {
 
-	
 	const [value, setValue] = React.useState(0);
-	const isloggedin = true
+	const isloggedin = false
 
 	const handleChange = (event, newValue) => {
 	  setValue(newValue);
 	}
+
 	return (
 		<ElevationScroll {...props}>
 
@@ -91,9 +92,7 @@ export default function MainNav(props) {
 					<Stack direction="row" spacing={2}>
 					{!isloggedin
 					?<>
-					<Button variant="outlined" sx={{borderRadius: "16px"}} disableElevation>
-						Log In
-					</Button>
+					<Login/>
 					<Button variant="contained" href="/register" sx={{borderRadius: "16px"}} disableElevation>
 						Register
 					</Button>

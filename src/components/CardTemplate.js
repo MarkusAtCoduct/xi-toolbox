@@ -45,10 +45,11 @@ export default function BasicCard(props) {
 				padding: "8px",
 				borderRadius: "16px",
 				maxWidth: "344px",
-				height: "352px"
+				height: "352px",
+				
 			}}
 
-			style={props.drag ? {filter: "grayscale(100%)", backgroundColor: "#e2e2e2"} : null}
+			style={props.drag ? {  outline:" solid 2px #FF5454"} : null}
 		>
 			<CardContent>
 				<CardFunctions add={handleAdd} type={props.data.type}  />
@@ -145,7 +146,7 @@ export default function BasicCard(props) {
 					:<MethodList heading="Methods used"/>
 					}
 					
-					<Details data={props}/>
+					<Details data={props.data}/>
 				</Box>
 			</CardContent>
 		</Card>

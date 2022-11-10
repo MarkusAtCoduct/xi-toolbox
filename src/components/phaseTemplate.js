@@ -160,7 +160,7 @@ export default function Phase(props) {
 							
 							
 								<Box sx={{width: "270px",minHeight: "140px", borderRadius: "16px", border: "dashed 2px #FFF"}}>
-								<Typography pl={3} mb={3} sx={{ fontWeight: "400", fontSize: "32px", color: "#fff" }} align='center'>
+								<Typography p={1} mb={3} sx={{ fontWeight: "400", fontSize: "32px", color: "#fff" }} align='center'>
 									Drop Methods here
 								</Typography>
 								</Box>

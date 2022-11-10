@@ -5,7 +5,7 @@ import MainNav from "./components/MainNav"
 import { createTheme } from "@mui/material/styles"
 import { ThemeProvider } from "@emotion/react"
 
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, Navigate} from "react-router-dom"
 
 import Layout from "./pages/Layout"
 import Methods from "./pages/Methods"
@@ -61,7 +61,7 @@ const theme = createTheme({
 
 
 function App() {
-	const [methods, setMethods] = useAtom(methodAtom)
+	const [methods] = useAtom(methodAtom)
 	const [phaseItems, setPhaseItems] = useAtom(phaseAtom)
 	const [activeId, setActiveId] = useAtom(activeAtom)
 	const [expanded] = useAtom(phaseAccordionAtom);
@@ -72,13 +72,15 @@ function App() {
 	
 	const handleDragEnd = (data) => {
 		const { over, active } = data
-
-		if(!over){
+		console.log(over)
+		if(!over || over.id === "allMethodsContainer"){
 			return
 		}
 		const Index = methods.findIndex(({id}) => id === active.id);
 		const test = phaseItems.findIndex(({id}) => id === active.id);
 		const newIndex = phaseItems.findIndex(({id}) => id === over.id);
+
+		
 
 		 if(active.data.current?.sortable){
 			setPhaseItems(arrayMove(phaseItems, test, newIndex))
@@ -132,8 +134,8 @@ const sensors = useSensors(
 						<MainNav />
 
 						<Routes>
-								<Route path='/home' element={<Home />}/>
-								<Route path='/' element={<Layout />}>
+								<Route path='/' element={<Navigate to="/home" />}/>
+								<Route path='/home' element={<Home/>}/>
 								<Route path='/methods' element={<Methods />} />
 								<Route path='/createSet' element={<MethodSetCreator />} />
 								<Route path='/myProfile' element={<MyProfile />} />
@@ -143,7 +145,7 @@ const sensors = useSensors(
 						 <Route path="contact" element={<Contact />} />
           				<Route path="*" element={<NoPage />} />
   						*/}
-							</Route>
+							
 						</Routes>
 						<Footer/>
 					</div>

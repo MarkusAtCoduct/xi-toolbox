@@ -18,10 +18,10 @@ import Paragraph from "./Paragraph";
 
 const style = {
 	position: "absolute",
-	top: "50%",
+	top: "1vh",
 	left: "50%",
 	maxWidth: "1100px",
-	transform: "translate(-50%, -50%)",
+	transform: "translateX(-50%)",
 	
 };
 
@@ -33,23 +33,23 @@ export default function Details(props) {
 
 	return (
 		<>
-			<Stack direction="row"	justifyContent="flex-end"	alignItems="flex-end">
+			<Stack direction="row" justifyContent="flex-end" alignItems="flex-end">
 			<Button onClick={handleOpen}>Details</Button>
 			</Stack>
-				
+
 				<Modal
 					open={open}
 					onClose={handleClose}
 					aria-labelledby="modal-modal-title"
-					aria-describedby="modal-modal-description">
-					<Grid container>
-
-						<Grid xs={12} sx={style}>
+					aria-describedby="modal-modal-description"
+					p={3}
+					>
+						<Container sx={style}>
 							<Card elevation={2} sx={{ borderRadius: "16px" }}>
-								<CardContent>
+								<CardContent sx={{ maxHeight:"94vh"}}>
 										<CardFunctions type={props.data.type}/>
 
-										<Box >
+										<Box>
 											<Typography
 												sx={{
 													fontSize: 28,
@@ -112,6 +112,7 @@ export default function Details(props) {
 												<Stack direction="column">
 													<Paragraph
 														heading="Description"
+														lines="4rem"
 														body={
 															props.data.description ||
 															"A market analysis is the process of conducting thorough research on a specific market. Businesses typically use market analysis to determine whether a new product can perform well in a market or if it needs adjustment before being presented to consumers"
@@ -160,10 +161,8 @@ export default function Details(props) {
 										</Stack>
 								</CardContent>
 							</Card>
-						</Grid>
-					</Grid>
-					
-				</Modal>
+							</Container>
+						</Modal>
 				</>
 		
 	);

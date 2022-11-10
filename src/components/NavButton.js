@@ -10,8 +10,6 @@ export default function NavButton(props) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
 	
 
-
-
 	if (props.active) {
 		return (
 			<Button

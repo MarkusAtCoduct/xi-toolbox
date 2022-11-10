@@ -1,5 +1,7 @@
-import * as React from "react";
 import { Container, Typography } from "@mui/material";
+
+import * as React from "react";
+
 import RegistrationForm from "../components/RegistrationForm";
 
 export default function Register() {
@@ -7,16 +9,15 @@ export default function Register() {
 		<>
 			<div
 				style={{
-					position: "absolute",
+					
 					top: "0",
 					left: "0",
 					width: "100%",
-					height: "500%",
+					
 					backgroundColor: "#EFF1EE",
 					zIndex: "-1",
-					overflow: "hidden",
 				}}
-			></div>
+			>
 			<Container>
 				<Typography
 					p={4}
@@ -30,6 +31,7 @@ export default function Register() {
 				</Typography>
 				<RegistrationForm />
 			</Container>
+			</div>
 		</>
 	)
 }

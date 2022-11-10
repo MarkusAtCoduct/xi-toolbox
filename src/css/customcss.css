@@ -17,17 +17,17 @@ body{
 
   /* Chrome, Edge, and Safari */
   *::-webkit-scrollbar {
-    width: 16px;
+    width: 1px;
   }
 
   *::-webkit-scrollbar-track {
-    background: #ffffff;
+    background: rgba(225,227,224,1);
   }
 
   *::-webkit-scrollbar-thumb {
     background-color: #9a989a;
     border-radius: 10px;
-    border: 3px solid #ffffff;
+    
   }
 
 
@@ -134,4 +134,14 @@ ol{
 .circlePlaceholder{
   min-height: 20px;
   min-width: 20px;
+}
+
+.stick{
+  position: sticky;
+}
+
+
+.MuiModal-root{
+  max-height: 100vh;
+  
 }

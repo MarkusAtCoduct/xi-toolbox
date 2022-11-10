@@ -228,7 +228,7 @@ export default function RegistrationForm(props) {
 					</Stack>
 				</CardContent>
 		</Card>
-        <Stack direction="row"   justifyContent="center" alignItems="center" spacing={4} mt={4}>
+        <Stack direction="row"   justifyContent="center" alignItems="center" spacing={4} mt={4} pb={4}>
                 <Button sx={{width: "264px", height: "52px"}} variant="outlined">Cancel</Button>
                 <Button sx={{width: "264px", height: "52px"}} variant="contained">Save Profile</Button>
         </Stack>
