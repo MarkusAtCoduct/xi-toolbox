@@ -1,8 +1,11 @@
 import { atom } from "jotai";
 
-export const methodAtom = atom([
-    {id : "1",
-    header: "focus group",
+export const methodAtom = atom([])
+
+
+
+/*  {id : "1",
+    name: "focus group",
     container: "recommendedMethodContainer",
     type: "method"
     },
@@ -46,4 +49,4 @@ export const methodAtom = atom([
     header: "oneMoreMethod",
     container: "recommendedMethodContainer",
     type: "method"
-    }])
+    }*/

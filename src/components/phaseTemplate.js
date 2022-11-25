@@ -23,7 +23,16 @@ import SmallCard from "./SmallCardTemplate";
 import { Sortable } from "./Sortable";
 import ToolboxStepperPhase from "./toolboxStepperPhase";
 
+
+import { Link, useLocation} from "react-router-dom"
+import MethodCreatorForm from "./MethodCreatorForm";
+
+
 const Accordion = styled((props) => (
+
+	
+
+
 	<MuiAccordion disableGutters elevation={2} sx={{ borderRadius: "16px", backgroundColor: "none"}} square {...props} />
 ))(({ theme }) => ({
 	
@@ -80,16 +89,16 @@ export default function Phase(props) {
 	const [expanded, setExpanded] = useAtom(phaseAccordionAtom);
 
 	const handleChange = (panel) => (event, newExpanded) => {
-		
-		// const section = document.querySelector("#"+props.id);
-		// console.log(section)
-  		// section.scrollIntoView( { behavior: 'smooth', block: 'start' } );
 	 	setExpanded(newExpanded ? panel : false);
 
 	 };
 
-	 const handleSave =() =>{
-		const methodset = []
+
+	const methodset = []
+
+	const handleSave =() =>{
+
+		
 		phaseItems.forEach(element => {
 			if (element.container === props.id){
 				methodset.push(element)
@@ -97,9 +106,14 @@ export default function Phase(props) {
 				return
 			}
 		});
-		console.table(methodset)
+
+		//console.log(methodset)
 		setPhaseItems([])
+
 	 }
+
+
+
 		return (
 			<>
 				<Accordion id={props.id} expanded={expanded === props.id} className='phase disableTransition' onChange={handleChange(props.id)} square={true}>
@@ -147,7 +161,7 @@ export default function Phase(props) {
 								?	<Stack direction={"row"} pr={3} pl={3} spacing={2} mb={1}>
 											<ToolboxStepperPhase index={index}></ToolboxStepperPhase>
 											<Sortable id={method.id}>
-												<SmallCard id={method.id} header={method.header}></SmallCard>
+												<SmallCard id={method.id} data={method}></SmallCard>
 											</Sortable>
 									</Stack>
 								:null}
@@ -177,6 +191,7 @@ export default function Phase(props) {
 							onClick={handleSave}>
 						  Save Methodset
 						</Button>
+						<Link  to="/createMethod" state={{set: methodset}} onClick={handleSave} component={<MethodCreatorForm />} >About</Link>
 					</AccordionDetails>
 					
 				</Accordion>

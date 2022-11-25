@@ -9,6 +9,7 @@ import Grid from "@mui/material/Grid";
 import { Typography, Stack } from "@mui/material";
 
 import * as React from "react";
+import { useEffect } from 'react';
 
 import { useAtom } from "jotai";
 
@@ -23,22 +24,30 @@ import SmallCard from './SmallCardTemplate';
 
 import Masonry from 'react-masonry-css'
 
-
-
-
-
-const cards1 = ["Eins", "Zwei"];
-const cards2 = ["drei", "vier"];
-
+import { GetContent } from './Api';
 
 
 export default function CardGrid(props) {
-  const [methods] = useAtom(methodAtom);
+  const [methods, setMethods] = useAtom(methodAtom);
   const [activeId, setActiveId] = useAtom(activeAtom);
   const [phaseItems] = useAtom(phaseAtom);
 
+  useEffect(() => {
+	console.log(methods)
+	const tmpItems = [...methods]
 
+	GetContent("/api/method/search?label&pageIndex=0&pageSize=10&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=false")
+	.then((response) => {
+		response.data.forEach(element => {
+			element.container = "recommendedMethodContainer"
+			element.type = "method"
+		});
+		setMethods(response.data)
+	});
+	
+   }, []);
 
+   
   return (
 		<Box>
 			<Accordion defaultExpanded sx={{ background: "none" }} elevation={0}>
@@ -52,11 +61,11 @@ export default function CardGrid(props) {
 						<Masonry breakpointCols={2} className='my-masonry-grid' columnClassName='my-masonry-grid_column'>
 							{methods.map((method) => (
 								<div key={method.id}>
-									{method.type === "method" ? (
+									{!method.isMethodSet ? (
 										<Grid className='method' item key={method.id} mb={1} mr={-1} xs={props.columns || 3}>
 											{method.container === "recommendedMethodContainer" || method.container === null ? (
 												<Draggable key={method.id} data={method} id={method.id}>
-													<CardItem className='method' data={method} type={method.type} header={method.header}></CardItem>
+													<CardItem className='method' data={method}></CardItem>
 												</Draggable>
 											) : null}
 										</Grid>
@@ -64,7 +73,7 @@ export default function CardGrid(props) {
 										<Grid className='methodset' item key={method.id} mb={1} mr={-1} xs={props.columns || 3}>
 											{method.container === "recommendedMethodContainer" || method.container === null ? (
 												<Draggable data={method} key={method.id} id={method.id}>
-													<CardItem data={method} type={method.type} header={method.header}></CardItem>
+													<CardItem data={method}></CardItem>
 												</Draggable>
 											) : null}
 										</Grid>

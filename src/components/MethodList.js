@@ -5,7 +5,6 @@ import * as React from "react";
 
 import ToolboxStepper from "./toolboxStepper";
 
-const listItems = ["Focus Groups", "Market analysis", "Expert Interview", "Brainstorming"]
 export default function MethodList(props) {
 	return (
 		<Box mt={2}>
@@ -13,21 +12,21 @@ export default function MethodList(props) {
 			{props.heading || "no heading set"}
 			</Typography>
             
-			{props.listItems ?? (
 				
 				<Stack direction='column' alignItems="flex-start">
 					<Chip label="Input"/>
-					{listItems.map((item) => (
-                        <Stack key={item} direction="row">
+
+					{/*</Stack>*props.listItems.map((item) => (
+                        <Stack key={item.id} direction="row">
                         <ToolboxStepper variant="Card"></ToolboxStepper>
                         <Box p={1} >
-						<Chip label={item || "no body set"}/>
+						<Chip label={item.header || "no body set"}/>
                         </Box>
                         </Stack>
-					))}
+					))*/}
 					  <Chip label="Output"/>
 				</Stack>
-			)}
+			
           
     		</Box>
 	)

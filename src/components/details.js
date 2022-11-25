@@ -26,6 +26,7 @@ const style = {
 };
 
 export default function Details(props) {
+	
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
@@ -33,7 +34,7 @@ export default function Details(props) {
 
 	return (
 		<>
-			<Stack direction="row" justifyContent="flex-end" alignItems="flex-end">
+			<Stack sx={{height: "100%"}} direction="row" justifyContent="flex-end" alignItems="flex-end">
 			<Button onClick={handleOpen}>Details</Button>
 			</Stack>
 
@@ -120,7 +121,7 @@ export default function Details(props) {
 													/>
 													<Paragraph
 														heading="When to use"
-														body={props.data.whenToUse || "placeholder"}
+														body={props.data.whenToConduct || "placeholder"}
 													/>
 													<ListTemplate heading="How to conduct" />
 													{props.data.type == "method"

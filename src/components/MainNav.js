@@ -41,7 +41,7 @@ function LinkTab(props) {
 export default function MainNav(props) {
 
 	const [value, setValue] = React.useState(0);
-	const isloggedin = false
+	const isloggedin = true
 
 	const handleChange = (event, newValue) => {
 	  setValue(newValue);

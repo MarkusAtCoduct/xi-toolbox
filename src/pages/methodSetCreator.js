@@ -1,6 +1,6 @@
 import { Container } from "@mui/system";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Button } from "@mui/material";
 
 import * as React from "react";
 
@@ -23,7 +23,12 @@ export default function MethodSetCreator() {
 			</Grid>
 			<Grid item xs={8} sx={{backgroundColor: "#E1E3E0"}}>
 				<Box>
-				<Heading heading={"Methods & Method Sets Library"} />
+				<Stack direction="row"  justifyContent="space-between" alignItems="center">
+					<Heading heading={"Methods & Method Sets Library"}/>
+					<Button sx={{ height: "40px", fontWeight: "400"}} variant='contained' href="/createMethod">
+						Create new Method
+					</Button>		
+				</Stack>
 				<Filter/>
 				<MethodCards columns={6} />
 				</Box>

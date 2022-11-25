@@ -22,7 +22,7 @@ export function Draggable(props) {
   return (
     <div ref={setNodeRef} {...listeners} {...attributes}>
       {isDragging
-      ?<CardItem data={props.data} drag></CardItem>
+      ?<CardItem className="dragCard" data={props.data} drag></CardItem>
       :<>{props.children}</>
       }
       

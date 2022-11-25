@@ -54,8 +54,17 @@ body{
 
   .method{
     height: 336px;
+    transition-duration: 100ms;
 
   }
+.method:hover{
+  border-radius: 16px;
+  transform: scale(1.009);
+  
+  filter: drop-shadow(0 0 25px #c7c7c790); 
+}
+
+
 .disableTransition{
     transition: none
 }
@@ -145,3 +154,4 @@ ol{
   max-height: 100vh;
   
 }
+

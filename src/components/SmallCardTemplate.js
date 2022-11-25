@@ -44,7 +44,7 @@ export default function SmallCard(props) {
 			<Stack direction='column' spacing={1} justifyContent='center' alignItems="flex-start">
 
 			<Stack sx={{width: "100%"}} direction="row" justifyContent="space-between" alignItems="center">
-            <Typography sx={{ fontSize: 28, fontWeight: "900", textAlign: "left" }}>{props.header || "Placeholder"}</Typography>
+            <Typography sx={{ fontSize: 28, fontWeight: "900", textAlign: "left" }}>{props.data?.name || "Placeholder"}</Typography>
 			
 			<IconButton onClick={handleDelete} aria-label="deleteMethod" size="medium">
 				<RemoveCircleOutlineIcon />

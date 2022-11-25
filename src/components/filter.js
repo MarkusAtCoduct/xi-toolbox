@@ -13,10 +13,50 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 
+import { useAtom } from "jotai";
+
+import { methodAtom } from "../atoms/methodAtom";
+import { useForm } from 'react-hook-form';
+
+
 import * as React from "react";
+import { IconButton } from "@mui/material";
+import { GetContent } from './Api';
+
 
 export default function Filter() {
+
+	const Search = useForm({defaultValues:{
+		label: "",
+		pageIndex: 0,
+		pageSize: 20,
+		sortBy: "NAME",
+		sortDirection: "DESC",
+		includeMethods: true,
+		includeMethodSets: false,
+	}})
+
+	const { control, register, handleSubmit, formState: { errors } } = Search;
+	const [methods, setMethods] = useAtom(methodAtom);
+
+
+	const onSubmit = data =>{ 
+		//console.log(`/api/method/search?label=${data.label}&pageIndex=${data.pageIndex}&pageSize=${data.pageSize}&sortBy=${data.sortBy}&sortDirection=${data.sortDirection}&includeMethods=${data.includeMethods}&includeMethodSets=${data.includeMethodSets}`)
+	const tmpItems = [...methods]
+	GetContent(`/api/method/search?label=${data.label}&pageIndex=${data.pageIndex}&pageSize=${data.pageSize}&sortBy=${data.sortBy}&sortDirection=${data.sortDirection}&includeMethods=${data.includeMethods}&includeMethodSets=${data.includeMethodSets}`)
+	.then((response) => {
+		response.data.forEach(element => {
+			element.container = "recommendedMethodContainer"
+			element.type = "method"
+		});
+		console.log(response.data)
+		setMethods(response.data)
+	});
+		
+	}
+
 	return (
+		<form onSubmit={handleSubmit(onSubmit)}>
 		<Box p={1}>
 			<Card
 				elevation={0}
@@ -33,7 +73,9 @@ export default function Filter() {
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position="start">
+										<IconButton type='submit'>
 										<SearchOutlinedIcon />
+										</IconButton>
 									</InputAdornment>
 								),
 								endAdornment: (
@@ -42,15 +84,15 @@ export default function Filter() {
 									</InputAdornment>
 								),
 							}}
+
+							{...register("label")}
 						/>
+
+
 						<Stack direction="column">
 							<FormGroup>
-								<FormControlLabel
-									sx={{ fontSize: 11, color: "#5C5F5D" }}
-									control={<Checkbox defaultChecked />}
-									label="Methods"
-								/>
-								<FormControlLabel control={<Checkbox />} label="MethodSets" />
+								<FormControlLabel sx={{ fontSize: 11, color: "#5C5F5D" }} control={<Checkbox defaultChecked {...register("includeMethods")}/>}label="Methods"/>
+								<FormControlLabel control={<Checkbox {...register("includeMethodSets")}/>}  label="MethodSets" />
 							</FormGroup>
 						</Stack>
 
@@ -73,5 +115,6 @@ export default function Filter() {
 				</CardContent>
 			</Card>
 		</Box>
+		</form>
 	);
 }

@@ -30,6 +30,7 @@ import {
 import Footer from "./components/Footer"
 import Home from "./pages/Home"
 import { phaseAccordionAtom } from "./atoms/phaseAccordionAtom"
+import MethodCreator from "./pages/MethodCreator"
 
 
 const theme = createTheme({
@@ -136,7 +137,7 @@ const sensors = useSensors(
 						<Routes>
 								<Route path='/' element={<Navigate to="/home" />}/>
 								<Route path='/home' element={<Home/>}/>
-								<Route path='/methods' element={<Methods />} />
+								<Route path='/createMethod' element={<MethodCreator />} />
 								<Route path='/createSet' element={<MethodSetCreator />} />
 								<Route path='/myProfile' element={<MyProfile />} />
 								<Route path='/Register' element={<Register />} />

@@ -11,10 +11,12 @@ import { Box, Stack, Typography } from "@mui/material";
 import * as React from "react";
 
 export default function CardFunctions(props) {
+	console.log(props.id)
         return (
 		<Box>
 			<Stack direction="row" justifyContent="space-between" alignItems="center">
 				<div>
+					
 					<Stack direction="row" alignItems="center">
                         {props.type === "method" 
 						?<SvgIcon {...props} color="primary" viewBox="0 0 24 7">
@@ -40,7 +42,7 @@ export default function CardFunctions(props) {
 							<EditOutlinedIcon />
 						</IconButton>
 						<IconButton
-							onClick={() => {props.add()}}
+							onClick={() => props.add()}
 							color="primary"
 							aria-label="add to phase"
 							size="medium"
