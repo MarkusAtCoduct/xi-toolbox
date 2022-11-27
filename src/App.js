@@ -1,5 +1,6 @@
 import * as React from "react"
 
+import { useEffect } from "react"
 import "./App.css"
 import MainNav from "./components/MainNav"
 import { createTheme } from "@mui/material/styles"
@@ -21,6 +22,7 @@ import { useAtom } from "jotai"
 import { methodAtom } from "./atoms/methodAtom"
 import { phaseAtom } from "./atoms/phaseAtom"
 import { activeAtom } from "./atoms/activeAtom"
+import {userAtom} from "./atoms/userAtom"
 import { arrayMove} from "@dnd-kit/sortable"
 import { 
 	PointerSensor,
@@ -32,6 +34,12 @@ import Home from "./pages/Home"
 import { phaseAccordionAtom } from "./atoms/phaseAccordionAtom"
 import MethodCreator from "./pages/MethodCreator"
 
+import { Suspense } from "react"
+
+import LinearProgress from '@mui/material/LinearProgress';
+import { Box } from "@mui/material"
+
+import { isLoggedIn } from "../src/services/authApi"
 
 const theme = createTheme({
 	typography: {
@@ -66,6 +74,14 @@ function App() {
 	const [phaseItems, setPhaseItems] = useAtom(phaseAtom)
 	const [activeId, setActiveId] = useAtom(activeAtom)
 	const [expanded] = useAtom(phaseAccordionAtom);
+	const [user, setUser] = useAtom(userAtom);
+
+
+	useEffect(() => {	
+		if (isLoggedIn()) {
+			setUser(localStorage.getItem("token"))
+		}
+	}, [])
 
 
 

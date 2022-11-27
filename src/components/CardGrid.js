@@ -6,7 +6,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Box from "@mui/material/Box";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Grid from "@mui/material/Grid";
-import { Typography, Stack } from "@mui/material";
+import { Typography, Stack, Button } from "@mui/material";
 
 import * as React from "react";
 import { useEffect } from 'react';
@@ -24,18 +24,22 @@ import SmallCard from './SmallCardTemplate';
 
 import Masonry from 'react-masonry-css'
 
-import { GetContent } from './Api';
+import { GetContent } from '../services/Api';
+
+import {logout} from "../services/authApi";
+import { userAtom } from '../atoms/userAtom';
+
+
+
 
 
 export default function CardGrid(props) {
   const [methods, setMethods] = useAtom(methodAtom);
   const [activeId, setActiveId] = useAtom(activeAtom);
   const [phaseItems] = useAtom(phaseAtom);
+  const [user, setUser] = useAtom(userAtom);
 
-  useEffect(() => {
-	console.log(methods)
-	const tmpItems = [...methods]
-
+  useEffect(() => { 
 	GetContent("/api/method/search?label&pageIndex=0&pageSize=10&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=false")
 	.then((response) => {
 		response.data.forEach(element => {
@@ -43,13 +47,20 @@ export default function CardGrid(props) {
 			element.type = "method"
 		});
 		setMethods(response.data)
-	});
-	
-   }, []);
+	});	
+   }, [user]);
 
+const handleLogout = () => {	
+	logout()
+	setUser(null)
+}
    
   return (
+	
 		<Box>
+			{user ? <Button onClick={() => handleLogout()}>Logout</Button> : null}
+
+			
 			<Accordion defaultExpanded sx={{ background: "none" }} elevation={0}>
 				<AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls='panel1a-content' id='panel1a-header'>
 					<Typography gutterBottom ml={4} sx={{ textAlign: "left", fontSize: "28px", fontWeight: "400", color: "#5C5F5D" }}>
@@ -116,5 +127,6 @@ export default function CardGrid(props) {
 						</Masonry>*/}
 					</Droppable>
 		</Box>
+		
 	)
 }

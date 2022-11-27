@@ -1,27 +1,11 @@
-import Avatar from "@mui/material/Avatar";
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
 import { Stack } from "@mui/system";
-import Select from "@mui/material/Select";
 import { Typography, Button, Card, CardContent, IconButton } from "@mui/material";
 import TextField from "@mui/material/TextField";
 
 import * as React from "react";
 import { FormProvider, useForm, useFieldArray, Controller } from 'react-hook-form';
-import { PostMethod } from "./Api";
-import {FormGroup, Checkbox} from "@mui/material";
-
-import InputAdornment from '@mui/material/InputAdornment';
-
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-
-import { DeleteOutline } from "@mui/icons-material";
-
+import { PostMethod } from "../services/Api";
+import { Checkbox} from "@mui/material";
 import { useLocation} from "react-router-dom"
 
 import InputList from "./InputList";
@@ -32,14 +16,10 @@ export default function MethodCreatorForm(props) {
 	const { set } = location.state || ""
 
 	const Fields = useForm( {defaultValues: {
-
-
-		
-	
-
-
-
-		advantages : [""],
+		advantages : [
+			{
+				name: ""
+			}],
 			disadvantages : [
 			{
 				name: ""

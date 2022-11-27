@@ -7,10 +7,17 @@ import { Box, Stack } from '@mui/system';
 import {CardContent} from '@mui/material';
 import { AddBox } from '@mui/icons-material';
 
+import { useForm } from 'react-hook-form';
 import * as React from 'react';
+
+
+import {login} from "../services/authApi";
+import { useAtom } from "jotai";
+import { userAtom } from '../atoms/userAtom';
 
 export default function Login() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [user, setUser] = useAtom(userAtom)
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -18,6 +25,13 @@ export default function Login() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const onSubmit = data => {
+	setUser(login(data.username, data.password))
+	console.log(data);
+  } 
 
   return (
 		<div style={{ borderRadius: "16px" }}>
@@ -43,16 +57,18 @@ export default function Login() {
 				}}
 			>
 				<Box p={2}>
+				<form onSubmit={handleSubmit(onSubmit)}>
 					<Stack direction='column'>
-						<TextField id='outlined-basic' label='Username / E-mail' variant='outlined' margin='dense' />
-						<TextField type='password' id='outlined-basic' label='Password' variant='outlined' margin='dense' />
+						<TextField {...register("username", { required: true })} id='outlined-basic' label='Username / E-mail' variant='outlined' margin='dense' />
+						<TextField {...register("password", { required: true })} type='password' id='outlined-basic' label='Password' variant='outlined' margin='dense' />
 						<Typography gutterBottom>forgot password ? </Typography>
                         
-                        <Button onClick={handleClose} fullWidth variant='contained' sx={{ borderRadius: "16px" }} disableElevation>
+                        <Button onClick={handleClose} type="submit" fullWidth variant='contained' sx={{ borderRadius: "16px" }} disableElevation>
 							LOGIN
 						</Button>
                         
 					</Stack>
+				</form>
 				</Box>
 			</Menu>
 		</div>

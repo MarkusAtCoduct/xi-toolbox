@@ -13,6 +13,9 @@ import * as React from "react";
 
 import { Link } from "react-router-dom";
 import Login from "./login"
+import { useAtom } from "jotai";
+import { userAtom } from "../atoms/userAtom";
+import { logout } from "../services/authApi";
 
 function ElevationScroll(props) {
 	const { children, window } = props;
@@ -41,10 +44,14 @@ function LinkTab(props) {
 export default function MainNav(props) {
 
 	const [value, setValue] = React.useState(0);
-	const isloggedin = true
-
+	const [user, setUser] = useAtom(userAtom)
+	
 	const handleChange = (event, newValue) => {
 	  setValue(newValue);
+	}
+	const handleLogout = () => {
+		logout()
+		setUser(null)
 	}
 
 	return (
@@ -84,13 +91,16 @@ export default function MainNav(props) {
 						<LinkTab label="Methods Library" path="/createSet" />
 						<LinkTab label="How it works" href="/trash" />
 						<LinkTab label="About us" href="/spam" />
-						{isloggedin
-						?<LinkTab label="My Profile" path="/myProfile" />
+						{user
+						?<>
+						<LinkTab label="My Profile" path="/myProfile" />
+						<Button onClick={handleLogout}>logout</Button>
+						</>
 						:null}
 						
 					</Tabs>
 					<Stack direction="row" spacing={2}>
-					{!isloggedin
+					{!user
 					?<>
 					<Login/>
 					<Button variant="contained" href="/register" sx={{borderRadius: "16px"}} disableElevation>

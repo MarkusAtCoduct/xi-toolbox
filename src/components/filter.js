@@ -21,7 +21,7 @@ import { useForm } from 'react-hook-form';
 
 import * as React from "react";
 import { IconButton } from "@mui/material";
-import { GetContent } from './Api';
+import { GetContent } from '../services/Api';
 
 
 export default function Filter() {

@@ -37,6 +37,7 @@ export default function SmallCard(props) {
 				borderRadius: "16px",
 				minWidth: "254px",
 				minHeight: "140px",
+				
 			}}
 		>
 			<CardContent>
