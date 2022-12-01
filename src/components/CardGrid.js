@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Grid from "@mui/material/Grid";
 import { Typography, Stack, Button } from "@mui/material";
+import CircularProgress from '@mui/material/CircularProgress';
 
 import * as React from "react";
 import { useEffect } from 'react';
@@ -40,27 +41,21 @@ export default function CardGrid(props) {
   const [user, setUser] = useAtom(userAtom);
 
   useEffect(() => { 
-	GetContent("/api/method/search?label&pageIndex=0&pageSize=10&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=false")
+	GetContent("/api/method/search?label&pageIndex=0&pageSize=50&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=true")
 	.then((response) => {
 		response.data.forEach(element => {
 			element.container = "recommendedMethodContainer"
 			element.type = "method"
 		});
 		setMethods(response.data)
+		console.log(response.data)
 	});	
    }, [user]);
 
-const handleLogout = () => {	
-	logout()
-	setUser(null)
-}
    
   return (
 	
 		<Box>
-			{user ? <Button onClick={() => handleLogout()}>Logout</Button> : null}
-
-			
 			<Accordion defaultExpanded sx={{ background: "none" }} elevation={0}>
 				<AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls='panel1a-content' id='panel1a-header'>
 					<Typography gutterBottom ml={4} sx={{ textAlign: "left", fontSize: "28px", fontWeight: "400", color: "#5C5F5D" }}>
@@ -69,7 +64,13 @@ const handleLogout = () => {
 				</AccordionSummary>
 				<Stack direction='row'>
 					<Droppable id='recommendedMethodContainer'>
-						<Masonry breakpointCols={2} className='my-masonry-grid' columnClassName='my-masonry-grid_column'>
+							
+					{!methods ? (
+						<Box sx={{ display: 'flex' }}>
+      						<CircularProgress />
+    					</Box>
+					) : ( 
+							<Masonry breakpointCols={2} className='my-masonry-grid' columnClassName='my-masonry-grid_column'>
 							{methods.map((method) => (
 								<div key={method.id}>
 									{!method.isMethodSet ? (
@@ -92,6 +93,7 @@ const handleLogout = () => {
 								</div>
 							))}
 						</Masonry>
+						)}
 					</Droppable>
 					<DragOverlay dropAnimation={null} style={{ width: 270 }} modifiers={[snapCenterToCursor]}>
 						{activeId ? <SmallCard header={methods[activeId - 1]?.header || phaseItems[activeId - 1]?.header}></SmallCard> : null}

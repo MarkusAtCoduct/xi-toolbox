@@ -6,6 +6,7 @@ import * as React from "react";
 import ToolboxStepper from "./toolboxStepper";
 
 export default function MethodList(props) {
+
 	return (
 		<Box mt={2}>
 			<Typography mb={2} sx={{ fontSize: "22px", fontWeight: "900", textAlign: "left" }}>
@@ -15,15 +16,21 @@ export default function MethodList(props) {
 				
 				<Stack direction='column' alignItems="flex-start">
 					<Chip label="Input"/>
-
-					{/*</Stack>*props.listItems.map((item) => (
-                        <Stack key={item.id} direction="row">
+				
+				{props.listItems ? 
+					<>
+					{props.listItems.map((item) => 
+					(
+                        <Stack key={item.id+Math.random()} direction="row">
                         <ToolboxStepper variant="Card"></ToolboxStepper>
                         <Box p={1} >
-						<Chip label={item.header || "no body set"}/>
+						<Chip label={item.name || "no body set"}/>
                         </Box>
                         </Stack>
-					))*/}
+					)
+					)}</>
+: null
+					}
 					  <Chip label="Output"/>
 				</Stack>
 			

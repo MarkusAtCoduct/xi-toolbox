@@ -101,13 +101,11 @@ export default function Phase(props) {
 		
 		phaseItems.forEach(element => {
 			if (element.container === props.id){
-				methodset.push(element)
+				methodset.push(element.prevId)
 			}else{
 				return
 			}
 		});
-
-		//console.log(methodset)
 		setPhaseItems([])
 
 	 }
@@ -164,7 +162,8 @@ export default function Phase(props) {
 												<SmallCard id={method.id} data={method}></SmallCard>
 											</Sortable>
 									</Stack>
-								:null}
+
+								: null }
 								</div>
 							)}
 						<Stack direction={"row"} pr={3} pl={3} spacing={2}>
@@ -184,14 +183,9 @@ export default function Phase(props) {
 						</SortableContext>
 						
 						</Stack>
-						<Button variant="contained" color="primary"
-							size="large"
-							sx={{ borderRadius: "100px", marginTop:"32px" }}
-							disableElevation
-							onClick={handleSave}>
-						  Save Methodset
-						</Button>
-						<Link  to="/createMethod" state={{set: methodset}} onClick={handleSave} component={<MethodCreatorForm />} >About</Link>
+						<Box sx={{ width: "100%"}} mt={2}>
+						<Link className="LinkButton" to="/createMethodSet" state={{set: methodset, isMethodSet:true}} onClick={handleSave} component={<MethodCreatorForm />} >Save Methodset</Link>
+						</Box>
 					</AccordionDetails>
 					
 				</Accordion>

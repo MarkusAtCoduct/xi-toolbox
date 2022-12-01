@@ -16,6 +16,7 @@ import Login from "./login"
 import { useAtom } from "jotai";
 import { userAtom } from "../atoms/userAtom";
 import { logout } from "../services/authApi";
+import AccountMenu from "./AccountMenu";
 
 function ElevationScroll(props) {
 	const { children, window } = props;
@@ -91,11 +92,8 @@ export default function MainNav(props) {
 						<LinkTab label="Methods Library" path="/createSet" />
 						<LinkTab label="How it works" href="/trash" />
 						<LinkTab label="About us" href="/spam" />
-						{user
-						?<>
+						{user ?
 						<LinkTab label="My Profile" path="/myProfile" />
-						<Button onClick={handleLogout}>logout</Button>
-						</>
 						:null}
 						
 					</Tabs>
@@ -108,7 +106,7 @@ export default function MainNav(props) {
 					</Button>
 					
 					</>
-					:<Avatar src="/broken-image.jpg" sx={{ width: "38", height: "38" }} />}	
+					: <AccountMenu/> }	
 					
 					</Stack>
 

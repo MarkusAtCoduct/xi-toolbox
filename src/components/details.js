@@ -32,6 +32,7 @@ export default function Details(props) {
 	const handleClose = () => setOpen(false);
 	const [value, setValue] = React.useState(2);
 
+
 	return (
 		<>
 			<Stack sx={{height: "100%"}} direction="row" justifyContent="flex-end" alignItems="flex-end">
@@ -40,7 +41,7 @@ export default function Details(props) {
 
 				<Modal
 					open={open}
-					onClose={handleClose}
+					onClose={() => handleClose}
 					aria-labelledby="modal-modal-title"
 					aria-describedby="modal-modal-description"
 					p={3}
@@ -48,7 +49,7 @@ export default function Details(props) {
 						<Container sx={style}>
 							<Card elevation={2} sx={{ borderRadius: "16px" }}>
 								<CardContent sx={{ maxHeight:"94vh"}}>
-										<CardFunctions type={props.data.type}/>
+										<CardFunctions details close={handleClose} type={props.data.isMethodSet}/>
 
 										<Box>
 											<Typography
@@ -86,7 +87,7 @@ export default function Details(props) {
 													color: "#757875",
 												}}>
 												{props.data.ratings | 253} Ratings | {props.data.questions | 36}{" "}
-												answered Questions | By: {props.data.author || "Placeholder"}{" "}
+												answered Questions | By: {props.data.owner || "Placeholder"}{" "}
 											</Typography>
 											<MilitaryTech color="primary" />
 										</Stack>
@@ -123,27 +124,27 @@ export default function Details(props) {
 														heading="When to use"
 														body={props.data.whenToConduct || "placeholder"}
 													/>
-													<ListTemplate heading="How to conduct" />
-													{props.data.type == "method"
+													<ListTemplate listItems={props.data.howToConduct} heading="How to conduct" />
+													{!props.data.isMethodSet
 													?null
-													:<MethodList heading="Methods used"/>}
+													:<MethodList listItems={props.data.simpleUsedMethods} heading="Methods used"/>}
 													
 												</Stack>
 											</Grid>
 											<Grid md={4}>
 												<Stack direction="column">
-													<ChipList heading="Input" />
-													<ChipList heading="Output" />
-													<ListTemplate heading="Advantages" />
-													<ListTemplate heading="Disadvantages" />
+													<ChipList listItems={props.data.input} heading="Input" />
+													<ChipList listItems={props.data.output} heading="Output" />
+													<ListTemplate listItems={props.data.advantages} heading="Advantages" />
+													<ListTemplate listItems={props.data.disadvantages}heading="Disadvantages" />
 													
-													<ChipList heading="Methods of same output" />
+													<ChipList listItems={props.data.sameOutputMethods} heading="Methods of same output" />
 												</Stack>
 											</Grid>
 											<Grid md={4}>
 												<Stack direction="column">
-													<ChipList heading="Recommended Phases" />
-													<ListTemplate heading="References" />
+													<ChipList listItems={props.data.recommendedPhases} heading="Recommended Phases" />
+													<ListTemplate listItems={props.data.references} heading="References" />
 												</Stack>
 											</Grid>
 										</Grid>
@@ -156,8 +157,9 @@ export default function Details(props) {
 												size="large"
 												variant="contained"
 												sx={{ borderRadius: "100px" }}
+												onClick={() =>handleClose()}
 												disableElevation>
-												Add to my Toolbox
+												Close
 											</Button>
 										</Stack>
 								</CardContent>

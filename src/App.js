@@ -11,6 +11,7 @@ import { Routes, Route, Navigate} from "react-router-dom"
 import Layout from "./pages/Layout"
 import Methods from "./pages/Methods"
 import MethodSetCreator from "./pages/methodSetCreator"
+import MethodSetCreate from "./pages/MethodSetCreate"
 import MyProfile from "./pages/MyProfile"
 import Register from "./pages/Register"
 import { StyledEngineProvider } from "@mui/material/styles"
@@ -34,12 +35,10 @@ import Home from "./pages/Home"
 import { phaseAccordionAtom } from "./atoms/phaseAccordionAtom"
 import MethodCreator from "./pages/MethodCreator"
 
-import { Suspense } from "react"
+import { isLoggedIn, refreshToken } from "../src/services/authApi"
 
-import LinearProgress from '@mui/material/LinearProgress';
-import { Box } from "@mui/material"
+import uuid from 'react-uuid';
 
-import { isLoggedIn } from "../src/services/authApi"
 
 const theme = createTheme({
 	typography: {
@@ -79,7 +78,7 @@ function App() {
 
 	useEffect(() => {	
 		if (isLoggedIn()) {
-			setUser(localStorage.getItem("token"))
+			setUser(refreshToken())
 		}
 	}, [])
 
@@ -89,7 +88,6 @@ function App() {
 	
 	const handleDragEnd = (data) => {
 		const { over, active } = data
-		console.log(over)
 		if(!over || over.id === "allMethodsContainer"){
 			return
 		}
@@ -97,33 +95,41 @@ function App() {
 		const test = phaseItems.findIndex(({id}) => id === active.id);
 		const newIndex = phaseItems.findIndex(({id}) => id === over.id);
 
+
+		const tmp = {...methods[Index]}
+		const tmpItems = [...phaseItems]
 		
 
 		 if(active.data.current?.sortable){
 			setPhaseItems(arrayMove(phaseItems, test, newIndex))
 		 }
 		else if(methods[Index].container != over?.id){
-			var tmp = {...methods[Index]}
-			const tmpItems = [...phaseItems]
+			console.log(tmp)
 
-			if(tmp.type === "methodset"){
-				tmp.methods.forEach(element => {
-					element.id = String(Math.random())
+			if(tmp.isMethodSet){
+					tmp.simpleUsedMethods.forEach(element => {
+
+					element.prevId = element.id
+
+					element.id = uuid()
 					element.container = expanded
 				});
-				tmpItems.push(...tmp.methods) 
+				console.log(tmp)
+				tmpItems.push(...tmp.simpleUsedMethods) 
 				setPhaseItems(tmpItems)
 				
 
 			}else{
-				tmp.id = String(Math.random())
+				tmp.prevId = tmp.id
+				tmp.id = uuid()
 				tmp.container = expanded
 				tmpItems.push(tmp) 
+				
+				console.log(tmp)
 		
 				setPhaseItems(tmpItems)
 			}
-			console.log("Items: ",phaseItems)
-			
+			console.log(phaseItems)
 		}
 		setActiveId(null)
 	}
@@ -138,7 +144,7 @@ function App() {
 const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 8,
+        distance: 4,
       }
     }),
   );
@@ -156,6 +162,7 @@ const sensors = useSensors(
 								<Route path='/createMethod' element={<MethodCreator />} />
 								<Route path='/createSet' element={<MethodSetCreator />} />
 								<Route path='/myProfile' element={<MyProfile />} />
+								<Route path='/createMethodSet' element={<MethodSetCreate />} />
 								<Route path='/Register' element={<Register />} />
 								{/*
 

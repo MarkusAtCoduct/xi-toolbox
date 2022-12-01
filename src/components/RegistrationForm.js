@@ -9,20 +9,35 @@ import { Stack } from "@mui/system";
 import Select from "@mui/material/Select";
 import { Typography, Button, Card, CardContent } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import { FormProvider, useForm, useFieldArray, Controller } from 'react-hook-form';
+import {registerUser} from "../services/authApi"
+import { useNavigate } from "react-router-dom";
 
 import * as React from "react";
 
 
 export default function RegistrationForm(props) {
+	const navigate = useNavigate();
 
+
+	const { register, handleSubmit, formState: { errors } } = useForm();
 
     const [age, setAge] = React.useState('');
+
 
     const handleChange = (event) => {
       setAge(event.target.value);
     };
+
+const onSubmit = (data) => {	
+			console.log(data)
+			registerUser(data)
+			//navigate("/home");
+		}
+
+
 	return (
-        <>
+        <form onSubmit={handleSubmit(onSubmit)}>
 		<Card sx={{borderRadius: "16px"}} elevation={0}>
 				<CardContent sx={{paddingLeft: "96px", paddingRight: "96px" }}>
 					<Stack direction="column" spacing={4}>
@@ -65,16 +80,19 @@ export default function RegistrationForm(props) {
 									value="female"
 									control={<Radio />}
 									label="Female"
+									{...register("gender")}
 								/>
 								<FormControlLabel
 									value="male"
 									control={<Radio />}
 									label="Male"
+									{...register("gender")}
 								/>
 								<FormControlLabel
 									value="other"
 									control={<Radio />}
 									label="Other"
+									{...register("gender")}
 								/>
 							</RadioGroup>
 						</FormControl>
@@ -91,8 +109,9 @@ export default function RegistrationForm(props) {
 								<TextField
 									fullWidth
 									id="filled-basic"
-									label="Filled"
+									label="First Name"
 									variant="filled"
+									{...register("firstName", { required: true })}
 								/>
 							</div>
 							<div style={{ width: "100%" }}>
@@ -107,8 +126,10 @@ export default function RegistrationForm(props) {
 								<TextField
 									fullWidth
 									id="filled-basic"
-									label="Filled"
+									label="Last Name"
 									variant="filled"
+									
+									{...register("lastName", { required: true })}
 								/>
 							</div>
 						</Stack>
@@ -124,57 +145,65 @@ export default function RegistrationForm(props) {
 							<TextField
 								fullWidth
 								id="filled-basic"
-								label="Filled"
+								label="E-mail"
 								variant="filled"
+								type="email"
+								{...register("email", { required: true })}
+							/>
+						</div>
+						<div style={{ width: "100%" }}>
+							<Typography
+								sx={{
+									fontSize: 18,
+									fontWeight: "400",
+									float: "left",
+								}}>
+								Password
+							</Typography>
+							<TextField
+								fullWidth
+								id="filled-basic"
+								label="password"
+								variant="filled"
+								type="password"
+								{...register("password", { required: true })}
 							/>
 						</div>
 						<Stack direction="row" spacing={3} justifyContent="center">
+						<div style={{ width: "100%" }}>
+							<Typography
+								sx={{
+									fontSize: 18,
+									fontWeight: "400",
+									float: "left",
+								}}>
+								Industry
+							</Typography>
+							<TextField
+								fullWidth
+								id="filled-basic"
+								label="Filled"
+								variant="filled"
+								{...register("industry")}
+							/>
+						</div>
 							<div style={{ width: "100%" }}>
-								<Typography
-									sx={{
-										fontSize: 18,
-										fontWeight: "400",
-										float: "left",
-									}}>
-									Industry
-								</Typography>
-								<FormControl variant="filled" fullWidth>
-									<InputLabel id="demo-simple-select-label">Age</InputLabel>
-									<Select
-										labelId="demo-simple-select-label"
-										id="demo-simple-select"
-										value={age}
-										label="Age"
-										onChange={handleChange}>
-										<MenuItem value={10}>Ten</MenuItem>
-										<MenuItem value={20}>Twenty</MenuItem>
-										<MenuItem value={30}>Thirty</MenuItem>
-									</Select>
-								</FormControl>
-							</div>
-							<div style={{ width: "100%" }}>
-								<Typography
-									sx={{
-										fontSize: 18,
-										fontWeight: "400",
-										float: "left",
-									}}>
-									Current Job
-								</Typography>
-								<FormControl variant="filled" fullWidth>
-									<InputLabel id="demo-simple-select-label">Age</InputLabel>
-									<Select
-										labelId="demo-simple-select-label"
-										id="demo-simple-select"
-										value={age}
-										label="Age"
-										onChange={handleChange}>
-										<MenuItem value={10}>Ten</MenuItem>
-										<MenuItem value={20}>Twenty</MenuItem>
-										<MenuItem value={30}>Thirty</MenuItem>
-									</Select>
-								</FormControl>
-							</div>
+							<Typography
+								sx={{
+									fontSize: 18,
+									fontWeight: "400",
+									float: "left",
+								}}>
+								Corrent Job
+							</Typography>
+							<TextField
+								fullWidth
+								id="filled-basic"
+								label="Filled"
+								variant="filled"
+								{...register("currentJob")}
+							/>
+						</div>
 							<div style={{ width: "100%" }}>
 								<Typography
 									sx={{
@@ -189,6 +218,8 @@ export default function RegistrationForm(props) {
 									id="filled-basic"
 									label="Filled"
 									variant="filled"
+									type="number"
+									{...register("yearsOfExperience", {max: 3})}
 								/>
 							</div>
 						</Stack>
@@ -206,6 +237,7 @@ export default function RegistrationForm(props) {
 								id="filled-basic"
 								label="Filled"
 								variant="filled"
+								{...register("linkedinLink")}
 							/>
 						</div>
 						<div style={{ width: "100%" }}>
@@ -223,15 +255,16 @@ export default function RegistrationForm(props) {
 								id="filled-basic"
 								label="Filled"
 								variant="filled"
+								{...register("aboutMe")}
 							/>
 						</div>
 					</Stack>
 				</CardContent>
 		</Card>
         <Stack direction="row"   justifyContent="center" alignItems="center" spacing={4} mt={4} pb={4}>
-                <Button sx={{width: "264px", height: "52px"}} variant="outlined">Cancel</Button>
-                <Button sx={{width: "264px", height: "52px"}} variant="contained">Save Profile</Button>
+                <Button sx={{width: "264px", height: "52px"}} onClick={() => navigate("/home")} variant="outlined">Cancel</Button>
+                <Button sx={{width: "264px", height: "52px"}} type="submit" variant="contained">Save Profile</Button>
         </Stack>
-        </>
+        </form>
 	);
 }

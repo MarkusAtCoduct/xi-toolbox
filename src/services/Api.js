@@ -15,8 +15,13 @@ export async function GetContent(_url) {
         'Content-Type' : 'application/json',
         'Authorization': 'Bearer '+ token      
     },
-    });
-    return response.json(); // parses JSON response into native JavaScript objects
+    }).then((response) => {
+        return response.json()
+        }).catch((error) => {
+            console.log(error)
+            });
+    return response
+    //return response.json(); // parses JSON response into native JavaScript objects
   }
 
 
@@ -37,3 +42,34 @@ export async function GetContent(_url) {
     });
     return response.json(); // parses JSON response into native JavaScript objects
   }
+
+  export async function UpdateMethod(_url, data={}) {
+    // Default options are marked with *
+    let url = baseURL+_url
+    const token = getCurrentUser()
+    const response = await fetch(url, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      
+      headers: {
+        'Access-Control-Allow-Origin' : "*",
+        'Content-Type' : 'application/json',
+        'Authorization': 'Bearer '+ token      
+      },
+      });
+      return response.json(); // parses JSON response into native JavaScript objects
+    }
+
+    export async function DeleteMethod(_url) {
+      let url = baseURL+_url
+      const token = getCurrentUser()
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          'Access-Control-Allow-Origin' : "*",
+          'Content-Type' : 'application/json',
+          'Authorization': 'Bearer '+ token
+        },
+        });
+        return response.json();
+      }

@@ -4,7 +4,7 @@ import * as React from "react";
 
 import MethodCreatorForm from "../components/MethodCreatorForm";
 
-export default function MethodCreator() {
+export default function MethodSetCreate() {
   return (
 		<>
 			<div
@@ -27,7 +27,7 @@ export default function MethodCreator() {
 						textAlign: "center",
 					}}
 				>
-					Create new Method
+					Create new Methodset
 					</Typography>
 				<MethodCreatorForm />
 			</Container>

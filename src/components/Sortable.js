@@ -5,6 +5,7 @@ import React from 'react';
 
 
 export function Sortable(props) {
+
   const {
     attributes,
     listeners,
@@ -18,6 +19,7 @@ export function Sortable(props) {
     transform: CSS.Transform.toString(transform),
     transition,
   };
+
   const dragging = {
     height: "156px",
     width: "270px",

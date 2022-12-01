@@ -48,7 +48,7 @@ body{
     margin-bottom: 32px;
   }
 
-  .methodset{
+  .methodSet{
     height: 705px;
   }
 
@@ -57,7 +57,7 @@ body{
     transition-duration: 100ms;
 
   }
-.method:hover{
+.method:hover, .methodSet:hover{
   border-radius: 16px;
   transform: scale(1.009);
   
@@ -155,3 +155,15 @@ ol{
   
 }
 
+.LinkButton{
+  margin-top: 24px;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #FF5454;
+  border-radius: 100px;
+  padding: 8px 16px;
+  font-weight: 500;
+  font-size: 14px;
+  transition-duration: 100ms;
+
+}

@@ -8,6 +8,8 @@ import MethodCards from "../components/CardGrid";
 import Heading from "../components/Heading";
 import PhaseSelector from "../components/PhaseSelector";
 import Filter from "../components/filter";
+import { Link } from "react-router-dom";
+import MethodCreatorForm from "../components/MethodCreatorForm";
 
 
 
@@ -25,9 +27,9 @@ export default function MethodSetCreator() {
 				<Box>
 				<Stack direction="row"  justifyContent="space-between" alignItems="center">
 					<Heading heading={"Methods & Method Sets Library"}/>
-					<Button sx={{ height: "40px", fontWeight: "400"}} variant='contained' href="/createMethod">
-						Create new Method
-					</Button>		
+
+					<Link className="LinkButton" to="/createMethod" state={{methodupdate: true, isMethodSet:false}} component={<MethodCreatorForm />} >Create new Method</Link>
+	
 				</Stack>
 				<Filter/>
 				<MethodCards columns={6} />

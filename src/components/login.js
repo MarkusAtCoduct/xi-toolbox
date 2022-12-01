@@ -28,9 +28,11 @@ export default function Login() {
 
 
   const { register, handleSubmit, formState: { errors } } = useForm();
+  
   const onSubmit = data => {
 	setUser(login(data.username, data.password))
-	console.log(data);
+	
+	//console.log(data);
   } 
 
   return (

@@ -34,25 +34,23 @@ export default function BasicCard(props) {
 		tmp.container = expanded
 		tmpItems.push(tmp)
 		setPhaseItems(tmpItems)
-	}return
+		}return
 	}
 
 	return (
 		<Card
-		className={props.data.type}
+			className={props.data.isMethodSet ? "methodSet" : "method"}
 			elevation={3}
 			sx={{
 				padding: "8px",
 				borderRadius: "16px",
-				maxWidth: "344px",
-				height: "352px",
-				
+				//maxWidth: "344px",
+				//height: "352px",
 			}}
-
-			style={props.drag ? {  outline:" solid 2px #FF5454"} : null}
+			style={props.drag ? { outline: " solid 2px #FF5454" } : null}
 		>
 			<CardContent>
-				<CardFunctions add={handleAdd} id={props.data.id} type={props.data.type}  />
+				<CardFunctions add={handleAdd} data={props.data} owner={props.data.ownerId} id={props.data.id} type={props.data.isMethodSet} />
 				<Box>
 					<Stack direction='row' alignItems='flex-end' justifyContent='space-between'>
 						<Typography sx={{ fontSize: 28, fontWeight: "900", textAlign: "left" }}>{props.data.name || "Placeholder"}</Typography>
@@ -115,39 +113,40 @@ export default function BasicCard(props) {
 						</Box>
 					</Stack>
 
-					{!props.data.isMethodSet
-					?<Grid container spacing={2} direction='row' justifyContent='space-around'>
-						<Grid xs={6}>
-							<Stack direction='column' justifyContent='center' alignItems='flex-start' spacing={1}>
-								<Typography sx={{ fontSize: 11, fontWeight: "500", color: "#757875" }}>Input</Typography>
-								<Chip
-									sx={{
-										backgroundColor: "#FFDAD6",
-										fontSize: 14,
-										fontWeight: "500",
-									}}
-									label={props.data.input || "Input"}
-								/>
-							</Stack>
+					{!props.data.isMethodSet ? (
+						<Grid container spacing={2} direction='row' justifyContent='space-around'>
+							<Grid xs={6}>
+								<Stack direction='column' justifyContent='center' alignItems='flex-start' spacing={1}>
+									<Typography sx={{ fontSize: 11, fontWeight: "500", color: "#757875" }}>Input</Typography>
+									<Chip
+										sx={{
+											backgroundColor: "#FFDAD6",
+											fontSize: 14,
+											fontWeight: "500",
+										}}
+										label={props.data.input || "Input"}
+									/>
+								</Stack>
+							</Grid>
+							<Grid xs={6}>
+								<Stack direction='column' justifyContent='center' alignItems='flex-start' spacing={1}>
+									<Typography sx={{ fontSize: 11, fontWeight: "500", color: "#757875" }}>Output</Typography>
+									<Chip
+										sx={{
+											backgroundColor: "#FFDAD6",
+											fontSize: 14,
+											fontWeight: "500",
+										}}
+										label={props.data.output || "Output"}
+									/>
+								</Stack>
+							</Grid>
 						</Grid>
-						<Grid xs={6}>
-							<Stack direction='column' justifyContent='center' alignItems='flex-start' spacing={1}>
-								<Typography sx={{ fontSize: 11, fontWeight: "500", color: "#757875" }}>Output</Typography>
-								<Chip
-									sx={{
-										backgroundColor: "#FFDAD6",
-										fontSize: 14,
-										fontWeight: "500",
-									}}
-									label={props.data.output || "Output"}
-								/>
-							</Stack>
-						</Grid>
-					</Grid>
-					:<MethodList listItems={props.data.methods} heading="Methods used"/>
-					}
-					
-					<Details data={props.data}/>
+					) : (
+						<MethodList listItems={props.data.simpleUsedMethods} heading='Methods used' />
+					)}
+
+					<Details style={{position: "absolute"}} data={props.data} />
 				</Box>
 			</CardContent>
 		</Card>

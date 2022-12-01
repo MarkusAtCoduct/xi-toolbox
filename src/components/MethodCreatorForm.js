@@ -4,16 +4,20 @@ import TextField from "@mui/material/TextField";
 
 import * as React from "react";
 import { FormProvider, useForm, useFieldArray, Controller } from 'react-hook-form';
-import { PostMethod } from "../services/Api";
+import { PostMethod, UpdateMethod } from "../services/Api";
 import { Checkbox} from "@mui/material";
 import { useLocation} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+
 
 import InputList from "./InputList";
+import { useEffect } from "react";
 export default function MethodCreatorForm(props) {
+	const navigate = useNavigate();
 
 
 	const location = useLocation()
-	const { set } = location.state || ""
+	const state = location.state || ""
 
 	const Fields = useForm( {defaultValues: {
 		advantages : [
@@ -53,16 +57,11 @@ export default function MethodCreatorForm(props) {
 			references: [
 			{
 				name: ""
-			}],
-			usedMethods:[
-			{
-				name: ""
-			}
-			]
+			}]
 
 		}});
 
-	const onSubmit = data => {
+	const onSubmitMethod = data => {
 		
 		data.advantages = data.advantages.map(object => object.name);
 		data.disadvantages = data.disadvantages.map(object => object.name);
@@ -73,9 +72,41 @@ export default function MethodCreatorForm(props) {
 		data.relevantPhases = data.relevantPhases.map(object => object.name);
 		data.sameOutputMethods = data.sameOutputMethods.map(object => object.name);
 		data.references = data.references.map(object => object.name);
-		console.log(data);
 		PostMethod("/api/method/create", data);
+		navigate("/createSet");
 	} 
+
+	const onSubmitMethodSet = data => {
+		
+		data.advantages = data.advantages.map(object => object.name);
+		data.disadvantages = data.disadvantages.map(object => object.name);
+		data.howToConduct = data.howToConduct.map(object => object.name);
+		data.whenToConduct = data.whenToConduct.map(object => object.name);
+		data.input = data.input.map(object => object.name);
+		data.output = data.output.map(object => object.name);
+		data.relevantPhases = data.relevantPhases.map(object => object.name);
+		data.sameOutputMethods = data.sameOutputMethods.map(object => object.name);
+		data.references = data.references.map(object => object.name);
+		data.usedMethodIds = state.set;
+		data.isMethodSet = true;
+		console.log(data);
+
+		PostMethod("/api/method/create", data);
+		navigate("/createSet");
+	} 
+	const onSubmitMethodUpdate = data => {
+		data.advantages = data.advantages.map(object => object.name);
+		data.disadvantages = data.disadvantages.map(object => object.name);
+		data.howToConduct = data.howToConduct.map(object => object.name);
+		data.whenToConduct = data.whenToConduct.map(object => object.name);
+		data.input = data.input.map(object => object.name);
+		data.output = data.output.map(object => object.name);
+		data.relevantPhases = data.relevantPhases.map(object => object.name);
+		data.sameOutputMethods = data.sameOutputMethods.map(object => object.name);
+		data.references = data.references.map(object => object.name);
+		UpdateMethod(`/api/method/${state.prefill.id}/update/`, data);
+		navigate("/createSet");
+	}
 
 	const { control, register, handleSubmit, formState: { errors } } = Fields;
 
@@ -113,14 +144,52 @@ export default function MethodCreatorForm(props) {
 	const { append: referencesAppend, remove: referencesRemove, fields: referencesFields } = useFieldArray(
 		{control,
 		name: 'references'});
-	
-	const { append: usedMethodsAppend, remove: usedMethodsRemove, fields: usedMethodsFields } = useFieldArray(
-		{control,
-		name: 'usedMethods'});
 
+		useEffect(() => {
+		if(state.prefill){
+			advantageRemove();
+			disadvantageRemove();
+			howToConductRemove();
+			whenToConductRemove();
+			inputRemove();
+			outputRemove();
+			relevantPhasesRemove();
+			sameOutputMethodsRemove();
+			referencesRemove();
+
+			state.prefill.advantages.forEach(advantage => {
+				advantageAppend({name: advantage})
+			})
+			state.prefill.disadvantages.forEach(disadvantage => {
+				disadvantageAppend({name: disadvantage})
+			})
+			state.prefill.howToConduct.forEach(howToConduct => {
+				howToConductAppend({name: howToConduct})
+			})
+			state.prefill.whenToConduct.forEach(whenToConduct => {
+				whenToConductAppend({name: whenToConduct})
+			})
+			state.prefill.input.forEach(input => {
+				inputAppend({name: input})
+			})
+			state.prefill.output.forEach(output => {
+				outputAppend({name: output})
+			})
+			state.prefill.relevantPhases.forEach(relevantPhase => {
+				relevantPhasesAppend({name: relevantPhase})
+			})
+			state.prefill.sameOutputMethods.forEach(sameOutputMethod => {
+				sameOutputMethodsAppend({name: sameOutputMethod})
+			})
+			state.prefill.references.forEach(reference => {
+				referencesAppend({name: reference})
+			})
+
+			}
+	}, [])
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
+		<form onSubmit={state.isMethodSet ?  handleSubmit(onSubmitMethodSet) : state.methodupdate ? handleSubmit(onSubmitMethod) : handleSubmit(onSubmitMethodUpdate)}>
 			<Card sx={{ marginBottom: "32px", borderRadius: "16px" }} elevation={0}>
 				<CardContent sx={{ paddingBottom: "32px", paddingLeft: "96px", paddingRight: "96px" }}>
 					<Stack direction='column' spacing={4}>
@@ -132,9 +201,9 @@ export default function MethodCreatorForm(props) {
 									float: "left",
 								}}
 							>
-								Method's name
+								{state.isMethodSet ?  "Methodset's name" : "Method's name"}
 							</Typography>
-							<TextField {...register("name", { required: true })} fullWidth id='filled-basic' label='name' variant='filled' />
+							<TextField {...register("name", { required: true })} fullWidth id='filled-basic' label='name' variant='filled' defaultValue={state.prefill?.name || null} />
 						</div>
 
 						<div style={{ width: "100%" }}>
@@ -153,6 +222,7 @@ export default function MethodCreatorForm(props) {
 								id='filled-basic'
 								label='brief description of the method'
 								variant='filled'
+								defaultValue={state.prefill?.descriptionBrief || ""}
 							/>
 						</div>
 
@@ -174,6 +244,7 @@ export default function MethodCreatorForm(props) {
 								id='filled-basic'
 								label='describe your method in detail...'
 								variant='filled'
+								defaultValue={state.prefill?.description || ""}
 							/>
 						</div>
 						<Stack direction={"row"} alignItems='center' justifyContent='flex-start' spacing={6}>
@@ -189,7 +260,7 @@ export default function MethodCreatorForm(props) {
 								</Typography>
 							</Stack>
 							<Stack direction={"row"} alignItems='center'>
-								<Checkbox {...register("needInvolvement")} size='small' />
+								<Checkbox {...register("needInvolvement")} size='small'/>
 								<Typography
 									sx={{
 										fontSize: 12,
@@ -212,7 +283,7 @@ export default function MethodCreatorForm(props) {
 								>
 									Cost
 								</Typography>
-								<TextField {...register("cost", { required: true })} fullWidth id='filled-basic' label='€' variant='filled' />
+								<TextField {...register("cost", { required: true })} defaultValue={state.prefill?.cost} fullWidth id='filled-basic' label='€' variant='filled' />
 							</div>
 							<div style={{ width: "100%" }}>
 								<Typography
@@ -224,7 +295,7 @@ export default function MethodCreatorForm(props) {
 								>
 									Time
 								</Typography>
-								<TextField {...register("time", { required: true })} fullWidth id='filled-basic' label='time in days' variant='filled' />
+								<TextField {...register("time", { required: true })} defaultValue={state.prefill?.time} fullWidth id='filled-basic' label='time in days' variant='filled' />
 							</div>
 						</Stack>
 						<Stack direction="row" spacing={4}>
@@ -256,18 +327,18 @@ export default function MethodCreatorForm(props) {
 						</Stack>
 
 
-						<InputList header="References" addHint="Add more References" formRegister="usedMethods" register={register} data={usedMethodsFields} Remove={usedMethodsRemove} Append={usedMethodsAppend}/>
+						<InputList header="References" addHint="Add more References" formRegister="references" register={register} data={referencesFields} Remove={referencesRemove} Append={referencesAppend}/>
 
 					</Stack>
 				</CardContent>
 			</Card>
 
 			<Stack direction='row' justifyContent='center' alignItems='center' spacing={4} mt={4} pb={4}>
-				<Button sx={{ width: "264px", height: "52px" }} variant='outlined' onClick={() => console.log(set)}>
+				<Button sx={{ width: "264px", height: "52px" }} variant='outlined' onClick={() => navigate("/createSet")}>
 					Cancel
 				</Button>
 				<Button sx={{ width: "264px", height: "52px" }} type='submit' variant='contained'>
-					Save Profile
+					Save
 				</Button>
 			</Stack>
 		</form>
