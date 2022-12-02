@@ -17,7 +17,7 @@ body{
 
   /* Chrome, Edge, and Safari */
   *::-webkit-scrollbar {
-    width: 1px;
+    width: 10px;
   }
 
   *::-webkit-scrollbar-track {
@@ -39,17 +39,17 @@ body{
     width: auto;
   }
   .my-masonry-grid_column {
-    padding-left: 24px; /* gutter size */
+    padding-left: 16px; /* gutter size */
     background-clip: padding-box;
   }
 
 
   .my-masonry-grid_column > div > .method, .methodset{ /* change div to reference your elements you put in <Masonry> */
-    margin-bottom: 32px;
+    margin-bottom: 16px;
   }
 
   .methodSet{
-    height: 705px;
+    height: 688px;
   }
 
   .method{
@@ -64,12 +64,41 @@ body{
   filter: drop-shadow(0 0 25px #c7c7c790); 
 }
 
-
 .disableTransition{
     transition: none
 }
 
+.sidebar{
+  position: sticky;    
+  align-self: flex-start;
+  top: 56px;
+  padding: 8px;
+  z-index: 1;
+  background-color: #eff1ee;
+  height: fit-content;
+  width: 100%;
+  border: 1px solid #c7c7c790;
+}
 
+.setMakerWrapper{
+    position: relative;
+    display: flex;
+    background-color: #e1e3e0;
+    
+}
+
+.filterWrapper{
+  position: sticky;
+  top: 56px;
+  align-self: flex-start;
+  z-index: 1;
+  background-color: #e1e3e0;
+}
+
+
+.cards{
+  padding: 8px;
+}
 ol{
     padding-left: 24px;
 }
@@ -103,7 +132,7 @@ ol{
 }
 
 .MuiCardContent-root:last-child{
-    padding-bottom: 16px;
+    padding-bottom: 16px; 
 }
 
 
@@ -127,7 +156,6 @@ ol{
 
 .phaseDrop{
     width: 270px;
-    
 }
 
 .circle{

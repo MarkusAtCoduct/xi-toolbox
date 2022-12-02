@@ -40,7 +40,6 @@ const Accordion = styled((props) => (
 	"&:not(:last-child)": {
 		borderBottom: 0,
 	},
-    marginRight: theme.spacing(1),
 	marginBottom: theme.spacing(1),
 	"&:before": {
 		display: "none",
@@ -50,7 +49,8 @@ const Accordion = styled((props) => (
 		backgroundColor: "#ff5354",
 		boxShadow: "0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)",
 		borderRadius: "16px 16px 16px 16px",
-		color: "#FFF"
+		color: "#FFF",
+		
 	},
 }));
 
@@ -113,7 +113,7 @@ export default function Phase(props) {
 
 
 		return (
-			<>
+			<div style={{marginBottom: "8px"}}>
 				<Accordion id={props.id} expanded={expanded === props.id} className='phase disableTransition' onChange={handleChange(props.id)} square={true}>
 					<AccordionSummary className='disableTransition' aria-controls='panel1d-content' id='panel1d-header'>
 						<Stack direction='row' spacing={3} alignItems='center'>
@@ -189,6 +189,6 @@ export default function Phase(props) {
 					</AccordionDetails>
 					
 				</Accordion>
-			</>
+			</div>
 		)
 }

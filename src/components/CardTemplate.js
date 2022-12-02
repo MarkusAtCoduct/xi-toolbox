@@ -34,7 +34,7 @@ export default function BasicCard(props) {
 		tmp.container = expanded
 		tmpItems.push(tmp)
 		setPhaseItems(tmpItems)
-		}return
+		}
 	}
 
 	return (
@@ -42,14 +42,13 @@ export default function BasicCard(props) {
 			className={props.data.isMethodSet ? "methodSet" : "method"}
 			elevation={3}
 			sx={{
-				padding: "8px",
 				borderRadius: "16px",
 				//maxWidth: "344px",
 				//height: "352px",
 			}}
 			style={props.drag ? { outline: " solid 2px #FF5454" } : null}
 		>
-			<CardContent>
+			<CardContent sx={{padding: "24px", paddingBottom: "24px"}}>
 				<CardFunctions add={handleAdd} data={props.data} owner={props.data.ownerId} id={props.data.id} type={props.data.isMethodSet} />
 				<Box>
 					<Stack direction='row' alignItems='flex-end' justifyContent='space-between'>

@@ -4,12 +4,19 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import MilitaryTech from "@mui/icons-material/MilitaryTechOutlined";
 import { Stack } from "@mui/system";
 import { Typography, Button } from "@mui/material";
+import { useEffect } from "react";
 
 import * as React from "react";
 
-
+import { useAtom } from "jotai";
+import { userAtom } from '../atoms/userAtom';
+ 
+import AvatarUpload from "./AvatarUpload";
 
 export default function ProfileInfo(props) {
+	const [user, setUser] = useAtom(userAtom)
+console.log(user)
+
 	return (
 		<>
 			<Stack
@@ -20,7 +27,7 @@ export default function ProfileInfo(props) {
 				alignItems="center"
 				justifyContent="center">
 				<Avatar
-					src="/broken-image.jpg"
+					src={user.data.mainAvatarUrl || "/broken-image.jpg"}
 					sx={{ width: "112px", height: "112px" }}
 				/>
                 <Stack direction="column" alignItems="center">
@@ -42,8 +49,10 @@ export default function ProfileInfo(props) {
 						fontWeight: "400",
 						float: "right",
 					}}>
-					{props.author || "Placeholder"}
+					{user.data.firstName +" "+ user.data.lastName || "Placeholder"}
 				</Typography>
+
+					<AvatarUpload />
 
                 <Button variant="text" sx={{color:"#757875" }} size="small" startIcon={<EditOutlinedIcon />}>
                     Edit Personal Details

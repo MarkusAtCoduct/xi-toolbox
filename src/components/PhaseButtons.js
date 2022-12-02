@@ -64,7 +64,7 @@ export default function PhaseButtons(props) {
 	 };
 
 		return (
-			<>
+			<div style={{marginBottom: "8px"}}>
 				<Accordion id={props.id} expanded={expanded === props.id} className='phase disableTransition' onChange={handleChange(props.id)} square={true}>
 					<AccordionSummary className='disableTransition' aria-controls='panel1d-content' id='panel1d-header'>
 						<Stack direction='row' spacing={3} alignItems='center'>
@@ -80,6 +80,6 @@ export default function PhaseButtons(props) {
 						</Stack>
 					</AccordionSummary>
 				</Accordion>
-			</>
+			</div>
 		)
 }

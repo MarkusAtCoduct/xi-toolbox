@@ -31,6 +31,7 @@ export default function AccountMenu() {
 	setUser(null)
 }
 
+
   return (
 		<React.Fragment>
 			<Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
@@ -43,7 +44,7 @@ export default function AccountMenu() {
 						aria-haspopup='true'
 						aria-expanded={open ? "true" : undefined}
 					>
-						<Avatar sx={{ width: 32, height: 32 }}>{user.firstName.charAt(0)}</Avatar>
+						<Avatar sx={{ width: 32, height: 32 }} src={user.data?.thumbnailAvatarUrl || null}>{user.data.firstName.charAt(0)}</Avatar>
 					</IconButton>
 				</Tooltip>
 			</Box>

@@ -1,6 +1,5 @@
 import AdbIcon from "@mui/icons-material/Adb";
 import AppBar from "@mui/material/AppBar";
-import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
@@ -45,19 +44,15 @@ function LinkTab(props) {
 export default function MainNav(props) {
 
 	const [value, setValue] = React.useState(0);
-	const [user, setUser] = useAtom(userAtom)
+	const [user] = useAtom(userAtom)
 	
 	const handleChange = (event, newValue) => {
 	  setValue(newValue);
 	}
-	const handleLogout = () => {
-		logout()
-		setUser(null)
-	}
+
 
 	return (
-		<ElevationScroll {...props}>
-
+	
 		<AppBar position="sticky" color="neutral" elevation={0}>
 			<Container>
 				<Stack
@@ -97,11 +92,11 @@ export default function MainNav(props) {
 						:null}
 						
 					</Tabs>
-					<Stack direction="row" spacing={2}>
+					<Stack direction="row" spacing={2} alignItems="center">
 					{!user
 					?<>
 					<Login/>
-					<Button variant="contained" href="/register" sx={{borderRadius: "16px"}} disableElevation>
+					<Button variant="contained" href="/register" sx={{borderRadius: "16px", width: "100%"}} disableElevation>
 						Register
 					</Button>
 					
@@ -116,7 +111,7 @@ export default function MainNav(props) {
 				</Stack>
 			</Container>
 		</AppBar>
-		</ElevationScroll>
+		
 	);
 };
 

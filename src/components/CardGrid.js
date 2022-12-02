@@ -37,9 +37,7 @@ import { userAtom } from '../atoms/userAtom';
 export default function CardGrid(props) {
   const [methods, setMethods] = useAtom(methodAtom);
   const [activeId, setActiveId] = useAtom(activeAtom);
-  const [phaseItems] = useAtom(phaseAtom);
-  const [user, setUser] = useAtom(userAtom);
-
+  
   useEffect(() => { 
 	GetContent("/api/method/search?label&pageIndex=0&pageSize=50&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=true")
 	.then((response) => {
@@ -50,7 +48,7 @@ export default function CardGrid(props) {
 		setMethods(response.data)
 		console.log(response.data)
 	});	
-   }, [user]);
+   }, []);
 
    
   return (
@@ -65,7 +63,7 @@ export default function CardGrid(props) {
 				<Stack direction='row'>
 					<Droppable id='recommendedMethodContainer'>
 							
-					{!methods ? (
+					{methods === [] ? (
 						<Box sx={{ display: 'flex' }}>
       						<CircularProgress />
     					</Box>
@@ -74,21 +72,21 @@ export default function CardGrid(props) {
 							{methods.map((method) => (
 								<div key={method.id}>
 									{!method.isMethodSet ? (
-										<Grid className='method' item key={method.id} mb={1} mr={-1} xs={props.columns || 3}>
+										<div className='method'>
 											{method.container === "recommendedMethodContainer" || method.container === null ? (
 												<Draggable key={method.id} data={method} id={method.id}>
 													<CardItem className='method' data={method}></CardItem>
 												</Draggable>
 											) : null}
-										</Grid>
+										</div>
 									) : (
-										<Grid className='methodset' item key={method.id} mb={1} mr={-1} xs={props.columns || 3}>
+										<div className='methodset' key={method.id}>
 											{method.container === "recommendedMethodContainer" || method.container === null ? (
 												<Draggable data={method} key={method.id} id={method.id}>
 													<CardItem data={method}></CardItem>
 												</Draggable>
 											) : null}
-										</Grid>
+										</div>
 									)}
 								</div>
 							))}
@@ -96,7 +94,7 @@ export default function CardGrid(props) {
 						)}
 					</Droppable>
 					<DragOverlay dropAnimation={null} style={{ width: 270 }} modifiers={[snapCenterToCursor]}>
-						{activeId ? <SmallCard header={methods[activeId - 1]?.header || phaseItems[activeId - 1]?.header}></SmallCard> : null}
+						{activeId ? <SmallCard/> : null}
 					</DragOverlay>
 				</Stack>
 			</Accordion>

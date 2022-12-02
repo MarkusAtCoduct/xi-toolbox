@@ -38,6 +38,7 @@ import MethodCreator from "./pages/MethodCreator"
 import { isLoggedIn, refreshToken } from "../src/services/authApi"
 
 import uuid from 'react-uuid';
+import { GetUserDetails } from "./services/Api";
 
 
 const theme = createTheme({
@@ -78,7 +79,9 @@ function App() {
 
 	useEffect(() => {	
 		if (isLoggedIn()) {
-			setUser(refreshToken())
+			refreshToken().then(() => {
+				setUser(GetUserDetails())
+			})
 		}
 	}, [])
 
@@ -148,7 +151,7 @@ const sensors = useSensors(
       }
     }),
   );
-
+console.log(user)
 	return (
 		<ThemeProvider theme={theme}>
 			<DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} sensors={sensors}>

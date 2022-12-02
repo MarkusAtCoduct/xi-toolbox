@@ -73,3 +73,32 @@ export async function GetContent(_url) {
         });
         return response.json();
       }
+
+      export async function GetUserDetails(user = ""){
+        let url = baseURL+"/api/user/details"
+        const token = getCurrentUser()
+        const response = await fetch(url+"?"+ new URLSearchParams({userName: user}),{
+          method: "GET",
+          headers: {
+            'Access-Control-Allow-Origin' : "*",
+            'Content-Type' : 'application/json',
+            'Authorization': 'Bearer '+ token
+          },
+          });
+          return response.json();
+      }
+
+      //function to upload image
+      export async function UploadImage(_url, data) {
+        let url = baseURL+_url
+        const token = getCurrentUser()
+        const response = await fetch(url, {
+          method: "POST",
+          body: data,
+          headers: {
+            'Access-Control-Allow-Origin' : "*",
+            'Authorization': 'Bearer '+ token
+          } ,
+          });
+          return response.json(); // parses JSON response into native JavaScript objects
+        }

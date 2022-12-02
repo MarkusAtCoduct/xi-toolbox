@@ -36,10 +36,10 @@ export default function Login() {
   } 
 
   return (
-		<div style={{ borderRadius: "16px" }}>
+		<>
 			<Button
 				variant='outlined'
-				sx={{ borderRadius: "16px" }}
+				sx={{ borderRadius: "16px", width: "100%"}}
 				disableElevation
 				id='Login-Button'
 				aria-controls={open ? "basic-menu" : undefined}
@@ -73,6 +73,6 @@ export default function Login() {
 				</form>
 				</Box>
 			</Menu>
-		</div>
+		</>
 	)
 }
