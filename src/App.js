@@ -34,7 +34,7 @@ import Footer from "./components/Footer"
 import Home from "./pages/Home"
 import { phaseAccordionAtom } from "./atoms/phaseAccordionAtom"
 import MethodCreator from "./pages/MethodCreator"
-
+import EditProfile from "./pages/EditProfile"
 import { isLoggedIn, refreshToken } from "../src/services/authApi"
 
 import uuid from 'react-uuid';
@@ -167,6 +167,7 @@ console.log(user)
 								<Route path='/myProfile' element={<MyProfile />} />
 								<Route path='/createMethodSet' element={<MethodSetCreate />} />
 								<Route path='/Register' element={<Register />} />
+								<Route path='/editProfile' element={<EditProfile />} />
 								{/*
 
 						 <Route path="contact" element={<Contact />} />

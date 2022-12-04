@@ -10,8 +10,12 @@ import * as React from "react";
 
 import { useAtom } from "jotai";
 import { userAtom } from '../atoms/userAtom';
- 
+import MethodCreatorForm from "./Forms/MethodCreatorForm";
+import IconButton from "@mui/material/IconButton"; 
+import { Link } from "react-router-dom";
 import AvatarUpload from "./AvatarUpload";
+import RegistrationForm from "./Forms/RegistrationForm";
+import EditProfileForm from "./Forms/EditProfileForm";
 
 export default function ProfileInfo(props) {
 	const [user, setUser] = useAtom(userAtom)
@@ -27,7 +31,7 @@ console.log(user)
 				alignItems="center"
 				justifyContent="center">
 				<Avatar
-					src={user.data.mainAvatarUrl || "/broken-image.jpg"}
+					src={user?.data?.mainAvatarUrl || "/broken-image.jpg"}
 					sx={{ width: "112px", height: "112px" }}
 				/>
                 <Stack direction="column" alignItems="center">
@@ -49,14 +53,12 @@ console.log(user)
 						fontWeight: "400",
 						float: "right",
 					}}>
-					{user.data.firstName +" "+ user.data.lastName || "Placeholder"}
+					{user?.data?.firstName +" "+ user?.data?.lastName || "Placeholder"}
 				</Typography>
-
-					<AvatarUpload />
-
-                <Button variant="text" sx={{color:"#757875" }} size="small" startIcon={<EditOutlinedIcon />}>
-                    Edit Personal Details
-                </Button>
+				<Link to="/editProfile" state={{prefill: user }} component={<EditProfileForm />} ><IconButton aria-label="edit" size="medium">
+						<EditOutlinedIcon />Edit Personal Details
+						</IconButton>
+				</Link>
 			</Stack>
 			<Divider />
 		</>

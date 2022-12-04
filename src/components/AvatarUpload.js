@@ -6,6 +6,12 @@ import { UploadImage } from "../services/Api";
 import { useAtom } from "jotai";
 import { userAtom } from "../atoms/userAtom";
 import { GetUserDetails } from "../services/Api";
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+
+
+
 
 export default function AvatarUpload() {
     const [file, setFile] = useState(null);
@@ -25,14 +31,16 @@ useEffect(() => {
     const reader = new FileReader();
     reader.onloadend = () => {
         setPreview(reader.result);
-    }
-    reader.readAsDataURL(file);
-    formData.append('image', file);
+            }
+           
+            reader.readAsDataURL(file);
+    
 }, [file])
 
 
     const changeHandler = (e) => {
         let selected = e.target.files[0];
+        console.log(selected)
         if (selected && types.includes(selected.type)) {
             setFile(selected);
             setError("");
@@ -42,12 +50,11 @@ useEffect(() => {
         }
     }
 
-     const handleUpload = async () => {
-    //e.preventDefault();
+     const handleUpload = (e) => {
+    e.preventDefault();
+    formData.append("image", file);
     console.log(file);
-    
-
-    await UploadImage("/api/user/avatar-update", formData)
+    UploadImage("/api/user/avatar-update", formData)
     
 }
 
@@ -55,14 +62,42 @@ useEffect(() => {
     return (  
         //input that will be used to upload image
         <>
-        <input type="file" onChange={changeHandler} />
-        <div className="output">
-            {error && <div className="error">{error}</div>}
-            {preview && <img src={preview} alt="preview" />}
-        </div>
+                            <Stack
+                            mt={4}
+							direction="column"
+							justifyContent="center"
+							alignItems="center"
+							spacing={2}>
+							<Avatar
+								src={preview || "/broken-image.jpg" }
+								sx={{ width: "120px", height: "120px" }}
+							/>
+							<Stack direction="column">
+
+                                        <Button mb={2} variant="contained" component="label" >
+                                        Upload Photo
+                                        <input hidden  type="file" onChange={changeHandler} />
+                                        </Button>
+								<Typography
+                                gutterBottom
+									sx={{
+										fontSize: 14,
+										fontWeight: "400",
+										float: "left",
+										color: "#5C5F5D",
+									}}>
+                                        (optional)
+								</Typography>
+							</Stack>
+                            </Stack>
+
+
+
+
+{/* 
         <IconButton color="primary" aria-label="upload picture" component="label" onClick={handleUpload}>
             <PhotoCamera />
-        </IconButton>
+        </IconButton> */}
         </>
     );
 }

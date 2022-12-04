@@ -10,8 +10,9 @@ import Select from "@mui/material/Select";
 import { Typography, Button, Card, CardContent } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { FormProvider, useForm, useFieldArray, Controller } from 'react-hook-form';
-import {registerUser} from "../services/authApi"
+import {registerUser} from "../../services/authApi"
 import { useNavigate } from "react-router-dom";
+import AvatarUpload from "../AvatarUpload";
 
 import * as React from "react";
 
@@ -31,6 +32,8 @@ export default function RegistrationForm(props) {
 
 const onSubmit = (data) => {	
 			console.log(data)
+			data.role = ["user"]
+			Number(data.yearsOfExperience)
 			registerUser(data)
 			//navigate("/home");
 		}
@@ -39,38 +42,9 @@ const onSubmit = (data) => {
 	return (
         <form onSubmit={handleSubmit(onSubmit)}>
 		<Card sx={{borderRadius: "16px"}} elevation={0}>
+			<AvatarUpload/>
 				<CardContent sx={{paddingLeft: "96px", paddingRight: "96px" }}>
 					<Stack direction="column" spacing={4}>
-						<Stack
-                            mt={4}
-							direction="column"
-							justifyContent="center"
-							alignItems="center"
-							spacing={2}>
-							<Avatar
-								src="/broken-image.jpg"
-								sx={{ width: "120px", height: "120px" }}
-							/>
-							<Stack direction="column">
-								<Typography
-									sx={{
-										fontSize: 22,
-										fontWeight: "400",
-										float: "left",
-									}}>
-									Upload Photo
-								</Typography>
-								<Typography
-									sx={{
-										fontSize: 14,
-										fontWeight: "400",
-										float: "left",
-										color: "#5C5F5D",
-									}}>
-									(optional)
-								</Typography>
-							</Stack>
-						</Stack>
 						<FormControl>
 							<RadioGroup
 								row
@@ -219,7 +193,7 @@ const onSubmit = (data) => {
 									label="Filled"
 									variant="filled"
 									type="number"
-									{...register("yearsOfExperience", {max: 3})}
+									{...register("yearsOfExperience", {max: 3, valueAsNumber: true,})}
 								/>
 							</div>
 						</Stack>

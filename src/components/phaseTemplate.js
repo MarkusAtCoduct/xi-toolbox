@@ -25,7 +25,7 @@ import ToolboxStepperPhase from "./toolboxStepperPhase";
 
 
 import { Link, useLocation} from "react-router-dom"
-import MethodCreatorForm from "./MethodCreatorForm";
+import MethodCreatorForm from "./Forms/MethodCreatorForm";
 
 
 const Accordion = styled((props) => (

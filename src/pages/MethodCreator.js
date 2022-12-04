@@ -2,7 +2,7 @@ import { Container, Typography } from "@mui/material";
 
 import * as React from "react";
 
-import MethodCreatorForm from "../components/MethodCreatorForm";
+import MethodCreatorForm from "../components/Forms/MethodCreatorForm";
 
 export default function MethodCreator() {
   return (

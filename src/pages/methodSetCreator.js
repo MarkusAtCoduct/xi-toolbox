@@ -9,7 +9,7 @@ import PhaseSelector from "../components/PhaseSelector";
 import PhaseButtons from "../components/PhaseButtons";
 import Filter from "../components/filter";
 import { Link } from "react-router-dom";
-import MethodCreatorForm from "../components/MethodCreatorForm";
+import MethodCreatorForm from "../components/Forms/MethodCreatorForm";
 import { useAtom } from "jotai";
 import { userAtom } from "../atoms/userAtom";
 
@@ -23,11 +23,12 @@ export default function MethodSetCreator() {
 	return (
 		<Container>
 			<div className="setMakerWrapper">
+				<div className="sidebarWrapper">
 					<div className="sidebar">
 					<Heading heading={"Cross Innovation Process"} />
 					{user ? <PhaseSelector type="lib"/> : <PhaseSelector/>}
 					</div>
-			
+				</div>
 				<div className="content">
 				<div className="filterWrapper">
 				<Stack direction="row"  justifyContent="space-between" alignItems="center">
@@ -38,8 +39,10 @@ export default function MethodSetCreator() {
 				</Stack>
 				<Filter/>
 				</div>
-				<div className="cards">
-				<MethodCards columns={6} />
+				<div className="cardsWrapper">
+					<div className="cards">
+					<MethodCards />
+					</div>
 				</div>
 				</div>
 			</div>

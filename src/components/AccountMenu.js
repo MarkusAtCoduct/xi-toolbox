@@ -14,11 +14,14 @@ import Logout from '@mui/icons-material/Logout';
 import { logout } from '../services/authApi';
 import { useAtom } from 'jotai';
 import { userAtom } from '../atoms/userAtom';
+import { useNavigate } from "react-router-dom";
+
 
 
 export default function AccountMenu() {
     const [user, setUser] = useAtom(userAtom);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,6 +32,8 @@ export default function AccountMenu() {
   const handleLogout = () => {	
 	logout()
 	setUser(null)
+	navigate("/home");
+	
 }
 
 
@@ -44,7 +49,7 @@ export default function AccountMenu() {
 						aria-haspopup='true'
 						aria-expanded={open ? "true" : undefined}
 					>
-						<Avatar sx={{ width: 32, height: 32 }} src={user.data?.thumbnailAvatarUrl || null}>{user.data.firstName.charAt(0)}</Avatar>
+						<Avatar sx={{ width: 32, height: 32 }} src={user.data?.thumbnailAvatarUrl || null}>{user.data?.firstName.charAt(0)}</Avatar>
 					</IconButton>
 				</Tooltip>
 			</Box>

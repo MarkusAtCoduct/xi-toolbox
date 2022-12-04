@@ -10,7 +10,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import { useAtom } from "jotai";
 import { userAtom } from "../atoms/userAtom";
 import {Link} from "react-router-dom";
-import MethodCreatorForm from "./MethodCreatorForm";
+import MethodCreatorForm from "./Forms/MethodCreatorForm";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {DeleteMethod} from "../services/Api"
 

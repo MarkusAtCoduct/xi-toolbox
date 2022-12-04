@@ -2,9 +2,9 @@ import { Container, Typography } from "@mui/material";
 
 import * as React from "react";
 
-import MethodCreatorForm from "../components/Forms/MethodCreatorForm";
+import EditProfileForm from "../components/Forms/EditProfileForm";
 
-export default function MethodSetCreate() {
+export default function EditProfile() {
   return (
 		<>
 			<div
@@ -27,9 +27,9 @@ export default function MethodSetCreate() {
 						textAlign: "center",
 					}}
 				>
-					Create new Methodset
-					</Typography>
-				<MethodCreatorForm />
+					Edit Profile
+				</Typography>
+				<EditProfileForm />
 			</Container>
 			</div>
 		</>

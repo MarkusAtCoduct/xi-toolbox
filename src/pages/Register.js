@@ -2,7 +2,7 @@ import { Container, Typography } from "@mui/material";
 
 import * as React from "react";
 
-import RegistrationForm from "../components/RegistrationForm";
+import RegistrationForm from "../components/Forms/RegistrationForm";
 
 export default function Register() {
   return (

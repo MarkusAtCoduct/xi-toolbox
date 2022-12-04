@@ -4,13 +4,13 @@ import TextField from "@mui/material/TextField";
 
 import * as React from "react";
 import { FormProvider, useForm, useFieldArray, Controller } from 'react-hook-form';
-import { PostMethod, UpdateMethod } from "../services/Api";
+import { PostMethod, UpdateMethod } from "../../services/Api";
 import { Checkbox} from "@mui/material";
 import { useLocation} from "react-router-dom"
 import { useNavigate } from "react-router-dom";
 
 
-import InputList from "./InputList";
+import InputList from "../InputList";
 import { useEffect } from "react";
 export default function MethodCreatorForm(props) {
 	const navigate = useNavigate();

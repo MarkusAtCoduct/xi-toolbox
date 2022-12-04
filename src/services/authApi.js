@@ -56,7 +56,7 @@
   		});
   }
 
-  export const registerUser = (data) => {
+  export const registerUser = (data={}) => {
   	return fetch("https://xi-lab.codeleap.net/api/user/sign-up", {
   		method: "POST",
   		headers: {
