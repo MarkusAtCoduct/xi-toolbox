@@ -120,3 +120,31 @@ export async function GetContent(_url) {
             return response.json(); // parses JSON response into native JavaScript objects
           }
           
+          export async function rateMethod(_url, data={}) {
+            let url = baseURL+_url
+            const token = getCurrentUser()
+            const response = await fetch(url, {
+              method: "POST",
+              headers: {
+                'Access-Control-Allow-Origin' : "*",
+                'Content-Type' : 'application/json',
+                'Authorization': 'Bearer '+ token
+              },
+              body: JSON.stringify(data),
+              });
+              return response.json(); // parses JSON response into native JavaScript objects
+            }
+
+            export async function getMethodDetails(_url){
+              let url = baseURL+_url
+              const token = getCurrentUser()
+              const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                  'Access-Control-Allow-Origin' : "*",
+                  'Content-Type' : 'application/json',
+                  'Authorization': 'Bearer '+ token
+                },
+                });
+                return response.json(); // parses JSON response into native JavaScript objects
+            }

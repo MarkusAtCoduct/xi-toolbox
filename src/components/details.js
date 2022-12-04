@@ -15,6 +15,8 @@ import ChipList from "./ChipList";
 import ListTemplate from "./ListTemplate";
 import MethodList from "./MethodList";
 import Paragraph from "./Paragraph";
+import Rate from "./Rate";
+import Comments from "./Comments";
 
 const style = {
 	position: "absolute",
@@ -58,7 +60,7 @@ export default function Details(props) {
 													fontWeight: "900",
 													textAlign: "left",
 												}}>
-												{props.data.header || "Placeholder"}
+												{props.data.name || "Placeholder"}
 											</Typography>
 										</Box>
 
@@ -72,7 +74,7 @@ export default function Details(props) {
 												size="small"
 												name="simple-controlled"
 												sx={{ color: "#757875", float: "left" }}
-												value={value | props.data.value}
+												value={props.data.rate}
 												onChange={(event, newValue) => {
 													setValue(newValue);
 												}}
@@ -145,6 +147,8 @@ export default function Details(props) {
 												<Stack direction="column">
 													<ChipList listItems={props.data.recommendedPhases} heading="Recommended Phases" />
 													<ListTemplate listItems={props.data.references} heading="References" />
+													<Rate id={props.data.id}/>
+													<Comments id={props.data.id}/>
 												</Stack>
 											</Grid>
 										</Grid>

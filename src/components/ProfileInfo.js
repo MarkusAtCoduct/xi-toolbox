@@ -10,10 +10,12 @@ import { userAtom } from '../atoms/userAtom';
 import IconButton from "@mui/material/IconButton"; 
 import { Link } from "react-router-dom";
 import EditProfileForm from "./Forms/EditProfileForm";
+import {Button} from "@mui/material";
 
 export default function ProfileInfo(props) {
-	const [user, setUser] = useAtom(userAtom)
-console.log(user)
+	const [user] = useAtom(userAtom)
+
+	console.log(user)
 
 	return (
 		<>
@@ -49,9 +51,10 @@ console.log(user)
 					}}>
 					{user?.data?.firstName +" "+ user?.data?.lastName || "Placeholder"}
 				</Typography>
-				<Link to="/editProfile" state={{prefill: user }} component={<EditProfileForm/>} ><IconButton aria-label="edit" size="medium">
-						<EditOutlinedIcon />Edit Personal Details
-						</IconButton>
+				<Link to="/editProfile" state={{prefill: user }} style={{textDecoration: "none" }} component={<EditProfileForm/>} >
+				<Button label="fsdgg" size="medium" variant="contained" startIcon={<EditOutlinedIcon />}>
+					Edit Personal Detail
+				</Button>
 				</Link>
 			</Stack>
 			<Divider />

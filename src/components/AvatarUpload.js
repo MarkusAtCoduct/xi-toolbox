@@ -69,7 +69,7 @@ useEffect(() => {
 							alignItems="center"
 							spacing={2}>
 							<Avatar
-								src={preview || "/broken-image.jpg" }
+								src={!preview ?  user?.data?.mainAvatarUrl || "/broken-image.jpg" : preview}
 								sx={{ width: "120px", height: "120px" }}
 							/>
 							<Stack direction="column">

@@ -68,10 +68,7 @@ export default function BasicCard(props) {
 							size='small'
 							name='simple-controlled'
 							sx={{ color: "#757875", float: "left" }}
-							value={value | props.data.value}
-							onChange={(event, newValue) => {
-								setValue(newValue)
-							}}
+							value={props.data.rate}
 						/>
 
 						<Typography

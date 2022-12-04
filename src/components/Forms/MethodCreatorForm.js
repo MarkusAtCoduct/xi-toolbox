@@ -147,15 +147,15 @@ export default function MethodCreatorForm(props) {
 
 		useEffect(() => {
 		if(state.prefill){
-			advantageRemove();
-			disadvantageRemove();
-			howToConductRemove();
-			whenToConductRemove();
-			inputRemove();
-			outputRemove();
-			relevantPhasesRemove();
-			sameOutputMethodsRemove();
-			referencesRemove();
+			if(advantageFields.length  < 1){advantageRemove();}
+			if(disadvantageFields.length  < 1){disadvantageRemove();}
+			if(howToConductFields.length  < 1){howToConductRemove();}
+			if(whenToConductFields.length  < 1){whenToConductRemove();}
+			if(inputFields.length  < 1){inputRemove();}
+			if(outputFields.length  < 1){outputRemove();}
+			if(relevantPhasesFields.length  < 1){relevantPhasesRemove();}
+			if(sameOutputMethodsFields.length  < 1){sameOutputMethodsRemove();}
+			if(referencesFields.length  < 1){referencesRemove();}
 
 			state.prefill.advantages.forEach(advantage => {
 				advantageAppend({name: advantage})

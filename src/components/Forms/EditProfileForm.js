@@ -19,7 +19,7 @@ import * as React from "react";
 import { updateUserDetails } from "../../services/Api";
 
 
-export default function EditProfileForm(props) {
+export default function EditProfileForm() {
 
 
 
@@ -29,14 +29,6 @@ export default function EditProfileForm(props) {
 	const location = useLocation()
 	const state = location.state || ""
 	const { register, handleSubmit, formState: { errors } } = useForm();
-
-    const [age, setAge] = React.useState('');
-
-
-    const handleChange = (event) => {
-      setAge(event.target.value);
-    };
-	console.log(state)
 
 	const onSubmit = (data) => {	
 		console.log(data)
