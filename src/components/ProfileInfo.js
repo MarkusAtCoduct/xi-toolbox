@@ -3,18 +3,12 @@ import Divider from "@mui/material/Divider";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import MilitaryTech from "@mui/icons-material/MilitaryTechOutlined";
 import { Stack } from "@mui/system";
-import { Typography, Button } from "@mui/material";
-import { useEffect } from "react";
-
+import { Typography} from "@mui/material";
 import * as React from "react";
-
 import { useAtom } from "jotai";
 import { userAtom } from '../atoms/userAtom';
-import MethodCreatorForm from "./Forms/MethodCreatorForm";
 import IconButton from "@mui/material/IconButton"; 
 import { Link } from "react-router-dom";
-import AvatarUpload from "./AvatarUpload";
-import RegistrationForm from "./Forms/RegistrationForm";
 import EditProfileForm from "./Forms/EditProfileForm";
 
 export default function ProfileInfo(props) {
@@ -55,7 +49,7 @@ console.log(user)
 					}}>
 					{user?.data?.firstName +" "+ user?.data?.lastName || "Placeholder"}
 				</Typography>
-				<Link to="/editProfile" state={{prefill: user }} component={<EditProfileForm />} ><IconButton aria-label="edit" size="medium">
+				<Link to="/editProfile" state={{prefill: user }} component={<EditProfileForm/>} ><IconButton aria-label="edit" size="medium">
 						<EditOutlinedIcon />Edit Personal Details
 						</IconButton>
 				</Link>

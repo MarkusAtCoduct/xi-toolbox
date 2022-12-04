@@ -13,14 +13,21 @@ import { FormProvider, useForm, useFieldArray, Controller } from 'react-hook-for
 import {registerUser} from "../../services/authApi"
 import { useNavigate } from "react-router-dom";
 import AvatarUpload from "../AvatarUpload";
+import { useLocation} from "react-router-dom"
 
 import * as React from "react";
+import { updateUserDetails } from "../../services/Api";
 
 
-export default function RegistrationForm(props) {
+export default function EditProfileForm(props) {
+
+
+
 	const navigate = useNavigate();
 
 
+	const location = useLocation()
+	const state = location.state || ""
 	const { register, handleSubmit, formState: { errors } } = useForm();
 
     const [age, setAge] = React.useState('');
@@ -29,12 +36,11 @@ export default function RegistrationForm(props) {
     const handleChange = (event) => {
       setAge(event.target.value);
     };
+	console.log(state)
 
-const onSubmit = (data) => {	
-			console.log(data)
-			data.role = ["user"]
-			Number(data.yearsOfExperience)
-			registerUser(data)
+	const onSubmit = (data) => {	
+		console.log(data)
+			updateUserDetails("/api/user/update", data)
 			//navigate("/home");
 		}
 
@@ -45,31 +51,6 @@ const onSubmit = (data) => {
 			<AvatarUpload/>
 				<CardContent sx={{paddingLeft: "96px", paddingRight: "96px" }}>
 					<Stack direction="column" spacing={4}>
-						<FormControl>
-							<RadioGroup
-								row
-								aria-labelledby="demo-row-radio-buttons-group-label"
-								name="row-radio-buttons-group">
-								<FormControlLabel
-									value="female"
-									control={<Radio />}
-									label="Female"
-									{...register("gender")}
-								/>
-								<FormControlLabel
-									value="male"
-									control={<Radio />}
-									label="Male"
-									{...register("gender")}
-								/>
-								<FormControlLabel
-									value="other"
-									control={<Radio />}
-									label="Other"
-									{...register("gender")}
-								/>
-							</RadioGroup>
-						</FormControl>
 						<Stack direction="row" spacing={3} justifyContent="center">
 							<div style={{ width: "100%" }}>
 								<Typography
@@ -82,10 +63,10 @@ const onSubmit = (data) => {
 								</Typography>
 								<TextField
 									fullWidth
-									id="filled-basic"
 									label="First Name"
 									variant="filled"
 									{...register("firstName", { required: true })}
+									defaultValue={state.prefill?.data?.firstName || null}
 								/>
 							</div>
 							<div style={{ width: "100%" }}>
@@ -99,11 +80,11 @@ const onSubmit = (data) => {
 								</Typography>
 								<TextField
 									fullWidth
-									id="filled-basic"
 									label="Last Name"
 									variant="filled"
 									
 									{...register("lastName", { required: true })}
+									defaultValue={state.prefill?.data?.lastName || null}
 								/>
 							</div>
 						</Stack>
@@ -118,29 +99,11 @@ const onSubmit = (data) => {
 							</Typography>
 							<TextField
 								fullWidth
-								id="filled-basic"
 								label="E-mail"
 								variant="filled"
 								type="email"
 								{...register("email", { required: true })}
-							/>
-						</div>
-						<div style={{ width: "100%" }}>
-							<Typography
-								sx={{
-									fontSize: 18,
-									fontWeight: "400",
-									float: "left",
-								}}>
-								Password
-							</Typography>
-							<TextField
-								fullWidth
-								id="filled-basic"
-								label="password"
-								variant="filled"
-								type="password"
-								{...register("password", { required: true })}
+								defaultValue={state.prefill?.data?.email || null}
 							/>
 						</div>
 						<Stack direction="row" spacing={3} justifyContent="center">
@@ -155,10 +118,10 @@ const onSubmit = (data) => {
 							</Typography>
 							<TextField
 								fullWidth
-								id="filled-basic"
 								label="Filled"
 								variant="filled"
 								{...register("industry")}
+								defaultValue={state.prefill?.data?.industry || null}
 							/>
 						</div>
 							<div style={{ width: "100%" }}>
@@ -172,10 +135,10 @@ const onSubmit = (data) => {
 							</Typography>
 							<TextField
 								fullWidth
-								id="filled-basic"
 								label="Filled"
 								variant="filled"
 								{...register("currentJob")}
+								defaultValue={state.prefill?.data?.currentJob || null}
 							/>
 						</div>
 							<div style={{ width: "100%" }}>
@@ -189,11 +152,11 @@ const onSubmit = (data) => {
 								</Typography>
 								<TextField
 									fullWidth
-									id="filled-basic"
 									label="Filled"
 									variant="filled"
 									type="number"
-									{...register("yearsOfExperience", {max: 3, valueAsNumber: true,})}
+									{...register("yearsOfExperience", {valueAsNumber: true,})}
+									defaultValue={state.prefill?.data?.yearsOfExperience || null}
 								/>
 							</div>
 						</Stack>
@@ -208,10 +171,10 @@ const onSubmit = (data) => {
 							</Typography>
 							<TextField
 								fullWidth
-								id="filled-basic"
 								label="Filled"
 								variant="filled"
 								{...register("linkedinLink")}
+								defaultValue={state.prefill?.data?.linkedinLink || null}
 							/>
 						</div>
 						<div style={{ width: "100%" }}>
@@ -226,10 +189,10 @@ const onSubmit = (data) => {
 							<TextField
 								sx={{ height: "6rem" }}
 								fullWidth
-								id="filled-basic"
 								label="Filled"
 								variant="filled"
 								{...register("aboutMe")}
+								defaultValue={state.prefill?.data?.aboutMe || null}
 							/>
 						</div>
 					</Stack>

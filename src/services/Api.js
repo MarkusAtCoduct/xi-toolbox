@@ -102,3 +102,21 @@ export async function GetContent(_url) {
           });
           return response.json(); // parses JSON response into native JavaScript objects
         }
+
+        export async function updateUserDetails(_url, data={}) {
+          // Default options are marked with *
+          let url = baseURL+_url
+          const token = getCurrentUser()
+          const response = await fetch(url, {
+            method: "PUT",
+            body: JSON.stringify(data),
+            
+            headers: {
+              'Access-Control-Allow-Origin' : "*",
+              'Content-Type' : 'application/json',
+              'Authorization': 'Bearer '+ token
+            },
+            });
+            return response.json(); // parses JSON response into native JavaScript objects
+          }
+          
