@@ -46,7 +46,7 @@ export default function CardGridProfile(props) {
   
   useEffect(() => { 
 	setLoading(true)
-	GetUserDetails().then((res) => GetContent(`/api/method/search?label=${res.data.firstName}&pageIndex=0&pageSize=50&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=true`)
+	GetUserDetails().then((res) => GetContent(`/api/method/search?label=${res.data.lastName}&pageIndex=0&pageSize=50&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=true`)
 	.then((response) => {
 		response.data.forEach(element => {
 			element.container = "recommendedMethodContainer"
@@ -61,11 +61,12 @@ export default function CardGridProfile(props) {
 
    
   return (
-	<>{loading ? 
+	<><Typography gutterBottom ml={4} sx={{ textAlign: "left", fontSize: "28px", fontWeight: "400", color: "#5C5F5D" }}>
+				All Methods / Method Sets
+			</Typography>
+	{loading ? 
 		<>
-		<Typography gutterBottom ml={4} sx={{ textAlign: "left", fontSize: "28px", fontWeight: "400", color: "#5C5F5D" }}>
-						Top Recommended
-					</Typography>
+		
 		<Grid container spacing={1}>
 			<Grid xs={6} item><Skeleton  animation="wave" height={"350px"} sx={{borderRadius: "16px"}} variant="rectangular" /></Grid>
 			<Grid xs={6} item><Skeleton  animation="wave" height={"350px"} sx={{borderRadius: "16px"}} variant="rectangular" /></Grid>
@@ -75,16 +76,7 @@ export default function CardGridProfile(props) {
 		</Grid> 
 		</>
 	:
-		<Box>
-			<Accordion defaultExpanded sx={{ background: "none" }} elevation={0}>
-				<AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls='panel1a-content' id='panel1a-header'>
-					<Typography gutterBottom ml={4} sx={{ textAlign: "left", fontSize: "28px", fontWeight: "400", color: "#5C5F5D" }}>
-						Top Recommended
-					</Typography>
-				</AccordionSummary>
-				<Stack direction='row'>
-					<Droppable id='recommendedMethodContainer'>
-							
+		<Box>	
 					{methods === [] ? (
 						<Box sx={{ display: 'flex' }}>
       						<CircularProgress />
@@ -95,59 +87,26 @@ export default function CardGridProfile(props) {
 								<div key={method.id}>
 									{!method.isMethodSet ? (
 										<div className='method'>
-											{method.container === "recommendedMethodContainer" || method.container === null ? (
-												<Draggable key={method.id} data={method} id={method.id}>
+										
+												<>
 													<CardItem className='method' data={method}></CardItem>
-												</Draggable>
-											) : null}
+												</>
+											
 										</div>
 									) : (
 										<div className='methodset' key={method.id}>
-											{method.container === "recommendedMethodContainer" || method.container === null ? (
-												<Draggable data={method} key={method.id} id={method.id}>
+											
+												<>
 													<CardItem data={method}></CardItem>
-												</Draggable>
-											) : null}
+												</>
+											
 										</div>
 									)}
 								</div>
 							))}
 						</Masonry>
 						)}
-					</Droppable>
-					<DragOverlay dropAnimation={null} style={{ width: 270 }} modifiers={[snapCenterToCursor]}>
-						{activeId ? <SmallCard/> : null}
-					</DragOverlay>
-				</Stack>
-			</Accordion>
-			<Typography gutterBottom ml={4} sx={{ textAlign: "left", fontSize: "28px", fontWeight: "400", color: "#5C5F5D" }}>
-				All Methods / Method Sets
-			</Typography>
-      <Droppable id='allMethodsContainer'>
-						{/*<Masonry breakpointCols={2} className='my-masonry-grid' columnClassName='my-masonry-grid_column'>
-							{methods.map((method) => (
-								<div key={method.id}>
-									{method.type === "method" ? (
-										<Grid className='method' item key={method.id} mb={1} mr={-1} xs={props.columns || 3}>
-											{method.container === "recommendedMethodContainer" || method.container === null ? (
-												<Draggable key={method.id} data={method} id={method.id}>
-													<CardItem className='method' data={method} type={method.type} header={method.header}></CardItem>
-												</Draggable>
-											) : null}
-										</Grid>
-									) : (
-										<Grid className='methodset' item key={method.id} mb={1} mr={-1} xs={props.columns || 3}>
-											{method.container === "recommendedMethodContainer" || method.container === null ? (
-												<Draggable data={method} key={method.id} id={method.id}>
-													<CardItem data={method} type={method.type} header={method.header}></CardItem>
-												</Draggable>
-											) : null}
-										</Grid>
-									)}
-								</div>
-							))}
-						</Masonry>*/}
-					</Droppable>
+     
 		</Box>
 	}
 </>

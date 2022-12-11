@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import * as React from 'react';
 
 
-import {login} from "../services/authApi";
+import { login } from "../services/authApi";
 import { useAtom } from "jotai";
 import { userAtom } from '../atoms/userAtom';
 import { Navigate } from 'react-router-dom';
@@ -35,10 +35,21 @@ export default function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   
   const onSubmit = data => {
-	login(data.username, data.password).then(() => {return GetUserDetails()}).then((res)=> setUser(res))
-	
+	login(data.username, data.password)
+	.then((response) => {
+        return GetUserDetails().then((res)=> setUser(res))})
+	}
 	Navigate("/home")
-  } 
+		/*{return GetUserDetails()})
+	.then((response) => {
+        if (!response.ok) {
+            throw Error("lol");
+        }
+        return response;
+    }).then((res)=> setUser(res))
+	
+	
+  } */
 
   return (
 		<>
@@ -68,7 +79,7 @@ export default function Login() {
 					<Stack direction='column'>
 						<TextField {...register("username", { required: true })} id='outlined-basic' label='Username / E-mail' variant='outlined' margin='dense' />
 						<TextField {...register("password", { required: true })} type='password' id='outlined-basic' label='Password' variant='outlined' margin='dense' />
-						<Typography gutterBottom>forgot password ? </Typography>
+						{/*<Typography gutterBottom>forgot password ? </Typography>*/}
                         
                         <Button onClick={handleClose} type="submit" fullWidth variant='contained' sx={{ borderRadius: "16px" }} disableElevation>
 							LOGIN

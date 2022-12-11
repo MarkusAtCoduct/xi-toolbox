@@ -4,7 +4,6 @@ import * as React from "react";
 
 
 export default function ListTemplate(props) {
-    console.log(props.listItems)
 	return (
 		<Box mt={2}>
 				<Typography gutterBottom sx={{ fontSize:"22px",  fontWeight: "900", textAlign:"left"}}>

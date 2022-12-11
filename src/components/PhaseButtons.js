@@ -11,6 +11,16 @@ import { useAtom } from "jotai";
 
 import { phaseAtom } from "../atoms/phaseAtom";
 import { privatePhaseAtom } from "../atoms/privatePhaseAtom";
+import { activeAtom } from "../atoms/activeAtom";
+import { methodAtom } from "../atoms/methodAtom";
+import { userAtom } from "../atoms/userAtom";
+import { GetUserDetails } from "../services/Api";
+import { GetContent } from "../services/Api";
+import { useState } from "react";
+import { useEffect } from "react";
+
+
+
 
 
 const Accordion = styled((props) => (
@@ -58,13 +68,43 @@ const AccordionSummary = styled((props) => (
 export default function PhaseButtons(props) {
 
 	const [expanded, setExpanded] = useAtom(privatePhaseAtom);
+	const [loading, setLoading] = useState(false);
+	const [methods, setMethods] = useAtom(methodAtom);
+
 
 	const handleChange = (panel) => (event, newExpanded) => {
 	 	setExpanded(newExpanded ? panel : false);
+		console.log(panel)
+		if(!expanded) {
+		setLoading(true)
+		GetUserDetails().then((res) => GetContent(`/api/method/search?label=${props.phasetext}&pageIndex=0&pageSize=50&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=true`)
+		.then((response) => {
+			response.data.forEach(element => {
+				element.container = "recommendedMethodContainer"
+				element.type = "method"
+			});
+			setMethods(response.data)
+			console.log(response.data)
+			setLoading(false)
+		}))
+		}else{
+			setLoading(true)
+		GetUserDetails().then((res) => GetContent(`/api/method/search?label=&pageIndex=0&pageSize=50&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=true`)
+		.then((response) => {
+			response.data.forEach(element => {
+				element.container = "allMethodsContainer"
+				element.type = "method"
+			});
+			setMethods(response.data)
+			console.log(response.data)
+			setLoading(false)
+		}))
+		}
+		
 	 };
 
 		return (
-			<div style={{marginBottom: "8px"}}>
+			<div style={{marginBottom: "8px"}} >
 				<Accordion id={props.id} expanded={expanded === props.id} className='phase disableTransition' onChange={handleChange(props.id)} square={true}>
 					<AccordionSummary className='disableTransition' aria-controls='panel1d-content' id='panel1d-header'>
 						<Stack direction='row' spacing={3} alignItems='center'>

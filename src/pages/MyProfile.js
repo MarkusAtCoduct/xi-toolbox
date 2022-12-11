@@ -26,7 +26,7 @@ export default function MyProfile() {
 					<div className="sidebar">
 					<ProfileInfo/>
 					<Heading heading={"My Cross Innovation Process"} />
-					{user ? <PhaseSelector type="lib"/> : <PhaseSelector/>}
+					<PhaseSelector/>
 					</div>
 				</div>
 				<div className="content">

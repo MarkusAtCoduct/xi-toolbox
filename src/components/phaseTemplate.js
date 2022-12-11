@@ -26,6 +26,9 @@ import ToolboxStepperPhase from "./toolboxStepperPhase";
 
 import { Link, useLocation} from "react-router-dom"
 import MethodCreatorForm from "./Forms/MethodCreatorForm";
+import { recommendedMethodAtom } from "../atoms/recommendedMethodAtom";
+import { GetUserDetails } from "../services/Api";
+import { GetContent } from "../services/Api";
 
 
 const Accordion = styled((props) => (
@@ -85,12 +88,29 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 export default function Phase(props) {
 
 	const [phaseItems, setPhaseItems] = useAtom(phaseAtom);
+	const [loading, setLoading] = React.useState(false);
+	const [recommendedMethods, setRecommendedMethods] = useAtom(recommendedMethodAtom)
 
 	const [expanded, setExpanded] = useAtom(phaseAccordionAtom);
 
 	const handleChange = (panel) => (event, newExpanded) => {
-	 	setExpanded(newExpanded ? panel : false);
-
+	 		setExpanded(newExpanded ? panel : false);
+			setLoading(true)
+			if(newExpanded === true){
+			GetUserDetails().then((res) => GetContent(`/api/method/search?label=${props.phasetext}&pageIndex=0&pageSize=50&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=true`)
+			.then((response) => {
+				response.data.forEach(element => {
+					element.container = "recommendedMethodContainer"
+					element.type = "method"
+				});
+				setRecommendedMethods(response.data)
+				console.log(response.data)
+				setLoading(false)
+			}))
+			}else{
+				setRecommendedMethods([])
+				setLoading(false)
+			}
 	 };
 
 

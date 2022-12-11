@@ -56,7 +56,7 @@ export default function Details(props) {
 						<Container sx={style}>
 							<Card elevation={2} sx={{ borderRadius: "16px" }}>
 								<CardContent sx={{ maxHeight:"94vh"}}>
-										<CardFunctions details close={handleClose} type={props.data.isMethodSet}/>
+										<CardFunctions details={true} data={props.data} close={handleClose}/>
 
 										<Box>
 											<Typography
@@ -119,10 +119,9 @@ export default function Details(props) {
 												<Stack direction="column">
 													<Paragraph
 														heading="Description"
-														lines="4rem"
+														lines="8rem"
 														body={
-															props.data.description ||
-															"A market analysis is the process of conducting thorough research on a specific market. Businesses typically use market analysis to determine whether a new product can perform well in a market or if it needs adjustment before being presented to consumers"
+															props.data.description || "placeholder"
 														}
 													/>
 													<Paragraph
@@ -148,7 +147,7 @@ export default function Details(props) {
 											</Grid>
 											<Grid md={4}>
 												<Stack direction="column">
-													<ChipList listItems={props.data.recommendedPhases} heading="Recommended Phases" />
+													<ChipList listItems={props.data.relevantPhases} heading="Recommended Phases" />
 													<ListTemplate listItems={props.data.references} heading="References" />
 													<Comments data={ratings?.data ? ratings?.data : []} id={props.data.id}/>
 												</Stack>

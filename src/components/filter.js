@@ -37,11 +37,11 @@ export default function Filter() {
 		includeMethodSets: true,
 	}})
 
-	const { control, register, handleSubmit, formState: { errors } } = Search;
+	const { control, watch, register, handleSubmit, formState: { errors } } = Search;
 	const [methods, setMethods] = useAtom(methodAtom);
 
-
 	const onSubmit = data =>{ 
+		console.log(watch)
 		//console.log(`/api/method/search?label=${data.label}&pageIndex=${data.pageIndex}&pageSize=${data.pageSize}&sortBy=${data.sortBy}&sortDirection=${data.sortDirection}&includeMethods=${data.includeMethods}&includeMethodSets=${data.includeMethodSets}`)
 	const tmpItems = [...methods]
 	GetContent(`/api/method/search?label=${data.label}&pageIndex=${data.pageIndex}&pageSize=${data.pageSize}&sortBy=${data.sortBy}&sortDirection=${data.sortDirection}&includeMethods=${data.includeMethods}&includeMethodSets=${data.includeMethodSets}`)
@@ -79,11 +79,6 @@ export default function Filter() {
 										</IconButton>
 									</InputAdornment>
 								),
-								endAdornment: (
-									<InputAdornment position="end">
-										<CancelOutlinedIcon />
-									</InputAdornment>
-								),
 							}}
 
 							{...register("label")}
@@ -99,19 +94,21 @@ export default function Filter() {
 
 						<Box sx={{ minWidth: 120 }}>
 							<FormControl fullWidth>
-								<InputLabel variant="standard" htmlFor="uncontrolled-native">
-									Sort by
-								</InputLabel>
+								
+								Sort by
+								
 								<select
-									{...register("sortBy")}
+									{...register("sortBy", {onChange: handleSubmit(onSubmit)})}
+									value={watch("sortBy")}
+									defaultValue="name"
 									inputProps={{
 										name: "age",
 										id: "uncontrolled-native",
 									}}>
-									<option value={"NAME"}>Name</option>
-									<option value={"COST"}>Cost</option>
-									<option value={"TIME"}>Time</option>
-									<option value={"RATE"}> Rating</option>
+									<option value={"name"}>Name</option>
+									<option value={"cost"}>Cost</option>
+									<option value={"time"}>Time</option>
+									<option value={"rate"}> Rating</option>
 								</select>
 							</FormControl>
 						</Box>

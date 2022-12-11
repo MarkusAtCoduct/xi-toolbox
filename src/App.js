@@ -82,6 +82,7 @@ function App() {
 			setLoading(true)
 			refreshToken().then(() => {return GetUserDetails()})
 			.then((res)=> setUser(res))
+			.catch((err) => console.log("refresh token out of date"))
 			.then(() => setLoading(false))
 		}
 	}, [])

@@ -27,9 +27,8 @@ import Masonry from 'react-masonry-css'
 
 import { GetContent } from '../services/Api';
 
-import {logout} from "../services/authApi";
-import { userAtom } from '../atoms/userAtom';
 import Skeleton from '@mui/material/Skeleton';
+import { recommendedMethodAtom } from '../atoms/recommendedMethodAtom';
 
 import { useState } from 'react';
 
@@ -38,12 +37,13 @@ import { useState } from 'react';
 export default function CardGrid(props) {
 	const [phaseItems, setPhaseItems] = useAtom(phaseAtom);
   const [methods, setMethods] = useAtom(methodAtom);
+  const [recommendedMethods, setRecommendedMethods] = useAtom(recommendedMethodAtom);
   const [activeId, setActiveId] = useAtom(activeAtom);
   const [loading, setLoading] = useState(false);
   
   useEffect(() => { 
 	setLoading(true)
-	GetContent("/api/method/search?label&pageIndex=0&pageSize=50&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=true")
+	GetContent("/api/method/search?label&pageIndex=0&pageSize=50&sortBy=name&sortDirection=asc&includeMethods=true&includeMethodSets=true")
 	.then((response) => {
 		response.data.forEach(element => {
 			element.container = "recommendedMethodContainer"
@@ -87,7 +87,7 @@ export default function CardGrid(props) {
     					</Box>
 					) : ( 
 							<Masonry breakpointCols={2} className='my-masonry-grid' columnClassName='my-masonry-grid_column'>
-							{methods.map((method) => (
+							{recommendedMethods.map((method) => (
 								<div key={method.id}>
 									{!method.isMethodSet ? (
 										<div className='method'>
@@ -124,7 +124,7 @@ export default function CardGrid(props) {
 				All Methods / Method Sets
 			</Typography>
       <Droppable id='allMethodsContainer'>
-						{/*<Masonry breakpointCols={2} className='my-masonry-grid' columnClassName='my-masonry-grid_column'>
+						<Masonry breakpointCols={2} className='my-masonry-grid' columnClassName='my-masonry-grid_column'>
 							{methods.map((method) => (
 								<div key={method.id}>
 									{method.type === "method" ? (
@@ -146,7 +146,7 @@ export default function CardGrid(props) {
 									)}
 								</div>
 							))}
-						</Masonry>*/}
+						</Masonry>
 					</Droppable>
 		</Box>}
 		</>

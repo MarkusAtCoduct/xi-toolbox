@@ -44,6 +44,7 @@ export default function BasicCard(props) {
 			sx={{
 				borderRadius: "16px",
 				maxWidth: "344px",
+				minWidth: "300px",
 				//height: "352px",
 			}}
 			style={props.drag ? { outline: " solid 2px #FF5454" } : null}

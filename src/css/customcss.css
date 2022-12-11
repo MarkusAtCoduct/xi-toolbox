@@ -14,13 +14,14 @@ body{
 /* ===== Scrollbar CSS ===== */
   /* Firefox */
   * {
-    scrollbar-width: auto;
+    scrollbar-width: thin;
     scrollbar-color: #9a989a #ffffff;
   }
 
   /* Chrome, Edge, and Safari */
   *::-webkit-scrollbar {
-    width: 5px;
+    width: 3px;
+    height: 3px;
   }
 
   *::-webkit-scrollbar-track {
@@ -218,4 +219,7 @@ ol{
   font-size: 14px;
   transition-duration: 100ms;
 
+}
+.MuiCardContent-root:last-child{
+  overflow: auto;
 }
