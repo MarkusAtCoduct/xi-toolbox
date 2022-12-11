@@ -32,6 +32,7 @@ import { userAtom } from '../atoms/userAtom';
 import { GetUserDetails } from '../services/Api';
 import { useState } from 'react';
 import Skeleton from '@mui/material/Skeleton';
+import { recommendedMethodAtom } from '../atoms/recommendedMethodAtom';
 
 
 
@@ -39,6 +40,7 @@ import Skeleton from '@mui/material/Skeleton';
 
 export default function CardGridProfile(props) {
   const [methods, setMethods] = useAtom(methodAtom);
+  const [recommendedMethods, setRecommendedMethods] = useAtom(recommendedMethodAtom);
   const [activeId, setActiveId] = useAtom(activeAtom);
   const [user, setUser] = useAtom(userAtom);
   const [loading, setLoading] = useState(false);
@@ -49,7 +51,6 @@ export default function CardGridProfile(props) {
 	GetUserDetails().then((res) => GetContent(`/api/method/search?label=${res.data.lastName}&pageIndex=0&pageSize=50&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=true`)
 	.then((response) => {
 		response.data.forEach(element => {
-			element.container = "recommendedMethodContainer"
 			element.type = "method"
 		});
 		setMethods(response.data)
@@ -82,29 +83,46 @@ export default function CardGridProfile(props) {
       						<CircularProgress />
     					</Box>
 					) : ( 
+						<>
+					<Masonry breakpointCols={2} className='my-masonry-grid' columnClassName='my-masonry-grid_column'>
+					{recommendedMethods.map((method) => (
+						<div key={method.id}>
+							{!method.isMethodSet ? (
+								<div className='method'>
+										<>
+											<CardItem className='method' data={method}></CardItem>
+										</>
+								</div>
+							) : (
+								<div className='methodset' key={method.id}>
+										<>
+											<CardItem data={method}></CardItem>
+										</>
+								</div>
+							)}
+						</div>
+					))}
+				</Masonry>
 							<Masonry breakpointCols={2} className='my-masonry-grid' columnClassName='my-masonry-grid_column'>
 							{methods.map((method) => (
 								<div key={method.id}>
 									{!method.isMethodSet ? (
 										<div className='method'>
-										
 												<>
 													<CardItem className='method' data={method}></CardItem>
 												</>
-											
 										</div>
 									) : (
 										<div className='methodset' key={method.id}>
-											
 												<>
 													<CardItem data={method}></CardItem>
 												</>
-											
 										</div>
 									)}
 								</div>
 							))}
 						</Masonry>
+						</>
 						)}
      
 		</Box>

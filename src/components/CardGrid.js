@@ -129,19 +129,19 @@ export default function CardGrid(props) {
 								<div key={method.id}>
 									{method.type === "method" ? (
 										<Grid className='method' item key={method.id} mb={1} mr={-1} xs={props.columns || 3}>
-											{method.container === "recommendedMethodContainer" || method.container === null ? (
+										
 												<Draggable key={method.id} data={method} id={method.id}>
 													<CardItem className='method' data={method} type={method.type} header={method.header}></CardItem>
 												</Draggable>
-											) : null}
+											
 										</Grid>
 									) : (
 										<Grid className='methodset' item key={method.id} mb={1} mr={-1} xs={props.columns || 3}>
-											{method.container === "recommendedMethodContainer" || method.container === null ? (
+											
 												<Draggable data={method} key={method.id} id={method.id}>
 													<CardItem data={method} type={method.type} header={method.header}></CardItem>
 												</Draggable>
-											) : null}
+											
 										</Grid>
 									)}
 								</div>

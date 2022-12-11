@@ -38,18 +38,8 @@ export default function Login() {
 	login(data.username, data.password)
 	.then((response) => {
         return GetUserDetails().then((res)=> setUser(res))})
+		Navigate("/home")
 	}
-	Navigate("/home")
-		/*{return GetUserDetails()})
-	.then((response) => {
-        if (!response.ok) {
-            throw Error("lol");
-        }
-        return response;
-    }).then((res)=> setUser(res))
-	
-	
-  } */
 
   return (
 		<>

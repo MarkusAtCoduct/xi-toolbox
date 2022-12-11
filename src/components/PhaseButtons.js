@@ -18,6 +18,7 @@ import { GetUserDetails } from "../services/Api";
 import { GetContent } from "../services/Api";
 import { useState } from "react";
 import { useEffect } from "react";
+import { recommendedMethodAtom } from "../atoms/recommendedMethodAtom";
 
 
 
@@ -68,6 +69,7 @@ const AccordionSummary = styled((props) => (
 export default function PhaseButtons(props) {
 
 	const [expanded, setExpanded] = useAtom(privatePhaseAtom);
+	const [recommendedMethods, setRecommendedMethods] = useAtom(recommendedMethodAtom);
 	const [loading, setLoading] = useState(false);
 	const [methods, setMethods] = useAtom(methodAtom);
 
@@ -75,7 +77,7 @@ export default function PhaseButtons(props) {
 	const handleChange = (panel) => (event, newExpanded) => {
 	 	setExpanded(newExpanded ? panel : false);
 		console.log(panel)
-		if(!expanded) {
+		if(newExpanded === true) {
 		setLoading(true)
 		GetUserDetails().then((res) => GetContent(`/api/method/search?label=${props.phasetext}&pageIndex=0&pageSize=50&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=true`)
 		.then((response) => {
@@ -83,16 +85,17 @@ export default function PhaseButtons(props) {
 				element.container = "recommendedMethodContainer"
 				element.type = "method"
 			});
-			setMethods(response.data)
+			setRecommendedMethods(response.data)
 			console.log(response.data)
 			setLoading(false)
 		}))
 		}else{
+			setRecommendedMethods([])
 			setLoading(true)
 		GetUserDetails().then((res) => GetContent(`/api/method/search?label=&pageIndex=0&pageSize=50&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=true`)
 		.then((response) => {
 			response.data.forEach(element => {
-				element.container = "allMethodsContainer"
+				element.container = "recommendedMethodContainer"
 				element.type = "method"
 			});
 			setMethods(response.data)
