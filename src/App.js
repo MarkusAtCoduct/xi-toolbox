@@ -1,6 +1,6 @@
 import * as React from "react"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import "./App.css"
 import MainNav from "./components/MainNav"
 import { createTheme } from "@mui/material/styles"
@@ -8,8 +8,6 @@ import { ThemeProvider } from "@emotion/react"
 
 import { Routes, Route, Navigate} from "react-router-dom"
 
-import Layout from "./pages/Layout"
-import Methods from "./pages/Methods"
 import MethodSetCreator from "./pages/methodSetCreator"
 import MethodSetCreate from "./pages/MethodSetCreate"
 import MyProfile from "./pages/MyProfile"
@@ -39,6 +37,7 @@ import { isLoggedIn, refreshToken } from "../src/services/authApi"
 
 import uuid from 'react-uuid';
 import { GetUserDetails } from "./services/Api";
+import { CircularProgress } from "@mui/material"
 
 
 const theme = createTheme({
@@ -75,13 +74,15 @@ function App() {
 	const [activeId, setActiveId] = useAtom(activeAtom)
 	const [expanded] = useAtom(phaseAccordionAtom);
 	const [user, setUser] = useAtom(userAtom);
+	const [loading, setLoading] = useState(false);
 
 
 	useEffect(() => {	
 		if (isLoggedIn()) {
-			refreshToken().then(() => {
-				setUser(GetUserDetails())
-			})
+			setLoading(true)
+			refreshToken().then(() => {return GetUserDetails()})
+			.then((res)=> setUser(res))
+			.then(() => setLoading(false))
 		}
 	}, [])
 
@@ -107,8 +108,6 @@ function App() {
 			setPhaseItems(arrayMove(phaseItems, test, newIndex))
 		 }
 		else if(methods[Index].container != over?.id){
-			console.log(tmp)
-
 			if(tmp.isMethodSet){
 					tmp.simpleUsedMethods.forEach(element => {
 
@@ -117,22 +116,15 @@ function App() {
 					element.id = uuid()
 					element.container = expanded
 				});
-				console.log(tmp)
 				tmpItems.push(...tmp.simpleUsedMethods) 
 				setPhaseItems(tmpItems)
-				
-
 			}else{
 				tmp.prevId = tmp.id
 				tmp.id = uuid()
 				tmp.container = expanded
 				tmpItems.push(tmp) 
-				
-				console.log(tmp)
-		
 				setPhaseItems(tmpItems)
 			}
-			console.log(phaseItems)
 		}
 		setActiveId(null)
 	}
@@ -151,14 +143,17 @@ const sensors = useSensors(
       }
     }),
   );
-console.log(user)
+
 	return (
+		
+		
 		<ThemeProvider theme={theme}>
 			<DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} sensors={sensors}>
 				<StyledEngineProvider injectFirst>
 					<div className='App'>
 						<MainNav />
 
+		{loading ? <div> <CircularProgress></CircularProgress></div> :
 						<Routes>
 								<Route path='/' element={<Navigate to="/home" />}/>
 								<Route path='/home' element={<Home/>}/>
@@ -175,6 +170,7 @@ console.log(user)
   						*/}
 							
 						</Routes>
+}
 						<Footer/>
 					</div>
 				</StyledEngineProvider>

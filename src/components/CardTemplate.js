@@ -40,24 +40,27 @@ export default function BasicCard(props) {
 	return (
 		<Card
 			className={props.data.isMethodSet ? "methodSet" : "method"}
-			elevation={3}
+			elevation={0}
 			sx={{
 				borderRadius: "16px",
-				//maxWidth: "344px",
+				maxWidth: "344px",
 				//height: "352px",
 			}}
 			style={props.drag ? { outline: " solid 2px #FF5454" } : null}
 		>
 			<CardContent sx={{padding: "24px", paddingBottom: "24px"}}>
-				<CardFunctions add={handleAdd} data={props.data} owner={props.data.ownerId} id={props.data.id} type={props.data.isMethodSet} />
+				<CardFunctions addtoset={handleAdd} data={props.data} owner={props.data.ownerId} id={props.data.id} type={props.data.isMethodSet} />
 				<Box>
-					<Stack direction='row' alignItems='flex-end' justifyContent='space-between'>
 						<Typography sx={{ fontSize: 28, fontWeight: "900", textAlign: "left" }}>{props.data.name || "Placeholder"}</Typography>
+					<Stack direction='row' alignItems='flex-end' justifyContent='space-between'>
 						<Stack direction='row' alignItems='flex-end'>
-							<Typography gutterBottom sx={{ fontSize: 11, fontWeight: "500", paddingTop: "5px" }}>
-								{props.data.owner || "Placeholder"}
+							<Typography gutterBottom sx={{width: "max-content", fontSize: 11, fontWeight: "500", paddingTop: "5px" }}>
+								{"by: "+props.data.owner || "Placeholder"}
 							</Typography>
-							<MilitaryTech color='primary' />
+							{props?.data.ownerBadges?.map((badge) => (
+									<>
+									{badge === "METHOD_CREATOR" ?<MilitaryTech color='primary' /> : null}
+									</>))}
 						</Stack>
 					</Stack>
 				</Box>
@@ -67,6 +70,7 @@ export default function BasicCard(props) {
 						<Rating
 							size='small'
 							name='simple-controlled'
+							readOnly
 							sx={{ color: "#757875", float: "left" }}
 							value={props.data.rate}
 						/>
@@ -87,7 +91,7 @@ export default function BasicCard(props) {
 					<Stack direction='row' justifyContent='space-between' alignItems='center' color='#000000'>
 						<Typography sx={{ fontWeight: "bold" }}>{props.data.cost || 6500} €</Typography>
 						<Typography sx={{ fontWeight: "bold" }}>{props.data.time || 15} Tage</Typography>
-						<Typography sx={{ fontWeight: "bold" }}>{props.data.MethodType || "placeholder"}</Typography>
+						<Typography sx={{ fontWeight: "bold" }}>{props.data.needInvolvement ? "Expert Involved" : null}</Typography>
 					</Stack>
 					<Stack direction='column' justifyContent='flex-start' alignItems='flex-start' mt={1}>
 						<Typography sx={{ fontSize: 11, fontWeight: "500", color: "#757875" }}>Brief</Typography>
@@ -120,7 +124,7 @@ export default function BasicCard(props) {
 											fontSize: 14,
 											fontWeight: "500",
 										}}
-										label={props.data.input || "Input"}
+										label={props.data.input[0] || "Input"}
 									/>
 								</Stack>
 							</Grid>
@@ -133,7 +137,7 @@ export default function BasicCard(props) {
 											fontSize: 14,
 											fontWeight: "500",
 										}}
-										label={props.data.output || "Output"}
+										label={props.data.output[0] || "Output"}
 									/>
 								</Stack>
 							</Grid>

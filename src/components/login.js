@@ -14,10 +14,15 @@ import * as React from 'react';
 import {login} from "../services/authApi";
 import { useAtom } from "jotai";
 import { userAtom } from '../atoms/userAtom';
+import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { GetUserDetails } from '../services/Api';
 
 export default function Login() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [user, setUser] = useAtom(userAtom)
+  const navigate = useNavigate();
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -30,9 +35,9 @@ export default function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   
   const onSubmit = data => {
-	setUser(login(data.username, data.password))
+	login(data.username, data.password).then(() => {return GetUserDetails()}).then((res)=> setUser(res))
 	
-	//console.log(data);
+	Navigate("/home")
   } 
 
   return (

@@ -11,17 +11,13 @@ import './css/customcss.css'
 import { Suspense } from "react"
 
 import LinearProgress from '@mui/material/LinearProgress';
-import { Box } from "@mui/material"
-
-
-
+import { Box, CircularProgress } from "@mui/material"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-
 root.render(
-    <Suspense fallback={<Box sx={{ width: '100%' }}>
-		<LinearProgress />
+    <Suspense fallback={<Box sx={{ width: '100%', height: "100%"  }}>
+        <CircularProgress />
 	  </Box>}>
     <BrowserRouter>
         <App />

@@ -1,0 +1,112 @@
+Date : 2022-12-07 22:00:18
+Directory : c:\Coduct\XI-LAB\Toolbox\xi-toolbox
+Total : 71 files,  34128 codes, 128 comments, 685 blanks, all 34941 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |          4 |     30,444 |         10 |          3 |     30,457 |
+| JavaScript |         59 |      3,378 |         86 |        590 |      4,054 |
+| CSS        |          3 |        212 |          5 |         54 |        271 |
+| Markdown   |          1 |         38 |          0 |         33 |         71 |
+| YAML       |          2 |         31 |          4 |          4 |         39 |
+| HTML       |          1 |         24 |         23 |          1 |         48 |
+| XML        |          1 |          1 |          0 |          0 |          1 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                    | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                       |         71 |     34,128 |        128 |        685 |     34,941 |
+| .github                                                                                 |          2 |         31 |          4 |          4 |         39 |
+| .github\workflows                                                                       |          2 |         31 |          4 |          4 |         39 |
+| public                                                                                  |          2 |         49 |         23 |          2 |         74 |
+| src                                                                                     |         63 |      3,591 |         91 |        644 |      4,326 |
+| src\atoms                                                                               |          6 |         12 |          0 |          8 |         20 |
+| src\components                                                                          |         35 |      2,730 |         52 |        436 |      3,218 |
+| src\components\Forms                                                                    |          3 |        724 |          2 |         66 |        792 |
+| src\css                                                                                 |          1 |        167 |          5 |         46 |        218 |
+| src\hooks                                                                               |          1 |         18 |          0 |          4 |         22 |
+| src\pages                                                                               |          9 |        248 |         18 |         59 |        325 |
+| src\services                                                                            |          3 |        188 |          6 |         29 |        223 |
++-----------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                | language   | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\.github\workflows\firebase-hosting-merge.yml        | YAML       |         17 |          2 |          2 |         21 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\.github\workflows\firebase-hosting-pull-request.yml | YAML       |         14 |          2 |          2 |         18 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\README.md                                           | Markdown   |         38 |          0 |         33 |         71 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\firebase.json                                       | JSON       |          7 |         10 |          0 |         17 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\package-lock.json                                   | JSON       |     30,356 |          0 |          1 |     30,357 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\package.json                                        | JSON       |         56 |          0 |          1 |         57 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\public\index.html                                   | HTML       |         24 |         23 |          1 |         48 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\public\manifest.json                                | JSON       |         25 |          0 |          1 |         26 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\App.css                                         | CSS        |         33 |          0 |          6 |         39 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\App.js                                          | JavaScript |        141 |          3 |         39 |        183 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\App.test.js                                     | JavaScript |          7 |          0 |          2 |          9 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\atoms\activeAtom.js                             | JavaScript |          2 |          0 |          1 |          3 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\atoms\methodAtom.js                             | JavaScript |          2 |          0 |          1 |          3 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\atoms\phaseAccordionAtom.js                     | JavaScript |          2 |          0 |          1 |          3 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\atoms\phaseAtom.js                              | JavaScript |          2 |          0 |          3 |          5 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\atoms\privatePhaseAtom.js                       | JavaScript |          2 |          0 |          1 |          3 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\atoms\userAtom.js                               | JavaScript |          2 |          0 |          1 |          3 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\AccountMenu.js                       | JavaScript |        100 |          0 |          6 |        106 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\AvatarUpload.js                      | JavaScript |         80 |          3 |         20 |        103 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\CardFunctions.js                     | JavaScript |         84 |          0 |         14 |         98 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\CardGrid.js                          | JavaScript |        111 |         21 |         18 |        150 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\CardGridProfile.js                   | JavaScript |        114 |         21 |         23 |        158 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\CardTemplate.js                      | JavaScript |        134 |          2 |         16 |        152 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\ChipList.js                          | JavaScript |         21 |          1 |          1 |         23 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\Comments.js                          | JavaScript |         55 |          0 |         11 |         66 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\Draggable.js                         | JavaScript |         22 |          1 |          8 |         31 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\Droppable.js                         | JavaScript |         15 |          0 |          4 |         19 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\Footer.js                            | JavaScript |         11 |          0 |          9 |         20 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\Forms\EditProfileForm.js             | JavaScript |        186 |          1 |         13 |        200 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\Forms\MethodCreatorForm.js           | JavaScript |        307 |          0 |         40 |        347 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\Forms\RegistrationForm.js            | JavaScript |        231 |          1 |         13 |        245 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\Heading.js                           | JavaScript |         11 |          0 |          6 |         17 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\InputList.js                         | JavaScript |         65 |          0 |          5 |         70 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\ListTemplate.js                      | JavaScript |         21 |          0 |          7 |         28 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\MainNav.js                           | JavaScript |         97 |          0 |         22 |        119 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\MethodList.js                        | JavaScript |         31 |          0 |          9 |         40 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\NavButton.js                         | JavaScript |         46 |          0 |          8 |         54 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\Paragraph.js                         | JavaScript |         14 |          0 |          4 |         18 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\PhaseButtons.js                      | JavaScript |         68 |          0 |         18 |         86 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\PhaseSelector.js                     | JavaScript |         33 |          0 |          4 |         37 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\ProfileInfo.js                       | JavaScript |         60 |          0 |          4 |         64 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\Rate.js                              | JavaScript |        100 |          0 |         11 |        111 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\ReviewList.js                        | JavaScript |         26 |          0 |          5 |         31 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\SmallCardTemplate.js                 | JavaScript |         65 |          0 |         18 |         83 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\Sortable.js                          | JavaScript |         31 |          0 |          8 |         39 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\SubComment.js                        | JavaScript |         34 |          0 |          4 |         38 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\details.js                           | JavaScript |        160 |          0 |         19 |        179 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\filter.js                            | JavaScript |        107 |          1 |         17 |        125 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\login.js                             | JavaScript |         71 |          0 |         12 |         83 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\phaseTemplate.js                     | JavaScript |        149 |          0 |         46 |        195 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\toolboxStepper.js                    | JavaScript |         24 |          0 |          8 |         32 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\components\toolboxStepperPhase.js               | JavaScript |         46 |          0 |          5 |         51 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\css\customcss.css                               | CSS        |        167 |          5 |         46 |        218 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\hooks\useFetch.js                               | JavaScript |         18 |          0 |          4 |         22 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\index.css                                       | CSS        |         12 |          0 |          2 |         14 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\index.js                                        | JavaScript |         21 |          3 |         10 |         34 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\logo.svg                                        | XML        |          1 |          0 |          0 |          1 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\pages\EditProfile.js                            | JavaScript |         32 |          0 |          5 |         37 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\pages\Home.js                                   | JavaScript |         10 |          0 |          5 |         15 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\pages\Layout.js                                 | JavaScript |         10 |          0 |          3 |         13 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\pages\MethodCreator.js                          | JavaScript |         32 |          0 |          5 |         37 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\pages\MethodSetCreate.js                        | JavaScript |         32 |          0 |          5 |         37 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\pages\Methods.js                                | JavaScript |         16 |          0 |          4 |         20 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\pages\MyProfile.js                              | JavaScript |         43 |          0 |         14 |         57 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\pages\Register.js                               | JavaScript |         32 |          0 |          5 |         37 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\pages\methodSetCreator.js                       | JavaScript |         41 |         18 |         13 |         72 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\reportWebVitals.js                              | JavaScript |         12 |          0 |          2 |         14 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\services\Api.js                                 | JavaScript |        126 |          6 |         19 |        151 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\services\authApi.js                             | JavaScript |         62 |          0 |          9 |         71 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\services\userService.js                         | JavaScript |          0 |          0 |          1 |          1 |
+| c:\Coduct\XI-LAB\Toolbox\xi-toolbox\src\setupTests.js                                   | JavaScript |          1 |          4 |          1 |          6 |
+| Total                                                                                   |            |     34,128 |        128 |        685 |     34,941 |
++-----------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

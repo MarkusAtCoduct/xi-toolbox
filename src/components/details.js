@@ -15,8 +15,12 @@ import ChipList from "./ChipList";
 import ListTemplate from "./ListTemplate";
 import MethodList from "./MethodList";
 import Paragraph from "./Paragraph";
-import Rate from "./Rate";
 import Comments from "./Comments";
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { getMethodDetails } from '../services/Api';
+
+
 
 const style = {
 	position: "absolute",
@@ -33,6 +37,7 @@ export default function Details(props) {
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 	const [value, setValue] = React.useState(2);
+	const [ratings, setRatings ] = useState(null);
 
 
 	return (
@@ -75,11 +80,9 @@ export default function Details(props) {
 												name="simple-controlled"
 												sx={{ color: "#757875", float: "left" }}
 												value={props.data.rate}
-												onChange={(event, newValue) => {
-													setValue(newValue);
-												}}
+												readOnly
 											/>
-
+											{props.data.rate}
 											<Typography
 												color="#757875"
 												sx={{
@@ -147,8 +150,7 @@ export default function Details(props) {
 												<Stack direction="column">
 													<ChipList listItems={props.data.recommendedPhases} heading="Recommended Phases" />
 													<ListTemplate listItems={props.data.references} heading="References" />
-													<Rate id={props.data.id}/>
-													<Comments id={props.data.id}/>
+													<Comments data={ratings?.data ? ratings?.data : []} id={props.data.id}/>
 												</Stack>
 											</Grid>
 										</Grid>

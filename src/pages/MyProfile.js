@@ -4,26 +4,53 @@ import { Container } from "@mui/material";
 import Filter from "../components/filter";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import Heading from "../components/Heading";
-import MethodCards from "../components/CardGrid"
 import PhaseSelector from "../components/PhaseSelector";
 import ProfileInfo from "../components/ProfileInfo";
-
+import MethodCards from "../components/CardGridProfile";
+import { useAtom } from "jotai";
+import { userAtom } from "../atoms/userAtom";
+import Stack from "@mui/material/Stack";
+import { Link } from "react-router-dom";
+import MethodCreatorForm from "../components/Forms/MethodCreatorForm";
 
 export default function MyProfile() {
+
+	const [user, setUser] = useAtom(userAtom);
+
   return (
-			<Container>
-				<Grid container spacing={2} mt={0}>
-					<Grid item xs={4} sx={{backgroundColor: "#EFF1EE"}} >
-                        <ProfileInfo/>
-						<Heading heading={"My Cross Innovation Process"} />
-                    	<PhaseSelector />
-                    </Grid>
-					<Grid item xs={8} sx={{backgroundColor: "#E1E3E0"}}>
-						<Heading heading={"My Methods & Method Sets Library"} />
-                    	<Filter />
-						<MethodCards columns={6} />
-					</Grid>
-				</Grid>
-			</Container>
+	<Container>
+			<div className="setMakerWrapper">
+					
+					
+				<div className="sidebarWrapper">
+					<div className="sidebar">
+					<ProfileInfo/>
+					<Heading heading={"My Cross Innovation Process"} />
+					{user ? <PhaseSelector type="lib"/> : <PhaseSelector/>}
+					</div>
+				</div>
+				<div className="content">
+				<div className="filterWrapper">
+				<Stack direction="row"  justifyContent="space-between" alignItems="center">
+					<Heading heading={"Methods & Method Sets Library"}/>
+
+					{user ? <Link className="LinkButton" to="/createMethod" state={{methodupdate: true, isMethodSet:false}} component={<MethodCreatorForm />} >Create new Method</Link> : null}
+	
+				</Stack>
+				<Filter/>
+				</div>
+				<div className="cardsWrapper">
+					<div className="cards">
+					<MethodCards />
+					</div>
+				</div>
+				</div>
+			</div>
+		</Container>
+
   );
 }
+
+
+
+

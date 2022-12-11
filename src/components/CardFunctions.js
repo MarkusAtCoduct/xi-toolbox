@@ -15,10 +15,9 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {DeleteMethod} from "../services/Api"
 
 import * as React from "react";
-import { ConstructionOutlined } from "@mui/icons-material";
 
 export default function CardFunctions(props) {
-	const [user] = useAtom(userAtom);
+const [user] = useAtom(userAtom);
 	
 const handleDelete = () => {
 	console.log(props.id)
@@ -26,6 +25,7 @@ const handleDelete = () => {
 	}
 	
         return (
+			<>
 		<Box>
 			<Stack direction="row" justifyContent="space-between" alignItems="center">
 				<div>
@@ -53,7 +53,7 @@ const handleDelete = () => {
 						<IconButton aria-label="delete" size="medium">
 							<ShareIcon />
 						</IconButton>
-						{user?.data.userId === props.owner ?	
+						{user?.data?.userId === props.owner ?	
 						<>
 						
 						<Link to="/createMethod" state={{prefill: props.data, methodUpdate: true}} component={<MethodCreatorForm />} ><IconButton aria-label="edit" size="medium">
@@ -68,7 +68,7 @@ const handleDelete = () => {
 						:null}
 						{!props.details ?
 						<IconButton
-							onClick={() => props.add()}
+							onClick={() => props.addtoset()}
 							color="primary"
 							aria-label="add to phase"
 							size="medium"
@@ -92,5 +92,6 @@ const handleDelete = () => {
 				</div>
 			</Stack>
 		</Box>
+		</>
 	);
 }

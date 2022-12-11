@@ -11,6 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import { Link } from "react-router-dom";
 import EditProfileForm from "./Forms/EditProfileForm";
 import {Button} from "@mui/material";
+import Badges from "./Badges";
 
 export default function ProfileInfo(props) {
 	const [user] = useAtom(userAtom)
@@ -31,17 +32,8 @@ export default function ProfileInfo(props) {
 					sx={{ width: "112px", height: "112px" }}
 				/>
                 <Stack direction="column" alignItems="center">
-				<MilitaryTech color="primary" />
-				<Typography
-					color="#757875"
-					sx={{
-						fontSize: 12,
-						fontWeight: "400",
-						float: "right",
-						color: "#757875",
-					}}>
-					{props.badge || "Placeholder"}
-				</Typography>
+				
+				<Badges badges={user?.data?.badges}/>
                 </Stack>
 				<Typography
 					sx={{

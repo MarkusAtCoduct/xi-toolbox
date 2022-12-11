@@ -22,6 +22,7 @@ import { useForm } from 'react-hook-form';
 import * as React from "react";
 import { IconButton } from "@mui/material";
 import { GetContent } from '../services/Api';
+import Select from '@mui/material/Select';
 
 
 export default function Filter() {
@@ -31,9 +32,9 @@ export default function Filter() {
 		pageIndex: 0,
 		pageSize: 20,
 		sortBy: "NAME",
-		sortDirection: "DESC",
+		sortDirection: "ASC",
 		includeMethods: true,
-		includeMethodSets: false,
+		includeMethodSets: true,
 	}})
 
 	const { control, register, handleSubmit, formState: { errors } } = Search;
@@ -92,7 +93,7 @@ export default function Filter() {
 						<Stack direction="column">
 							<FormGroup>
 								<FormControlLabel sx={{ fontSize: 11, color: "#5C5F5D" }} control={<Checkbox defaultChecked {...register("includeMethods")}/>}label="Methods"/>
-								<FormControlLabel control={<Checkbox {...register("includeMethodSets")}/>}  label="MethodSets" />
+								<FormControlLabel control={<Checkbox defaultChecked {...register("includeMethodSets")}/>}  label="MethodSets" />
 							</FormGroup>
 						</Stack>
 
@@ -101,14 +102,17 @@ export default function Filter() {
 								<InputLabel variant="standard" htmlFor="uncontrolled-native">
 									Sort by
 								</InputLabel>
-								<NativeSelect
-									defaultValue={"most relevant"}
+								<select
+									{...register("sortBy")}
 									inputProps={{
 										name: "age",
 										id: "uncontrolled-native",
 									}}>
-									<option>Most relevant</option>
-								</NativeSelect>
+									<option value={"NAME"}>Name</option>
+									<option value={"COST"}>Cost</option>
+									<option value={"TIME"}>Time</option>
+									<option value={"RATE"}> Rating</option>
+								</select>
 							</FormControl>
 						</Box>
 					</Stack>

@@ -25,52 +25,31 @@ const style = {
   p: 4,
 };
 
-export default function Rate(props) {
+export default function Comment(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const { control, register, handleSubmit, formState: { errors } } = useForm();
-  const [value, setValue] = useState(2);
 
 
   const onSubmit = (data) => {	
-    data.stars = value;
-    console.log(data);
-        rateMethod(`/api/method/${props.id}/rate`, data).then(() => props.update).then(() => handleClose())
+    	console.log(data);
+		data.parentCommentId = props.parentCommentId;
+        rateMethod(`/api/method/${props.id}/comment`, data).then(() => handleClose())
     }
 
 
   return (
 		<div>
 			<Button onClick={handleOpen} endIcon={<EditIcon />}>
-				Write a review
+				Write a Comment
 			</Button>
 			<Modal open={open} onClose={handleClose} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
 				<Box sx={style}>
 					<Typography variant='h4'> Write A Comment</Typography>
 
 					<form onSubmit={handleSubmit(onSubmit)}>
-						<Typography component='legend'>Add a Rating</Typography>
-
-						<FormControlLabel
-							control={
-								<>
-									<input name='stars' type='number' value={value} hidden readOnly {...register("stars", { valueAsNumber: true })} />
-
-									<Rating
-										name='stars'
-										value={value}
-										precision={0.1}
-										onChange={(_, value) => {
-											setValue(value)
-										}}
-									/>
-									{value}
-								</>
-							}
-							label='select rating'
-						/>
 						<div style={{ width: "100%" }}>
 							<Typography
 								sx={{
@@ -79,19 +58,7 @@ export default function Rate(props) {
 									float: "left",
 								}}
 							>
-								Add a Headline
-							</Typography>
-							<TextField fullWidth label='First Name' variant='filled' {...register("headline", { required: true })} />
-						</div>
-						<div style={{ width: "100%" }}>
-							<Typography
-								sx={{
-									fontSize: 18,
-									fontWeight: "400",
-									float: "left",
-								}}
-							>
-								Add a Review
+								Add a Comment
 							</Typography>
 							<TextField fullWidth multiline minRows={4} label='First Name' variant='filled' {...register("message", { required: true })} />
 						</div>

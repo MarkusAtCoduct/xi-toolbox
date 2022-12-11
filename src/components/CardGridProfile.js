@@ -29,30 +29,34 @@ import { GetContent } from '../services/Api';
 
 import {logout} from "../services/authApi";
 import { userAtom } from '../atoms/userAtom';
+import { GetUserDetails } from '../services/Api';
+import { useState } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 
-import { useState } from 'react';
 
 
 
-export default function CardGrid(props) {
-	const [phaseItems, setPhaseItems] = useAtom(phaseAtom);
+
+export default function CardGridProfile(props) {
   const [methods, setMethods] = useAtom(methodAtom);
   const [activeId, setActiveId] = useAtom(activeAtom);
+  const [user, setUser] = useAtom(userAtom);
   const [loading, setLoading] = useState(false);
+
   
   useEffect(() => { 
 	setLoading(true)
-	GetContent("/api/method/search?label&pageIndex=0&pageSize=50&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=true")
+	GetUserDetails().then((res) => GetContent(`/api/method/search?label=${res.data.firstName}&pageIndex=0&pageSize=50&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=true`)
 	.then((response) => {
 		response.data.forEach(element => {
 			element.container = "recommendedMethodContainer"
 			element.type = "method"
 		});
 		setMethods(response.data)
-		setLoading(false)
 		console.log(response.data)
-	});	
+		setLoading(false)
+	}))
+	
    }, []);
 
    
@@ -112,11 +116,7 @@ export default function CardGrid(props) {
 						)}
 					</Droppable>
 					<DragOverlay dropAnimation={null} style={{ width: 270 }} modifiers={[snapCenterToCursor]}>
-						{activeId ?
-						<SmallCard data={methods[methods.findIndex(({id}) => id === activeId)]
-						|| phaseItems[phaseItems.findIndex(({id}) => id === activeId)]}
-						/> 
-						: null}
+						{activeId ? <SmallCard/> : null}
 					</DragOverlay>
 				</Stack>
 			</Accordion>
@@ -148,7 +148,10 @@ export default function CardGrid(props) {
 							))}
 						</Masonry>*/}
 					</Droppable>
-		</Box>}
-		</>
+		</Box>
+	}
+</>
+
+		
 	)
 }

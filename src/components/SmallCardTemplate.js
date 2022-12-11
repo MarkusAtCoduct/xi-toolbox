@@ -29,6 +29,9 @@ export default function SmallCard(props) {
 		setPhaseItems(tmpItems)
 	}
 
+
+
+	console.log(props.data)
 	return (
 		<Card
 			elevation={3}
@@ -37,7 +40,9 @@ export default function SmallCard(props) {
 				borderRadius: "16px",
 				minWidth: "254px",
 				minHeight: "140px",
-				
+				maxHeight: "140px",
+				maxWidth: "254px",
+				overflow: "hidden"
 			}}
 		>
 			<CardContent>
@@ -51,30 +56,8 @@ export default function SmallCard(props) {
 				<RemoveCircleOutlineIcon />
 			</IconButton>
 			</Stack>
-
-					<Stack direction='row' spacing={1} justifyContent='flex-start' alignItems="center">
-						<Rating
-							size='small'
-							name='simple-controlled'
-							sx={{ color: "#757875", float: "left" }}
-							value={value | props.value}
-							onChange={(event, newValue) => {
-								setValue(newValue)
-							}}
-						/>
-						<Typography
-							color='#757875'
-							sx={{
-								fontSize: 11,
-								fontWeight: "500",
-								float: "right",
-								color: "#757875",
-							}}
-						>
-							{props.ratings | 253} Ratings 
-						</Typography>
-					</Stack>
-					</Stack>
+						<Typography sx={{textOverflow: "ellipsis"}}>{props.data?.description || "lorem"} </Typography>
+			</Stack>
 			</CardContent>
 			
 		</Card>
