@@ -52,9 +52,10 @@ export default function Details(props) {
 					aria-labelledby="modal-modal-title"
 					aria-describedby="modal-modal-description"
 					p={3}
+					
 					>
-						<Container sx={style}>
-							<Card elevation={2} sx={{ borderRadius: "16px" }}>
+						<Container sx={style} >
+							<Card elevation={2} sx={{paddingLeft : "24px",paddingRight : "24px", borderRadius: "16px" }}>
 								<CardContent sx={{ maxHeight:"94vh"}}>
 										<CardFunctions details={true} data={props.data} close={handleClose}/>
 
@@ -82,7 +83,7 @@ export default function Details(props) {
 												value={props.data.rate}
 												readOnly
 											/>
-											{props.data.rate}
+											
 											<Typography
 												color="#757875"
 												sx={{

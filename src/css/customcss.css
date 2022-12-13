@@ -40,7 +40,7 @@ body{
     display: -ms-flexbox; /* Not needed if autoprefixing */
     display: flex;
     margin-left: -16px; /* gutter size offset */
-    width: auto;
+    /*width: 50%; */
   }
   .my-masonry-grid_column {
     padding-left: 16px; /* gutter size */
@@ -86,7 +86,7 @@ body{
 }
 
 .sidebar{ 
-  padding: 8px;
+  padding: 16px;
   z-index: 1;
   background-color: #eff1ee;
 }
@@ -119,7 +119,7 @@ body{
 }
 .cards{
   position: static;
-  padding: 8px;
+  padding: 16px;
   height: 100%;
   overflow-y: scroll;
   flex-grow : 1;
@@ -222,4 +222,15 @@ ol{
 }
 .MuiCardContent-root:last-child{
   overflow: auto;
+}
+
+
+.fade{
+  position: absolute;
+  bottom: -8px;
+  align-self: flex-start;
+  z-index: 3; 
+  height: 8px;
+  width: 100%;
+  background: linear-gradient(180deg, rgba(225,227,224,1) 0%, rgba(228, 25, 25, 0) 100%);
 }

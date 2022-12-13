@@ -50,7 +50,7 @@ export default function BasicCard(props) {
 			style={props.drag ? { outline: " solid 2px #FF5454" } : null}
 		>
 			<CardContent sx={{padding: "24px", paddingBottom: "24px"}}>
-				<CardFunctions addtoset={handleAdd} data={props.data} owner={props.data.ownerId} id={props.data.id} type={props.data.isMethodSet} />
+				<CardFunctions addtoset={handleAdd} data={props.data} owner={props.data.ownerId} id={props.data.id}/>
 				<Box>
 						<Typography sx={{ fontSize: 28, fontWeight: "900", textAlign: "left" }}>{props.data.name || "Placeholder"}</Typography>
 					<Stack direction='row' alignItems='flex-end' justifyContent='space-between'>
@@ -58,10 +58,10 @@ export default function BasicCard(props) {
 							<Typography gutterBottom sx={{width: "max-content", fontSize: 11, fontWeight: "500", paddingTop: "5px" }}>
 								{"by: "+props.data.owner || "Placeholder"}
 							</Typography>
-							{props?.data.ownerBadges?.map((badge) => (
-									<>
+							{props?.data.ownerBadges?.map((badge, index) => (
+									<div key={index}>
 									{badge === "METHOD_CREATOR" ?<MilitaryTech color='primary' /> : null}
-									</>))}
+									</div>))}
 						</Stack>
 					</Stack>
 				</Box>

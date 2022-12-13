@@ -57,6 +57,7 @@ export default function Filter() {
 	}
 
 	return (
+		<>
 		<form onSubmit={handleSubmit(onSubmit)}>
 		<Box p={1}>
 			<Card
@@ -100,11 +101,8 @@ export default function Filter() {
 								<select
 									{...register("sortBy", {onChange: handleSubmit(onSubmit)})}
 									value={watch("sortBy")}
-									defaultValue="name"
-									inputProps={{
-										name: "age",
-										id: "uncontrolled-native",
-									}}>
+									//defaultValue="name"
+								>
 									<option value={"name"}>Name</option>
 									<option value={"cost"}>Cost</option>
 									<option value={"time"}>Time</option>
@@ -116,6 +114,8 @@ export default function Filter() {
 				</CardContent>
 			</Card>
 		</Box>
+		<div className="fade"></div>
 		</form>
+		</>
 	);
 }

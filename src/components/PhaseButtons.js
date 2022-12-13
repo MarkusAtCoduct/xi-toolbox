@@ -32,7 +32,7 @@ const Accordion = styled((props) => (
 	"&:not(:last-child)": {
 		borderBottom: 0,
 	},
-    marginRight: theme.spacing(1),
+   
 	marginBottom: theme.spacing(1),
 	"&:before": {
 		display: "none",

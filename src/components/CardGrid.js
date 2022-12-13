@@ -46,8 +46,7 @@ export default function CardGrid(props) {
 	GetContent("/api/method/search?label&pageIndex=0&pageSize=50&sortBy=name&sortDirection=asc&includeMethods=true&includeMethodSets=true")
 	.then((response) => {
 		response.data.forEach(element => {
-			element.container = "recommendedMethodContainer"
-			element.type = "method"
+			element.container = "AllMethodsContainer"
 		});
 		setMethods(response.data)
 		setLoading(false)
@@ -91,19 +90,15 @@ export default function CardGrid(props) {
 								<div key={method.id}>
 									{!method.isMethodSet ? (
 										<div className='method'>
-											{method.container === "recommendedMethodContainer" || method.container === null ? (
-												<Draggable key={method.id} data={method} id={method.id}>
+												<Draggable key={method.id +"recommendedMethodContainer"} data={method} id={method.id+"recommendedMethodContainer"}>
 													<CardItem className='method' data={method}></CardItem>
 												</Draggable>
-											) : null}
 										</div>
 									) : (
 										<div className='methodset' key={method.id}>
-											{method.container === "recommendedMethodContainer" || method.container === null ? (
 												<Draggable data={method} key={method.id} id={method.id}>
 													<CardItem data={method}></CardItem>
 												</Draggable>
-											) : null}
 										</div>
 									)}
 								</div>

@@ -19,6 +19,7 @@ import { DndContext } from "@dnd-kit/core"
 import { useAtom } from "jotai"
 
 import { methodAtom } from "./atoms/methodAtom"
+import { recommendedMethodAtom } from "./atoms/recommendedMethodAtom"
 import { phaseAtom } from "./atoms/phaseAtom"
 import { activeAtom } from "./atoms/activeAtom"
 import {userAtom} from "./atoms/userAtom"
@@ -70,6 +71,7 @@ const theme = createTheme({
 
 function App() {
 	const [methods] = useAtom(methodAtom)
+	const [recommendedMethods] = useAtom(recommendedMethodAtom)
 	const [phaseItems, setPhaseItems] = useAtom(phaseAtom)
 	const [activeId, setActiveId] = useAtom(activeAtom)
 	const [expanded] = useAtom(phaseAccordionAtom);
@@ -93,6 +95,8 @@ function App() {
 	
 	const handleDragEnd = (data) => {
 		const { over, active } = data
+		console.log(active)
+		console.log(over)
 		if(!over || over.id === "allMethodsContainer"){
 			return
 		}
@@ -104,11 +108,10 @@ function App() {
 		const tmp = {...methods[Index]}
 		const tmpItems = [...phaseItems]
 		
-
 		 if(active.data.current?.sortable){
 			setPhaseItems(arrayMove(phaseItems, test, newIndex))
 		 }
-		else if(methods[Index].container != over?.id){
+		else if(methods[Index]?.container != over?.id || recommendedMethods[Index]?.container != over?.id){
 			if(tmp.isMethodSet){
 					tmp.simpleUsedMethods.forEach(element => {
 

@@ -29,9 +29,6 @@ export default function SmallCard(props) {
 		setPhaseItems(tmpItems)
 	}
 
-
-
-	console.log(props.data)
 	return (
 		<Card
 			elevation={3}
