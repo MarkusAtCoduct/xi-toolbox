@@ -9,7 +9,7 @@ export default function EditProfile() {
 		<>
 			<div
 				style={{
-					
+					marginTop: "56px",
 					top: "0",
 					left: "0",
 					width: "100%",

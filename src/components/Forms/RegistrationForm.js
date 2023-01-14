@@ -13,12 +13,17 @@ import { FormProvider, useForm, useFieldArray, Controller } from 'react-hook-for
 import {registerUser} from "../../services/authApi"
 import { useNavigate } from "react-router-dom";
 import AvatarUpload from "../AvatarUpload";
+import { useLocation} from "react-router-dom"
+
 
 import * as React from "react";
 
 
 export default function RegistrationForm(props) {
 	const navigate = useNavigate();
+	
+	const location = useLocation()
+	const state = location.state || ""
 
 
 	const { register, handleSubmit, formState: { errors } } = useForm();
@@ -35,14 +40,13 @@ const onSubmit = (data) => {
 			data.role = ["user"]
 			Number(data.yearsOfExperience)
 			registerUser(data)
-			//navigate("/home");
+			navigate("/home");
 		}
-
 
 	return (
         <form onSubmit={handleSubmit(onSubmit)}>
 		<Card sx={{borderRadius: "16px"}} elevation={0}>
-			<AvatarUpload/>
+			{/*<AvatarUpload/>*/}
 				<CardContent sx={{paddingLeft: "96px", paddingRight: "96px" }}>
 					<Stack direction="column" spacing={4}>
 						<FormControl>
@@ -86,6 +90,7 @@ const onSubmit = (data) => {
 									label="First Name"
 									variant="filled"
 									{...register("firstName", { required: true })}
+									defaultValue={state.prefill?.firstName || null}
 								/>
 							</div>
 							<div style={{ width: "100%" }}>
@@ -193,6 +198,7 @@ const onSubmit = (data) => {
 									label="Filled"
 									variant="filled"
 									type="number"
+									defaultValue={0}
 									{...register("yearsOfExperience", {max: 3, valueAsNumber: true,})}
 								/>
 							</div>

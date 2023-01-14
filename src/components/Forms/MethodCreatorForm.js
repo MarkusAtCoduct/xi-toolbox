@@ -13,6 +13,7 @@ import Select from "@mui/material/Select";
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import { OutlinedInput } from "@mui/material";
+import Chip from '@mui/material/Chip';
 
 import InputList from "../InputList";
 import { useEffect } from "react";
@@ -65,13 +66,21 @@ export default function MethodCreatorForm(props) {
 	const onSubmitMethod = data => {
 		
 		data.advantages = data.advantages.map(object => object.name);
+    data.advantages = data.advantages.filter(advantage => advantage !== "");
 		data.disadvantages = data.disadvantages.map(object => object.name);
+    data.disadvantages = data.disadvantages.filter(disadvantage => disadvantage !== "");
 		data.howToConduct = data.howToConduct.map(object => object.name);
+    data.howToConduct = data.howToConduct.filter(howToConduct => howToConduct !== "");
 		data.whenToConduct = data.whenToConduct.map(object => object.name);
+    data.whenToConduct = data.whenToConduct.filter(whenToConduct => whenToConduct !== "");
 		data.input = data.input.map(object => object.name);
+    data.input = data.input.filter(input => input !== "");
 		data.output = data.output.map(object => object.name);
+    data.output = data.output.filter(output => output !== "");
 		data.sameOutputMethods = data.sameOutputMethods.map(object => object.name);
+    data.sameOutputMethods = data.sameOutputMethods.filter(sameOutputMethod => sameOutputMethod !== "");
 		data.references = data.references.map(object => object.name);
+    data.references = data.references.filter(reference => reference !== "");
 		console.log(data);
 		PostMethod("/api/method/create", data);
 		navigate("/createSet");
@@ -80,13 +89,21 @@ export default function MethodCreatorForm(props) {
 	const onSubmitMethodSet = data => {
 		
 		data.advantages = data.advantages.map(object => object.name);
+    data.advantages = data.advantages.filter(advantage => advantage !== "");
 		data.disadvantages = data.disadvantages.map(object => object.name);
+    data.disadvantages = data.disadvantages.filter(disadvantage => disadvantage !== "");
 		data.howToConduct = data.howToConduct.map(object => object.name);
+    data.howToConduct = data.howToConduct.filter(howToConduct => howToConduct !== "");
 		data.whenToConduct = data.whenToConduct.map(object => object.name);
+    data.whenToConduct = data.whenToConduct.filter(whenToConduct => whenToConduct !== "");
 		data.input = data.input.map(object => object.name);
+    data.input = data.input.filter(input => input !== "");
 		data.output = data.output.map(object => object.name);
+    data.output = data.output.filter(output => output !== "");
 		data.sameOutputMethods = data.sameOutputMethods.map(object => object.name);
+    data.sameOutputMethods = data.sameOutputMethods.filter(sameOutputMethod => sameOutputMethod !== "");
 		data.references = data.references.map(object => object.name);
+    data.references = data.references.filter(reference => reference !== "");
 		data.usedMethodIds = state.set;
 		data.isMethodSet = true;
 		console.log(data);
@@ -96,13 +113,21 @@ export default function MethodCreatorForm(props) {
 	} 
 	const onSubmitMethodUpdate = data => {
 		data.advantages = data.advantages.map(object => object.name);
+    data.advantages = data.advantages.filter(advantage => advantage !== "");
 		data.disadvantages = data.disadvantages.map(object => object.name);
+    data.disadvantages = data.disadvantages.filter(disadvantage => disadvantage !== "");
 		data.howToConduct = data.howToConduct.map(object => object.name);
+    data.howToConduct = data.howToConduct.filter(howToConduct => howToConduct !== "");
 		data.whenToConduct = data.whenToConduct.map(object => object.name);
+    data.whenToConduct = data.whenToConduct.filter(whenToConduct => whenToConduct !== "");
 		data.input = data.input.map(object => object.name);
+    data.input = data.input.filter(input => input !== "");
 		data.output = data.output.map(object => object.name);
+    data.output = data.output.filter(output => output !== "");
 		data.sameOutputMethods = data.sameOutputMethods.map(object => object.name);
+    data.sameOutputMethods = data.sameOutputMethods.filter(sameOutputMethod => sameOutputMethod !== "");
 		data.references = data.references.map(object => object.name);
+    data.references = data.references.filter(reference => reference !== "");
 
 		UpdateMethod(`/api/method/${state.prefill.id}/update/`, data);
 		navigate("/createSet");
@@ -337,7 +362,7 @@ export default function MethodCreatorForm(props) {
                   fullWidth
                   id="filled-basic"
                   type={"number"}
-                  label="€"
+                  label="price in €"
                   variant="filled"
                 />
               </div>
@@ -409,7 +434,7 @@ export default function MethodCreatorForm(props) {
               Append={whenToConductAppend}
             />
 
-            <Stack direction="row" alignItems="center" spacing={4}>
+            <Stack direction="row" spacing={4}>
               <InputList
                 header="Input"
                 addHint="Add more inputs"
@@ -431,8 +456,18 @@ export default function MethodCreatorForm(props) {
             </Stack>
 
             <Stack direction="row" spacing={4}>
-            <FormControl sx={{ m: 1}}fullWidth>
-			  <InputLabel id="demo-multiple-name-label">Relevant Phases</InputLabel>
+              <div style={{width: "50%"}}>
+              <Typography
+                sx={{
+                  fontSize: 22,
+                  fontWeight: "400",
+                  float: "left",
+                }}
+              >
+                Relevant Phases
+              </Typography>
+            <FormControl fullWidth>
+			          <InputLabel id="demo-multiple-name-label">Relevant Phases</InputLabel>
                 <Select
                   {...register("relevantPhases")}
                   value={phaseName}
@@ -451,15 +486,18 @@ export default function MethodCreatorForm(props) {
                   ))}
                 </Select>
               </FormControl>
-             {/* <InputList
-                header="Relevant Phases"
-                addHint="Add more Advantages"
-                formRegister="relevantPhases"
-                register={register}
-                data={relevantPhasesFields}
-                Remove={relevantPhasesRemove}
-                Append={relevantPhasesAppend}
-              /> */}
+              {phaseName.map((name) => (
+                <Chip
+                  key={name}
+                  label={name}
+                
+                  sx={{ mt: 1, mr: 1 }}
+                />
+              ))}
+
+
+
+              </div>
               <InputList
                 header="Methods of the same Output"
                 addHint="Add more Disdvantages"

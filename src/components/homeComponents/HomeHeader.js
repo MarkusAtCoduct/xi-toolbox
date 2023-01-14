@@ -4,10 +4,12 @@ import Methods from "./Methods";
 import SignInHome from "./SignInHome";
 import Fakten from "./Fakten";
 import Logos from "../../images/Logos.png";
+import background from "../../images/headerBackground.png";
 
 export default function HomeHeader() {
     return (
-        <div style={{}}>
+        <div className="HomeHeader">
+            
             <div
                 style={{
                     display: "flex",
@@ -35,22 +37,6 @@ export default function HomeHeader() {
             <div style={{ marginTop: 66, marginBottom: 90 }}>
                 <img src={Logos} />
             </div>
-            <Fakten />
-            <button
-                style={{
-                    color: "white",
-                    padding: "10 24",
-                    marginBottom: 40,
-                    width: 264,
-                    height: 52,
-                    background: "#FF5449",
-                    borderRadius: 100,
-                    borderColor: "transparent",
-                    fontSize: 18,
-                    fontWeight: 900,
-                }}>
-                Create my own Process
-            </button>
         </div>
     );
 }

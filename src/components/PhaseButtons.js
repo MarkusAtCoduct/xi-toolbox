@@ -19,6 +19,7 @@ import { GetContent } from "../services/Api";
 import { useState } from "react";
 import { useEffect } from "react";
 import { recommendedMethodAtom } from "../atoms/recommendedMethodAtom";
+import { queryAtom } from "../atoms/queryAtom";
 
 
 
@@ -39,10 +40,20 @@ const Accordion = styled((props) => (
 
 	},
 	"& .MuiButtonBase-root.Mui-expanded": {
-		backgroundColor: "#ff5354",
+		backgroundColor: "#00afc8",
 		boxShadow: "0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)",
 		borderRadius: "16px 16px 16px 16px",
-		color: "#FFF"
+		color: "#FFF",
+		
+	},
+	"& .MuiButtonBase-root.Mui-expanded:hover": {
+		backgroundColor: "#00afc8",
+
+		color: "#5C5F5D",
+	},
+	"& .MuiButtonBase-root:hover": {
+		backgroundColor: "#90eaf490",
+		borderRadius: "16px 16px 16px 16px",		
 	},
 }));
 
@@ -72,36 +83,40 @@ export default function PhaseButtons(props) {
 	const [recommendedMethods, setRecommendedMethods] = useAtom(recommendedMethodAtom);
 	const [loading, setLoading] = useState(false);
 	const [methods, setMethods] = useAtom(methodAtom);
+	const [query, setQuery] = useAtom(queryAtom);
 
 
 	const handleChange = (panel) => (event, newExpanded) => {
 	 	setExpanded(newExpanded ? panel : false);
-		console.log(panel)
 		if(newExpanded === true) {
 		setLoading(true)
-		GetUserDetails().then((res) => GetContent(`/api/method/search?label=${props.phasetext}&pageIndex=0&pageSize=50&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=true`)
+		GetContent(`/api/method/search?label=${props.phasetext}&pageIndex=0&pageSize=50&sortBy=${query.sortBy}&sortDirection=${query.sortDirection}&includeMethods=${query.includeMethods}&includeMethodSets=${query.includeMethodSets}`)
 		.then((response) => {
-			response.data.forEach(element => {
-				element.container = "recommendedMethodContainer"
-				element.type = "method"
-			});
-			setRecommendedMethods(response.data)
-			console.log(response.data)
+			if(props?.user){
+				var temp = response.data.filter((method) => method.ownerId === props?.user?.data?.userId)
+				setMethods(temp)
+				setLoading(false)
+				return
+			}
+			setMethods(response.data)
 			setLoading(false)
-		}))
-		}else{
+		})
+		}
+
+		else{
 			setRecommendedMethods([])
 			setLoading(true)
-		GetUserDetails().then((res) => GetContent(`/api/method/search?label=&pageIndex=0&pageSize=50&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=true`)
+		GetContent(`/api/method/search?label=&pageIndex=0&pageSize=50&sortBy=${query.sortBy}&sortDirection=${query.sortDirection}&includeMethods=${query.includeMethods}&includeMethodSets=${query.includeMethodSets}`)
 		.then((response) => {
-			response.data.forEach(element => {
-				element.container = "recommendedMethodContainer"
-				element.type = "method"
-			});
+			if(props.user){
+				var temp = response.data.filter((method) => method.ownerId === props?.user?.data?.userId)
+				setMethods(temp)
+				setLoading(false)
+				return
+			}
 			setMethods(response.data)
-			console.log(response.data)
 			setLoading(false)
-		}))
+		})
 		}
 		
 	 };

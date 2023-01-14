@@ -14,7 +14,7 @@ export default function ToolboxStepper(props) {
     <Stack direction="column" alignItems="center"  justifyContent="stretch" ml={1}>
         {props.first
         ?<Box sx={{width: "2px", height: "100%"}}/>
-        :<Box sx={{width: "2px", height: "100%", borderLeft: "solid #FF5454 2px", transform: "TranslateX(1px)"}}/>
+        :<Box sx={{width: "2px", height: "100%", borderLeft: "solid #00afc8 2px", transform: "TranslateX(1px)"}}/>
         }
 
         {props.variant === "Card" 
@@ -23,8 +23,8 @@ export default function ToolboxStepper(props) {
 
         }
         {props.first
-        ?<Box sx={{width: "2px", height: "100%", borderLeft: "dashed #FF5454 2px", transform: "TranslateX(1px)"}}/>
-        :<Box sx={{width: "2px", height: "100%", borderLeft: "solid #FF5454 2px", transform: "TranslateX(1px)"}}/>
+        ?<Box sx={{width: "2px", height: "100%", borderLeft: "dashed #00afc8 2px", transform: "TranslateX(1px)"}}/>
+        :<Box sx={{width: "2px", height: "100%", borderLeft: "solid #00afc8 2px", transform: "TranslateX(1px)"}}/>
         }
     </Stack>
         

@@ -9,6 +9,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import './css/customcss.css'
 import { Suspense } from "react"
+import AppLoader from './components/AppLoader';
 
 import LinearProgress from '@mui/material/LinearProgress';
 import { Box, CircularProgress } from "@mui/material"
@@ -16,12 +17,10 @@ import { Box, CircularProgress } from "@mui/material"
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-    <Suspense fallback={<Box sx={{ width: '100%', height: "100%"  }}>
-        <CircularProgress />
-	  </Box>}>
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
+    <Suspense fallback={<AppLoader/>}>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
     </Suspense>
 );
 

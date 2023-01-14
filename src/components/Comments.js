@@ -21,7 +21,7 @@ export default function Comments(props) {
 
   const [ratings, setRatings ] = useState(null);
   const [comments, setComments ] = useState(null);
-
+ 
 
 	useEffect(() => {
     setLoading(true);
@@ -32,6 +32,15 @@ export default function Comments(props) {
 	  }, []);
    
 
+    const fetchComments = (rates) => {
+      //console.log(rates)
+      //console.log(ratings)
+      setLoading(true);
+        setRatings([rates,...ratings])
+        setLoading(false);
+    }
+
+
 console.log(ratings)
   return (
     <>
@@ -40,30 +49,22 @@ console.log(ratings)
       {loading ? <Box><CircularProgress/></Box> : 
     <ol style={{listStyleType: "none", padding: "0 0 0 8px"}}>
       {ratings?.map((rating) => (
-        <li key={rating.id}>
+        <li key={rating?.id}>
           <Stack spacing={1}  direction="row" alignItems="center">
-          <Avatar sx={{ width: "28px", height: "28px" }} alt="Remy Sharp" src={"/broken-image.jpg"} />
+          <Avatar sx={{ width: "28px", height: "28px" }} alt="Remy Sharp" src={rating?.raterAvatarUrl ||"/broken-image.jpg"} />
           <Typography variant="body2" color="text.secondary">
-            {rating.ratedBy}
+            {rating?.ratedBy}
           </Typography>
           </Stack>
           <Stack spacing={1} mb={1} direction="row" alignItems="center">
-          <Rating name="read-only" precision={0.1} sx={{ color: "#757875", fontSize: "0.85rem"}} value={rating.score} readOnly />
-          <h4> {rating.headline} </h4>
+          <Rating name="read-only" precision={0.1} sx={{ color: "#757875", fontSize: "0.85rem"}} value={rating?.score} readOnly />
+          <h4> {rating?.headline} </h4>
           </Stack>
           <Typography gutterBottom variant="body2" color="text">
-            {rating.message}
+            {rating?.message}
           </Typography>
 
           <Divider variant="middle" sx={{marginBottom: "8px"}}/>
-          <Comment id={props.id} parentCommentId={rating.id}/>
-          <ol>
-          {rating.subRatings?.map((sub) => () => (
-            <li key={sub.id}>
-              <SubComment data={sub}/>
-              </li>
-          ))}
-          </ol>
         </li>
       ))}
     
@@ -71,7 +72,7 @@ console.log(ratings)
     </ol>
     }
     </Box>
-    <Rate  id={props.id}/>
+    <Rate update={fetchComments} id={props.id}/>
 </>
   );
 }

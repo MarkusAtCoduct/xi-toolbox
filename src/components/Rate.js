@@ -37,7 +37,7 @@ export default function Rate(props) {
   const onSubmit = (data) => {	
     data.stars = value;
     console.log(data);
-        rateMethod(`/api/method/${props.id}/rate`, data).then(() => props.update).then(() => handleClose())
+        rateMethod(`/api/method/${props.id}/rate`, data).then((response) => props.update(response.data)).then(() => handleClose())
     }
 
 
@@ -48,12 +48,13 @@ export default function Rate(props) {
 			</Button>
 			<Modal open={open} onClose={handleClose} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
 				<Box sx={style}>
-					<Typography variant='h4'> Write A Comment</Typography>
+					<Typography variant='h4'> Write A Review</Typography>
 
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<Typography component='legend'>Add a Rating</Typography>
-
+						<div style={{marginBottom:"16px"}}>
 						<FormControlLabel
+						sx={{marginLeft: "0px"}}
 							control={
 								<>
 									<input name='stars' type='number' value={value} hidden readOnly {...register("stars", { valueAsNumber: true })} />
@@ -61,16 +62,17 @@ export default function Rate(props) {
 									<Rating
 										name='stars'
 										value={value}
-										precision={0.1}
+										sx={{ color: "#757875", float: "left", marginRight: "16px" }}
+										precision={0.5}
 										onChange={(_, value) => {
 											setValue(value)
 										}}
 									/>
-									{value}
 								</>
 							}
 							label='select rating'
 						/>
+						</div>
 						<div style={{ width: "100%" }}>
 							<Typography
 								sx={{

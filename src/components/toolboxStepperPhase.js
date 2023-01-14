@@ -18,7 +18,7 @@ export default function ToolboxStepperPhase(props) {
 				<>
 					<Box sx={{ width: "2px", height: "100%", borderLeft: "none", transform: "TranslateX(1px)" }} />
 					<div className='circle'></div>
-					<Box mb={-1} sx={{ width: "2px", height: "100%", borderLeft: "solid #FF5454 2px", transform: "TranslateX(1px)" }} />
+					<Box mb={-1} sx={{ width: "2px", height: "100%", borderLeft: "solid #00afc8 2px", transform: "TranslateX(1px)" }} />
 				</>
 			) : (
 				<>
@@ -31,7 +31,7 @@ export default function ToolboxStepperPhase(props) {
 							<Box sx={{ width: "2px", height: "100%", borderLeft: "none", transform: "TranslateX(1px)" }} />
 						    </>
                         ):(<>
-							<Box sx={{ width: "2px", height: "100%", borderLeft: "dotted #FF5454 2px", transform: "TranslateX(1px)" }} />
+							<Box sx={{ width: "2px", height: "100%", borderLeft: "dotted #00afc8 2px", transform: "TranslateX(1px)" }} />
 							<div className='circlePlaceholder'></div>
 							<Box sx={{ width: "2px", height: "100%", transform: "TranslateX(1px)" }} />
 						</>)
@@ -39,9 +39,9 @@ export default function ToolboxStepperPhase(props) {
 						</>
 					) : (
 						<>
-							<Box sx={{ width: "2px", height: "100%", borderLeft: "solid #FF5454 2px", transform: "TranslateX(1px)" }} />
+							<Box sx={{ width: "2px", height: "100%", borderLeft: "solid #00afc8 2px", transform: "TranslateX(1px)" }} />
 							<div className='circle'></div>
-							<Box mb={-1} sx={{ width: "2px", height: "100%", borderLeft: "solid #FF5454 2px", transform: "TranslateX(1px)" }} />
+							<Box mb={-1} sx={{ width: "2px", height: "100%", borderLeft: "solid #00afc8 2px", transform: "TranslateX(1px)" }} />
 						</>
 					)}
 				</>

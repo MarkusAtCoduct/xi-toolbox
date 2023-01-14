@@ -49,11 +49,20 @@ const Accordion = styled((props) => (
 
 	},
 	"& .MuiButtonBase-root.Mui-expanded": {
-		backgroundColor: "#ff5354",
+		backgroundColor: "#00afc8",
 		boxShadow: "0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)",
 		borderRadius: "16px 16px 16px 16px",
 		color: "#FFF",
 		
+	},
+	"& .MuiButtonBase-root.Mui-expanded:hover": {
+		backgroundColor: "#00afc8",
+
+		color: "#5C5F5D",
+	},
+	"& .MuiButtonBase-root:hover": {
+		backgroundColor: "#90eaf490",
+		borderRadius: "16px 16px 16px 16px",		
 	},
 }));
 
@@ -192,7 +201,7 @@ export default function Phase(props) {
 							:<ToolboxStepperPhase empty ></ToolboxStepperPhase>}
 							
 							
-								<Box sx={{width: "270px",minHeight: "140px", borderRadius: "16px", border: "dashed 2px #FFF"}}>
+								<Box sx={{width: "254px", height: "140px", borderRadius: "8px", padding: "6px", border: "dashed 2px #FFF"}}>
 								<Typography p={1} mb={3} sx={{ fontWeight: "400", fontSize: "32px", color: "#fff" }} align='center'>
 									Drop Methods here
 								</Typography>

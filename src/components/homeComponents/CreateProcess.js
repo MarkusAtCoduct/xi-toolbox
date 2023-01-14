@@ -5,6 +5,7 @@ import SignInHome from "./SignInHome";
 import Fakten from "./Fakten";
 import Logos from "../../images/Logos.png";
 import ProcessCards from "./ProcessCards";
+import { Button } from "@mui/material";
 
 export default function CreateProcess() {
     return (
@@ -22,21 +23,14 @@ export default function CreateProcess() {
                 How to create your own Process?
             </div>
             <ProcessCards />
-            <button
-                style={{
-                    color: "white",
-                    padding: "10 24",
-                    marginBottom: 40,
-                    width: 264,
-                    height: 52,
-                    background: "#FF5449",
-                    borderRadius: 100,
-                    borderColor: "transparent",
-                    fontSize: 18,
-                    fontWeight: 900,
-                }}>
-                Create my own Process
-            </button>
+            <Button
+					variant='contained'
+					href='/createSet'
+					sx={{borderRadius: "16px",}}
+					disableElevation
+				>
+					Create your own Process
+				</Button>
         </div>
     );
 }

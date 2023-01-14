@@ -34,7 +34,7 @@ export default function SmallCard(props) {
 			elevation={3}
 			sx={{
 				padding: "8px",
-				borderRadius: "16px",
+				borderRadius: "8px",
 				minWidth: "254px",
 				minHeight: "140px",
 				maxHeight: "140px",

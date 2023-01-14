@@ -20,12 +20,13 @@ import { useForm } from 'react-hook-form';
 
 
 import * as React from "react";
-import { IconButton } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import { GetContent } from '../services/Api';
+import { queryAtom } from "../atoms/queryAtom";
 import Select from '@mui/material/Select';
 
 
-export default function Filter() {
+export default function Filter(props) {
 
 	const Search = useForm({defaultValues:{
 		label: "",
@@ -39,20 +40,35 @@ export default function Filter() {
 
 	const { control, watch, register, handleSubmit, formState: { errors } } = Search;
 	const [methods, setMethods] = useAtom(methodAtom);
+	const [query, setQuery] = useAtom(queryAtom);
 
-	const onSubmit = data =>{ 
-		console.log(watch)
-		//console.log(`/api/method/search?label=${data.label}&pageIndex=${data.pageIndex}&pageSize=${data.pageSize}&sortBy=${data.sortBy}&sortDirection=${data.sortDirection}&includeMethods=${data.includeMethods}&includeMethodSets=${data.includeMethodSets}`)
-	const tmpItems = [...methods]
-	GetContent(`/api/method/search?label=${data.label}&pageIndex=${data.pageIndex}&pageSize=${data.pageSize}&sortBy=${data.sortBy}&sortDirection=${data.sortDirection}&includeMethods=${data.includeMethods}&includeMethodSets=${data.includeMethodSets}`)
-	.then((response) => {
-		response.data.forEach(element => {
-			element.container = "recommendedMethodContainer"
-			element.type = "method"
-		});
-		console.log(response.data)
-		setMethods(response.data)
-	});
+	const onSubmit = data =>{
+		console.log("USER" + props.user)
+
+		if (props.user) {
+			console.log(props.user)
+			GetContent(`/api/method/search?label=${watch("label")}&pageIndex=0&pageSize=${data.pageSize}&sortBy=${watch("sortBy")}&sortDirection=${data.sortDirection}&includeMethods=${watch("includeMethods")}&includeMethodSets=${watch("includeMethodSets")}`)
+			.then((response) => {
+				var temp = response.data.filter((method) => method.ownerId === props?.user?.data?.userId)
+				temp.forEach(element => {
+					element.type = "method"
+				});
+				setMethods(temp)
+			})}
+		else {
+			GetContent(
+				`/api/method/search?label=${watch("label")}&pageIndex=${data.pageIndex}&pageSize=${data.pageSize}&sortBy=${data.sortBy}&sortDirection=${data.sortDirection}&includeMethods=${data.includeMethods}&includeMethodSets=${data.includeMethodSets}`,
+			).then((response) => {
+				response.data.forEach((element) => {
+					element.container = "recommendedMethodContainer"
+					element.type = "method"
+				})
+				console.log(response.data)
+				setMethods(response.data)
+			})
+		}
+		setQuery(data)
+		const tmpItems = [...methods]
 		
 	}
 
@@ -87,18 +103,17 @@ export default function Filter() {
 
 
 						<Stack direction="column">
-							<FormGroup>
-								<FormControlLabel sx={{ fontSize: 11, color: "#5C5F5D" }} control={<Checkbox defaultChecked {...register("includeMethods")}/>}label="Methods"/>
-								<FormControlLabel control={<Checkbox defaultChecked {...register("includeMethodSets")}/>}  label="MethodSets" />
+							<FormGroup onChange={handleSubmit(onSubmit)}>
+								<FormControlLabel sx={{ fontSize: 11, color: "#5C5F5D" }} control={<Checkbox  checked={query?.includeMethods} {...register("includeMethods")}/>}label="Methods"/>
+								<FormControlLabel control={<Checkbox checked={query?.includeMethodSets} {...register("includeMethodSets")}/>}  label="MethodSets" />
 							</FormGroup>
 						</Stack>
 
 						<Box sx={{ minWidth: 120 }}>
+								<Typography>Sort by</Typography>
 							<FormControl fullWidth>
-								
-								Sort by
-								
 								<select
+								className="selectSort"
 									{...register("sortBy", {onChange: handleSubmit(onSubmit)})}
 									value={watch("sortBy")}
 									//defaultValue="name"

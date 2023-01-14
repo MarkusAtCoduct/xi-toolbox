@@ -12,7 +12,7 @@ export default function Title() {
                 color: "#000000",
                 marginBottom: 65,
             }}>
-            Creat your goal driven Cross-Innovation Process
+            Create your own goal driven Cross-Innovation Process
         </div>
     );
 }

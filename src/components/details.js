@@ -3,10 +3,10 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import MilitaryTech from "@mui/icons-material/MilitaryTechOutlined";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import { Container, Rating, Stack } from "@mui/material";
+import Fade from '@mui/material/Fade';
 
 import * as React from "react";
 
@@ -17,9 +17,8 @@ import MethodList from "./MethodList";
 import Paragraph from "./Paragraph";
 import Comments from "./Comments";
 import { useState } from 'react';
-import { useEffect } from 'react';
-import { getMethodDetails } from '../services/Api';
-
+import NoteAddIcon from "@mui/icons-material/NoteAdd";
+import ForumIcon from "@mui/icons-material/Forum";
 
 
 const style = {
@@ -36,8 +35,8 @@ export default function Details(props) {
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
-	const [value, setValue] = React.useState(2);
-	const [ratings, setRatings ] = useState(null);
+	const [value] = React.useState(2);
+	const [ratings ] = useState(null);
 
 
 	return (
@@ -48,12 +47,14 @@ export default function Details(props) {
 
 				<Modal
 					open={open}
-					onClose={() => handleClose}
+					onClose={handleClose}
+					closeAfterTransition
 					aria-labelledby="modal-modal-title"
 					aria-describedby="modal-modal-description"
 					p={3}
 					
 					>
+						<Fade in={open}>
 						<Container sx={style} >
 							<Card elevation={2} sx={{paddingLeft : "24px",paddingRight : "24px", borderRadius: "16px" }}>
 								<CardContent sx={{ maxHeight:"94vh"}}>
@@ -92,10 +93,13 @@ export default function Details(props) {
 													float: "right",
 													color: "#757875",
 												}}>
-												{props.data.ratings | 253} Ratings | {props.data.questions | 36}{" "}
-												answered Questions | By: {props.data.owner || "Placeholder"}{" "}
+												By: {props.data.owner || "Placeholder"}
 											</Typography>
-											<MilitaryTech color="primary" />
+											{props?.data.ownerBadges?.map((badge, index) => (
+									<div key={index}>
+									{badge === "METHOD_CREATOR" ?<NoteAddIcon sx={{height:"16px", width:"16px", marginLeft:"8px"}} color='primary' /> : null}
+									{badge === "METHOD_FACILITATOR" ?<ForumIcon sx={{height:"16px", width:"16px",  marginLeft:"8px"}} color='primary' /> : null}
+									</div>))}
 										</Stack>
 
 										<Stack
@@ -111,7 +115,7 @@ export default function Details(props) {
 												{props.data.time || 15} Tage
 											</Typography>
 											<Typography sx={{ fontWeight: "bold" }}>
-												{props.data.type || "placeholder"}
+												{props.data.needsInvolvement ? "Expert involved" : null}
 											</Typography>
 										</Stack>
 
@@ -125,9 +129,9 @@ export default function Details(props) {
 															props.data.description || "placeholder"
 														}
 													/>
-													<Paragraph
+													<ListTemplate
 														heading="When to use"
-														body={props.data.whenToConduct || "placeholder"}
+														listItems={props.data.whenToConduct}
 													/>
 													<ListTemplate listItems={props.data.howToConduct} heading="How to conduct" />
 													{!props.data.isMethodSet
@@ -149,7 +153,7 @@ export default function Details(props) {
 											<Grid md={4}>
 												<Stack direction="column">
 													<ChipList listItems={props.data.relevantPhases} heading="Recommended Phases" />
-													<ListTemplate listItems={props.data.references} heading="References" />
+													<ListTemplate references listItems={props.data.references} heading="References" />
 													<Comments data={ratings?.data ? ratings?.data : []} id={props.data.id}/>
 												</Stack>
 											</Grid>
@@ -171,6 +175,7 @@ export default function Details(props) {
 								</CardContent>
 							</Card>
 							</Container>
+							</Fade>
 						</Modal>
 				</>
 		

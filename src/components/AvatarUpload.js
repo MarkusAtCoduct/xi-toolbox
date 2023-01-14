@@ -54,13 +54,16 @@ useEffect(() => {
     e.preventDefault();
     formData.append("image", file);
     console.log(file);
-    UploadImage("/api/user/avatar-update", formData)
-    
+    UploadImage("/api/user/avatar-update", formData).then((res) => {
+        console.log(res);
+        GetUserDetails("/api/user").then((res) => {
+            setUser(res);
+        })
+    })    
 }
 
 
     return (  
-        //input that will be used to upload image
         <>
                             <Stack
                             mt={4}
@@ -72,11 +75,15 @@ useEffect(() => {
 								src={!preview ?  user?.data?.mainAvatarUrl || "/broken-image.jpg" : preview}
 								sx={{ width: "120px", height: "120px" }}
 							/>
-							<Stack direction="column">
+							<Stack direction="row" spacing={2}>
 
                                         <Button mb={2} variant="contained" component="label" >
-                                        Upload Photo
+                                        Select Photo
                                         <input hidden  type="file" onChange={changeHandler} />
+                                        </Button>
+
+                                        <Button mb={2} onClick={handleUpload} disabled={preview ? false: true}  variant="contained" component="label" >
+                                        Upload Photo
                                         </Button>
 								<Typography
                                 gutterBottom
@@ -86,7 +93,6 @@ useEffect(() => {
 										float: "left",
 										color: "#5C5F5D",
 									}}>
-                                        (optional)
 								</Typography>
 							</Stack>
                             </Stack>

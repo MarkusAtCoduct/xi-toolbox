@@ -1,13 +1,11 @@
 import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import MilitaryTech from "@mui/icons-material/MilitaryTechOutlined";
 import { Stack } from "@mui/system";
 import { Typography} from "@mui/material";
 import * as React from "react";
 import { useAtom } from "jotai";
 import { userAtom } from '../atoms/userAtom';
-import IconButton from "@mui/material/IconButton"; 
 import { Link } from "react-router-dom";
 import EditProfileForm from "./Forms/EditProfileForm";
 import {Button} from "@mui/material";
@@ -31,11 +29,7 @@ export default function ProfileInfo(props) {
 					src={user?.data?.mainAvatarUrl || "/broken-image.jpg"}
 					sx={{ width: "112px", height: "112px" }}
 				/>
-                <Stack direction="column" alignItems="center">
-				
-				<Badges badges={user?.data?.badges}/>
-                </Stack>
-				<Typography
+					<Typography
 					sx={{
 						fontSize: 28,
 						fontWeight: "400",
@@ -43,6 +37,10 @@ export default function ProfileInfo(props) {
 					}}>
 					{user?.data?.firstName +" "+ user?.data?.lastName || "Placeholder"}
 				</Typography>
+                <Stack direction="column" alignItems="center">
+				<Badges badges={user?.data?.badges}/>
+                </Stack>
+			
 				<Link to="/editProfile" state={{prefill: user }} style={{textDecoration: "none" }} component={<EditProfileForm/>} >
 				<Button label="fsdgg" size="medium" variant="contained" startIcon={<EditOutlinedIcon />}>
 					Edit Personal Detail

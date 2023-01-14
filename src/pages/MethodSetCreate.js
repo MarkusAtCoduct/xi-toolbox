@@ -2,16 +2,19 @@ import { Container, Typography } from "@mui/material";
 
 import * as React from "react";
 
+import { useEffect } from "react";
 import MethodCreatorForm from "../components/Forms/MethodCreatorForm";
 
 export default function MethodSetCreate() {
+	useEffect(() => {
+		window.scrollTo(0, 0)
+	}, [])
   return (
 		<>
 			<div
 				style={{
 					
-					top: "0",
-					left: "0",
+					marginTop: "56px",
 					width: "100%",
 					
 					backgroundColor: "#EFF1EE",

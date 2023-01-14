@@ -7,7 +7,8 @@ body{
     background: linear-gradient(90deg, rgba(239,241,238,1) 0%, rgba(239,241,238,1) 50%, rgba(225,227,224,1) 50%, rgba(225,227,224,1) 100%);
     position: relative;
     height: 100vh;
-    width: 100%;
+    /*width: 100%; */
+    
   }
 
 
@@ -40,7 +41,7 @@ body{
     display: -ms-flexbox; /* Not needed if autoprefixing */
     display: flex;
     margin-left: -16px; /* gutter size offset */
-    /*width: 50%; */
+    /*width: 45%;*/
   }
   .my-masonry-grid_column {
     padding-left: 16px; /* gutter size */
@@ -53,19 +54,17 @@ body{
   }
 
   .methodSet{
-    /*height: 688px;*/
+    z-index: 9;
   }
 
   .method{
-    /*height: 336px;*/
     transition-duration: 100ms;
 
   }
 .method:hover, .methodSet:hover{
   border-radius: 16px;
-  transform: scale(1.009);
-  
-  filter: drop-shadow(0 0 25px #c7c7c790); 
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.4s;
+  filter: drop-shadow(0 0 5px #b0b7b89c); 
 }
 
 .disableTransition{
@@ -74,15 +73,14 @@ body{
 
 .sidebarWrapper{
     position: sticky;
-    top: 56px;
+    top: 0px;
+    padding-top: 5vh;
     display: flex;
-    height: 100vh;
+    height: 95vh;
     overflow-x: hidden;
     overflow-y: auto;
     width: fit-content;
-    background-color: #eff1ee;
-
-    
+    background-color: #eff1ee;    
 }
 
 .sidebar{ 
@@ -93,6 +91,7 @@ body{
 
 .setMakerWrapper{
     position: relative;
+    height: 100%;
     display: flex;
     background-color: #e1e3e0;
     
@@ -107,23 +106,26 @@ body{
   background-color: #e1e3e0;
 }
 .content{
+  height: 100%;
   display: flex;
   flex-flow: column;
   width: 66.6%;
 }
 
 .cardsWrapper{
+  position: relative;
   display: flex;
+  overflow-y: hidden;
   flex-flow: column;
   height: 100%;
 }
 .cards{
-  position: static;
   padding: 16px;
   height: 100%;
-  overflow-y: scroll;
+  overflow: auto;
   flex-grow : 1;
 }
+
 ol{
     padding-left: 24px;
 }
@@ -143,7 +145,7 @@ ol{
 
 .MuiChip-root{
     border-radius: 8px;
-    background-Color: #FFDAD6;
+    background-Color: #b0f4ff;
     font-Size: 14px;
     
 }
@@ -166,8 +168,11 @@ ol{
     box-shadow: none;
 }
 
+
+
+
 .MuiDivider-root::before, .MuiDivider-root::after {
-    border-color: #FF5454;
+    border-color: #00afc8;
     border-width: 2px;
 }
 
@@ -175,7 +180,7 @@ ol{
     width: 100%;
     height: 100%;
     border-radius: 16px; 
-    background-color: #FF5454;
+    background-color: #00afc8;
 }
 
 
@@ -186,7 +191,7 @@ ol{
 .circle{
   min-height: 8px;
   min-width: 8px;
-  background-color: #FF5454;
+  background-color: #00afc8;
   border: solid 6px  #C4C7C4;
   outline: solid 4px #ffffff;
   border-radius: 24px;
@@ -212,7 +217,7 @@ ol{
   margin-top: 24px;
   text-decoration: none;
   color: #ffffff;
-  background-color: #FF5454;
+  background-color: #00afc8;
   border-radius: 100px;
   padding: 8px 16px;
   font-weight: 500;
@@ -233,4 +238,30 @@ ol{
   height: 8px;
   width: 100%;
   background: linear-gradient(180deg, rgba(225,227,224,1) 0%, rgba(228, 25, 25, 0) 100%);
+}
+
+.HomeHeader{
+  height: 100vh;
+  background-image: url(../images/headerBackground.png);
+  background-size: 100% 100%;
+}
+
+
+.app-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vh;
+  height: 100%;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #282c34;
+}
+
+.selectSort{
+  padding: 16px;
+  border-radius: 6px;
+  border-color: #C4C7C4;
 }

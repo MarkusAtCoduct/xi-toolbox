@@ -1,12 +1,6 @@
-import { DragOverlay} from '@dnd-kit/core';
-import {snapCenterToCursor} from '@dnd-kit/modifiers';
-
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
 import Box from "@mui/material/Box";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Grid from "@mui/material/Grid";
-import { Typography, Stack, Button } from "@mui/material";
+import { Typography } from "@mui/material";
 import CircularProgress from '@mui/material/CircularProgress';
 
 import * as React from "react";
@@ -16,20 +10,12 @@ import { useAtom } from "jotai";
 
 import { activeAtom } from '../atoms/activeAtom';
 import { methodAtom } from "../atoms/methodAtom";
-import { phaseAtom } from '../atoms/phaseAtom';
-
 import CardItem from "./CardTemplate";
-import {Draggable} from './Draggable';
-import {Droppable} from './Droppable';
-import SmallCard from './SmallCardTemplate';
-
 import Masonry from 'react-masonry-css'
 
 import { GetContent } from '../services/Api';
 
-import {logout} from "../services/authApi";
 import { userAtom } from '../atoms/userAtom';
-import { GetUserDetails } from '../services/Api';
 import { useState } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import { recommendedMethodAtom } from '../atoms/recommendedMethodAtom';
@@ -46,19 +32,25 @@ export default function CardGridProfile(props) {
   const [loading, setLoading] = useState(false);
 
   
-  useEffect(() => { 
+   useEffect(() => { 
 	setLoading(true)
-	GetUserDetails().then((res) => GetContent(`/api/method/search?label=${res.data.lastName}&pageIndex=0&pageSize=50&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=true`)
+	GetContent(`/api/method/search?label=&pageIndex=0&pageSize=50&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=true`)
 	.then((response) => {
-		response.data.forEach(element => {
+		console.log(response.data)
+		console.log(props?.user?.data?.userId)
+
+		var temp = response.data.filter((method) => method.ownerId === props?.user?.data?.userId)
+
+		temp.forEach(element => {
 			element.type = "method"
 		});
-		setMethods(response.data)
-		console.log(response.data)
+		setMethods(temp)
+		
 		setLoading(false)
-	}))
+	})
 	
-   }, []);
+   }, [props?.user?.data?.userId]);
+
 
    
   return (
@@ -84,13 +76,14 @@ export default function CardGridProfile(props) {
     					</Box>
 					) : ( 
 						<>
+						
 					<Masonry breakpointCols={2} className='my-masonry-grid' columnClassName='my-masonry-grid_column'>
 					{recommendedMethods.map((method) => (
 						<div key={method.id}>
 							{!method.isMethodSet ? (
 								<div className='method'>
 										<>
-											<CardItem className='method' data={method}></CardItem>
+											<CardItem profile className='method' data={method}></CardItem>
 										</>
 								</div>
 							) : (
@@ -109,13 +102,13 @@ export default function CardGridProfile(props) {
 									{!method.isMethodSet ? (
 										<div className='method'>
 												<>
-													<CardItem className='method' data={method}></CardItem>
+													<CardItem profile className='method' data={method}></CardItem>
 												</>
 										</div>
 									) : (
 										<div className='methodset' key={method.id}>
 												<>
-													<CardItem data={method}></CardItem>
+													<CardItem profile data={method}></CardItem>
 												</>
 										</div>
 									)}

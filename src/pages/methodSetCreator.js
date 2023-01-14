@@ -12,6 +12,9 @@ import { Link } from "react-router-dom";
 import MethodCreatorForm from "../components/Forms/MethodCreatorForm";
 import { useAtom } from "jotai";
 import { userAtom } from "../atoms/userAtom";
+import { tabAtom } from "../atoms/tabAtom";
+import { useEffect } from "react";
+
 
 
 
@@ -19,36 +22,43 @@ import { userAtom } from "../atoms/userAtom";
 export default function MethodSetCreator() {
 
 	const [user, setUser] = useAtom(userAtom)
+	const [tab, setTab] = useAtom(tabAtom)
 
+	setTab(1)
+	useEffect(() => {
+		window.scrollTo(0, 0)
+	}, [])
 	return (
-		<Container>
-			<div className="setMakerWrapper">
-				<div className="sidebarWrapper">
-					<div className="sidebar">
-					<Heading heading={"Cross Innovation Process"} />
-					{user ? <PhaseSelector type="lib"/> : <PhaseSelector/>}
+		<Container >
+			<div className='setMakerWrapper'>
+				<div className='sidebarWrapper'>
+					<div className='sidebar'>
+						<Heading heading={"Cross Innovation Process"} />
+						{user ? <PhaseSelector type='lib' /> : <PhaseSelector />}
 					</div>
 				</div>
-				<div className="content">
-				<div className="filterWrapper">
-				<Stack direction="row"  justifyContent="space-between" alignItems="center">
-					<Heading heading={"Methods & Method Sets Library"}/>
+				<div className='content'>
+					<div className='filterWrapper'>
+						<Stack direction='row' justifyContent='space-between' alignItems='center'>
+							<Heading heading={"Methods & Method Sets Library"} />
 
-					{user ? <Link className="LinkButton" to="/createMethod" state={{methodupdate: true, isMethodSet:false}} component={<MethodCreatorForm />} >Create new Method</Link> : null}
-	
-				</Stack>
-				<Filter/>
-				</div>
-				<div className="cardsWrapper">
-					<div className="cards">
-					<MethodCards />
+							{user ? (
+								<Link className='LinkButton' to='/createMethod' state={{ methodupdate: true, isMethodSet: false }} component={<MethodCreatorForm />}>
+									Create new Method
+								</Link>
+							) : null}
+						</Stack>
+						<Filter />
 					</div>
-				</div>
+					<div className='cardsWrapper'>
+						<div className='cards'>
+							<MethodCards />
+						</div>
+					</div>
 				</div>
 			</div>
 		</Container>
-		
-	);
+	)
 }
 
 

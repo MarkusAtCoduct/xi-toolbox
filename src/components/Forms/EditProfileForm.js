@@ -14,6 +14,11 @@ import {registerUser} from "../../services/authApi"
 import { useNavigate } from "react-router-dom";
 import AvatarUpload from "../AvatarUpload";
 import { useLocation} from "react-router-dom"
+import { useAtom } from "jotai";
+import { userAtom } from "../../atoms/userAtom";
+
+import { GetUserDetails } from "../../services/Api";
+
 
 import * as React from "react";
 import { updateUserDetails } from "../../services/Api";
@@ -21,6 +26,7 @@ import { updateUserDetails } from "../../services/Api";
 
 export default function EditProfileForm() {
 
+    const [user, setUser] = useAtom(userAtom);
 
 
 	const navigate = useNavigate();
@@ -32,8 +38,13 @@ export default function EditProfileForm() {
 
 	const onSubmit = (data) => {	
 		console.log(data)
-			updateUserDetails("/api/user/update", data)
-			//navigate("/home");
+		Number(data.yearsOfExperience)
+		updateUserDetails("/api/user/update", data).then((res) => {
+			GetUserDetails("/api/user").then((res) => {
+				setUser(res);
+			})
+			navigate("/myProfile")
+		})
 		}
 
 
@@ -148,7 +159,7 @@ export default function EditProfileForm() {
 									variant="filled"
 									type="number"
 									{...register("yearsOfExperience", {valueAsNumber: true,})}
-									defaultValue={state.prefill?.data?.yearsOfExperience || null}
+									defaultValue={state.prefill?.data?.yearsOfExperience || 0}
 								/>
 							</div>
 						</Stack>

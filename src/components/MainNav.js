@@ -4,7 +4,6 @@ import Stack from "@mui/material/Stack";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
-import useScrollTrigger from "@mui/material/useScrollTrigger";
 import { Button } from "@mui/material";
 import { Container } from "@mui/system";
 
@@ -14,21 +13,13 @@ import { Link } from "react-router-dom";
 import Login from "./login"
 import { useAtom } from "jotai";
 import { userAtom } from "../atoms/userAtom";
-import { logout } from "../services/authApi";
+import { tabAtom } from "../atoms/tabAtom";
 import AccountMenu from "./AccountMenu";
+import { Box } from "@mui/system";
 
-function ElevationScroll(props) {
-	const { children, window } = props;
-	const trigger = useScrollTrigger({
-	  disableHysteresis: true,
-	  threshold: 0,
-	  target: window ? window() : undefined,
-	});
-  
-	return React.cloneElement(children, {
-	  elevation: trigger ? 4 : 0,
-	});
-  }
+
+import logo from "../images/logo.png" 
+
 
 function LinkTab(props) {
   return (
@@ -43,17 +34,18 @@ function LinkTab(props) {
 
 export default function MainNav(props) {
 
+	const [tab , setTab] = useAtom(tabAtom)
 	const [value, setValue] = React.useState(0);
 	const [user] = useAtom(userAtom)
 	
 	const handleChange = (event, newValue) => {
-	  setValue(newValue);
+	  setTab(newValue);
 	}
 
 
 	return (
 	
-		<AppBar position="sticky" color="neutral" elevation={0}>
+		<AppBar position="fixed" color="neutral" elevation={0}>
 			<Container>
 				<Stack
 					direction="row"
@@ -63,30 +55,14 @@ export default function MainNav(props) {
 					pl={4}
 					pr={4}
 				>
-					<Stack direction="row">
-						<AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-						<Typography
-							variant="h6"
-							noWrap
-							component="a"
-							href="/"
-							sx={{
-								mr: 2,
-								display: { xs: "none", md: "flex" },
-								fontWeight: 700,
-								letterSpacing: ".3rem",
-								color: "inherit",
-								textDecoration: "none",
-							}}
-						>
-							ToolBox
-						</Typography>
-					</Stack>
-					<Tabs value={value} onChange={handleChange}>
+				
+						<img src={logo } alt="logo" style={{width: "200px"}}/>
+					
+					<Tabs value={tab} onChange={handleChange}>
 						<LinkTab label="Home" path="/home" />
 						<LinkTab label="Methods Library" path="/createSet" />
-						<LinkTab label="How it works" href="/trash" />
-						<LinkTab label="About us" href="/spam" />
+						<LinkTab label="How it works" path="/HowItWorks" />
+						<LinkTab label="Imprint" path="/Imprint" />
 						{user ?
 						<LinkTab label="My Profile" path="/myProfile" />
 						:null}

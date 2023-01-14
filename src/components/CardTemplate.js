@@ -8,7 +8,8 @@ import Rating from "@mui/material/Rating";
 import { Typography, Stack } from "@mui/material";
 
 import * as React from "react";
-
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import ForumIcon from '@mui/icons-material/Forum';
 import { useAtom } from "jotai";
 
 import { phaseAccordionAtom } from "../atoms/phaseAccordionAtom";
@@ -17,9 +18,13 @@ import { phaseAtom } from "../atoms/phaseAtom";
 import CardFunctions from "./CardFunctions";
 import MethodList from "./MethodList";
 import Details from "./details";
+import UserProfile from "../pages/UserProfile";
+import { Link } from "react-router-dom";
+import { userAtom } from "../atoms/userAtom";
 
 export default function BasicCard(props) {
 	const [value, setValue] = React.useState(2);
+	const [user] = useAtom(userAtom);
 	const [phaseItems, setPhaseItems] = useAtom(phaseAtom)
 	const [expanded] = useAtom(phaseAccordionAtom);
 
@@ -45,22 +50,25 @@ export default function BasicCard(props) {
 				borderRadius: "16px",
 				maxWidth: "344px",
 				minWidth: "300px",
-				//height: "352px",
 			}}
-			style={props.drag ? { outline: " solid 2px #FF5454" } : null}
+			style={props.drag ? { outline: " solid 2px #00afc8" } : null}
 		>
 			<CardContent sx={{padding: "24px", paddingBottom: "24px"}}>
-				<CardFunctions addtoset={handleAdd} data={props.data} owner={props.data.ownerId} id={props.data.id}/>
+				<CardFunctions addtoset={handleAdd} data={props.data} profile={props.profile} owner={props.data.ownerId} id={props.data.id}/>
 				<Box>
 						<Typography sx={{ fontSize: 28, fontWeight: "900", textAlign: "left" }}>{props.data.name || "Placeholder"}</Typography>
 					<Stack direction='row' alignItems='flex-end' justifyContent='space-between'>
 						<Stack direction='row' alignItems='flex-end'>
 							<Typography gutterBottom sx={{width: "max-content", fontSize: 11, fontWeight: "500", paddingTop: "5px" }}>
-								{"by: "+props.data.owner || "Placeholder"}
+								by: 
+								<Link style={{marginLeft:"8px", textDecoration: "none", color: "#00afc8", cursor: "pointer"}} to={props?.data?.ownerId === user?.data?.userId ? "/myProfile" : `/Profile/${props?.data?.ownerId}`} component={<UserProfile />}>
+									{ props.data.owner || "Placeholder"}
+								</Link>
 							</Typography>
 							{props?.data.ownerBadges?.map((badge, index) => (
 									<div key={index}>
-									{badge === "METHOD_CREATOR" ?<MilitaryTech color='primary' /> : null}
+									{badge === "METHOD_CREATOR" ?<NoteAddIcon sx={{height:"16px", width:"16px", marginLeft:"8px"}} color='primary' /> : null}
+									{badge === "METHOD_FACILITATOR" ?<ForumIcon sx={{height:"16px", width:"16px",  marginLeft:"8px"}} color='primary' /> : null}
 									</div>))}
 						</Stack>
 					</Stack>
@@ -85,7 +93,7 @@ export default function BasicCard(props) {
 								color: "#757875",
 							}}
 						>
-							{props.data.rate | 253} Ratings | {props.data.questions | 36} answered Questions
+							
 						</Typography>
 					</Stack>
 
@@ -115,7 +123,7 @@ export default function BasicCard(props) {
 					</Stack>
 
 					{!props.data.isMethodSet ? (
-						<Grid container spacing={2} direction='row' justifyContent='space-around'>
+						<Grid mb={1} container spacing={2} direction='row' justifyContent='space-around'>
 							<Grid xs={6}>
 								<Stack direction='column' justifyContent='center' alignItems='flex-start' spacing={1}>
 									<Typography sx={{ fontSize: 11, fontWeight: "500", color: "#757875" }}>Input</Typography>
