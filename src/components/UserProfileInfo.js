@@ -41,36 +41,33 @@ export default function UserProfileInfo(props) {
 						fontWeight: "400",
 						float: "right"}}
 				>
-					{!props.loading ? props?.user?.data?.firstName + " " + props?.user?.data?.lastName : <Skeleton width={"100%"}/>}
+					{!props.loading ? props?.user?.data?.firstName + " " + props?.user?.data?.lastName : "Loading..."}
 				</Typography>
 					<Badges badges={props?.user?.data?.badges} />
+					<Box>
+						{props?.user?.data?.currentJob ?(
+						<div>
+							<Typography align="left" variant="h5">Occupation</Typography>
+							<Typography align="left" variant="subtitle1">{props?.user?.data?.currentJob}</Typography>
+							<Divider />
+						</div>
+						): null}
+						{props?.user?.data?.yearsOfExperience ?(
+						<div>
+							<Typography align="left" variant="h5">Years of Experience</Typography>
+							<Typography align="left" variant="subtitle1">{props?.user?.data?.yearsOfExperience}</Typography>
+							<Divider />
+						</div>
+						): null}
 
-
-				<div>
-					<Button onClick={handleOpen}>Further Details</Button>
-					<Modal open={open} onClose={handleClose} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
-						<Box sx={style}>
-							<Typography id='modal-modal-title' variant='h6' component='h2'>
-							Job
-							</Typography>
-							<Typography id='modal-modal-description' sx={{ mt: 2 }}>
-							{props?.user?.data?.currentJob}							
-							</Typography>
-							<Typography id='modal-modal-title' variant='h6' component='h2'>
-							Industry
-							</Typography>
-							<Typography id='modal-modal-description' sx={{ mt: 2 }}>
-							{props?.user?.data?.industry} {props?.user?.data?.yearsOfExperience}						
-							</Typography>
-							<Typography id='modal-modal-title' variant='h6' component='h2'>
-							email
-							</Typography>
-							<Typography id='modal-modal-description' sx={{ mt: 2 }}>
-							{props?.user?.data?.email}							
-							</Typography>
-						</Box>
-					</Modal>
-				</div>
+						{props?.user?.data?.industry ?(
+						<div>
+							<Typography align="left" variant="h5">Industry</Typography>
+							<Typography align="left" variant="subtitle1">{props?.user?.data?.industry}</Typography>
+							<Divider />
+						</div>
+						): null}
+					</Box>
 			</Stack>
 			<Divider />
 		</>

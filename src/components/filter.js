@@ -20,11 +20,12 @@ import { useForm } from 'react-hook-form';
 
 
 import * as React from "react";
-import { IconButton, Typography } from "@mui/material";
+import { IconButton, MenuItem, Typography } from "@mui/material";
 import { GetContent } from '../services/Api';
 import { queryAtom } from "../atoms/queryAtom";
 import Select from '@mui/material/Select';
-
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 export default function Filter(props) {
 
@@ -32,8 +33,8 @@ export default function Filter(props) {
 		label: "",
 		pageIndex: 0,
 		pageSize: 20,
-		sortBy: "NAME",
-		sortDirection: "ASC",
+		sortBy: "name",
+		sortDirection: "asc",
 		includeMethods: true,
 		includeMethodSets: true,
 	}})
@@ -73,7 +74,7 @@ export default function Filter(props) {
 	}
 
 	return (
-		<>
+		
 		<form onSubmit={handleSubmit(onSubmit)}>
 		<Box p={1}>
 			<Card
@@ -108,22 +109,42 @@ export default function Filter(props) {
 								<FormControlLabel control={<Checkbox checked={query?.includeMethodSets} {...register("includeMethodSets")}/>}  label="MethodSets" />
 							</FormGroup>
 						</Stack>
-
-						<Box sx={{ minWidth: 120 }}>
-								<Typography>Sort by</Typography>
-							<FormControl fullWidth>
-								<select
+						<Box sx={{ width: 125}}>
+							<FormControl fullWidth >
+								<InputLabel id="demo-simple-select-label">Sort By</InputLabel>
+								<Select
+								sx={{height: "56px"}}
 								className="selectSort"
-									{...register("sortBy", {onChange: handleSubmit(onSubmit)})}
-									value={watch("sortBy")}
-									//defaultValue="name"
+								labelId="demo-simple-select-label"
+								id="demo-simple-select"
+								label="Sort By"
+								{...register("sortBy", {onChange: handleSubmit(onSubmit)})}
+								value={watch("sortBy")}
 								>
-									<option value={"name"}>Name</option>
-									<option value={"cost"}>Cost</option>
-									<option value={"time"}>Time</option>
-									<option value={"rate"}> Rating</option>
-								</select>
-							</FormControl>
+									<MenuItem value={"name"}>Name</MenuItem>
+									<MenuItem value={"cost"}>Cost</MenuItem>
+									<MenuItem value={"time"}>Time</MenuItem>
+									<MenuItem value={"rate"}> Rating</MenuItem>
+								</Select>
+								</FormControl>
+						</Box>
+
+						<Box sx={{ width: 125}}>
+							<FormControl fullWidth >
+								<InputLabel id="sortDirectionLabel">Sort Direction</InputLabel>
+								<Select
+								sx={{height: "56px"}}
+								className="selectSort"
+								labelId="sortDirectionLabel"
+								id="sortDirection"
+								label="sort Direction"
+								{...register("sortDirection", {onChange: handleSubmit(onSubmit)})}
+								value={watch("sortDirection")}
+								>
+									<MenuItem value={"asc"}>Ascending</MenuItem>
+									<MenuItem value={"desc"}>Descending</MenuItem>
+								</Select>
+								</FormControl>
 						</Box>
 					</Stack>
 				</CardContent>
@@ -131,6 +152,6 @@ export default function Filter(props) {
 		</Box>
 		<div className="fade"></div>
 		</form>
-		</>
+		
 	);
 }
