@@ -7,19 +7,21 @@ import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import { Container, Rating, Stack } from "@mui/material";
 import Fade from '@mui/material/Fade';
-
 import * as React from "react";
+import { useState } from 'react';
+import NoteAddIcon from "@mui/icons-material/NoteAdd";
+import ForumIcon from "@mui/icons-material/Forum";
+import { useAtom } from "jotai";
 
-import CardFunctions from "./CardFunctions";
-import ChipList from "./ChipList";
+
+
+import { dragDisableAtom } from "../../atoms/dragDisableAtom";
+import CardFunctions from "../cardComponents/CardFunctions";
+import ChipList from "./ChipList"
 import ListTemplate from "./ListTemplate";
 import MethodList from "./MethodList";
 import Paragraph from "./Paragraph";
 import Comments from "./Comments";
-import { useState } from 'react';
-import NoteAddIcon from "@mui/icons-material/NoteAdd";
-import ForumIcon from "@mui/icons-material/Forum";
-
 
 const style = {
 	position: "absolute",
@@ -33,8 +35,15 @@ const style = {
 export default function Details(props) {
 	
 	const [open, setOpen] = React.useState(false);
-	const handleOpen = () => setOpen(true);
-	const handleClose = () => setOpen(false);
+	const [dragDisable, setDragDisable] = useAtom(dragDisableAtom);
+	const handleOpen = () => {
+		setDragDisable(true);
+		setOpen(true)
+	};
+	const handleClose = () => {
+		setDragDisable(false);
+		setOpen(false)
+	};
 	const [value] = React.useState(2);
 	const [ratings ] = useState(null);
 
@@ -142,8 +151,8 @@ export default function Details(props) {
 											</Grid>
 											<Grid md={4}>
 												<Stack direction="column">
-													<ChipList listItems={props.data.input} heading="Input" />
-													<ChipList listItems={props.data.output} heading="Output" />
+													<ChipList listItems={props.data.input.slice(0,1)} heading="Input" />
+													<ChipList listItems={props.data.output.slice(0,1)} heading="Output" />
 													<ListTemplate listItems={props.data.advantages} heading="Advantages" />
 													<ListTemplate listItems={props.data.disadvantages}heading="Disadvantages" />
 													

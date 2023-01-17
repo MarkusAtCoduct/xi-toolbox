@@ -4,12 +4,8 @@ import { Stack } from "@mui/system"
 import { Typography, Skeleton } from "@mui/material"
 import * as React from "react"
 
-import Badges from "./Badges"
-import Button from "@mui/material/Button"
+import Badges from "./detailsComponents/Badges"
 import Box from "@mui/material/Box"
-
-import Modal from "@mui/material/Modal"
-import { useEffect } from "react"
 
 const style = {
 	position: "absolute",
@@ -24,9 +20,6 @@ const style = {
 }
 
 export default function UserProfileInfo(props) {
-	const [open, setOpen] = React.useState(false)
-	const handleOpen = () => setOpen(true)
-	const handleClose = () => setOpen(false)
 
 
 	return (
@@ -44,6 +37,9 @@ export default function UserProfileInfo(props) {
 					{!props.loading ? props?.user?.data?.firstName + " " + props?.user?.data?.lastName : "Loading..."}
 				</Typography>
 					<Badges badges={props?.user?.data?.badges} />
+					
+					<Divider />
+					
 					<Box>
 						{props?.user?.data?.currentJob ?(
 						<div>

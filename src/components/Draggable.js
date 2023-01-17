@@ -2,11 +2,12 @@ import {useDraggable} from '@dnd-kit/core';
 
 import React from 'react';
 
-import CardItem from "./CardTemplate";
+import CardItem from "./cardComponents/CardTemplate";
 
 export function Draggable(props) {
   const {attributes, listeners, setNodeRef, isDragging} = useDraggable({
     id: props.id,
+    disabled: props.disabled,
   });
 
   

@@ -10,7 +10,7 @@ import { useAtom } from "jotai";
 
 import { activeAtom } from '../atoms/activeAtom';
 import { methodAtom } from "../atoms/methodAtom";
-import CardItem from "./CardTemplate";
+import CardItem from "./cardComponents/CardTemplate";
 import Masonry from 'react-masonry-css'
 
 import { GetContent } from '../services/Api';
@@ -60,13 +60,12 @@ export default function CardGridProfile(props) {
 	{loading ? 
 		<>
 		
-		<Grid container spacing={1}>
-			<Grid xs={6} item><Skeleton  animation="wave" height={"350px"} sx={{borderRadius: "16px"}} variant="rectangular" /></Grid>
-			<Grid xs={6} item><Skeleton  animation="wave" height={"350px"} sx={{borderRadius: "16px"}} variant="rectangular" /></Grid>
-			<Grid xs={6} item><Skeleton  animation="wave" height={"350px"} sx={{borderRadius: "16px"}} variant="rectangular" /></Grid>
-			<Grid xs={6} item><Skeleton  animation="wave" height={"350px"} sx={{borderRadius: "16px"}} variant="rectangular" /></Grid>
-		
-		</Grid> 
+		<Masonry breakpointCols={2} className='my-masonry-grid' columnClassName='my-masonry-grid_column'>
+							<Skeleton animation='wave' height={"700px"} sx={{ borderRadius: "16px", marginBottom: "16px"}}  variant='rectangular' />
+							<Skeleton animation='wave' height={"350px"} sx={{ borderRadius: "16px", marginBottom: "16px" }} mb={2} variant='rectangular' />
+							<Skeleton animation='wave' height={"350px"} sx={{ borderRadius: "16px", marginBottom: "16px" }} mb={2}variant='rectangular' />
+							<Skeleton animation='wave' height={"700px"} sx={{ borderRadius: "16px", marginBottom: "16px" }} mb={2}variant='rectangular' />
+					</Masonry> 
 		</>
 	:
 		<Box>	
@@ -76,26 +75,6 @@ export default function CardGridProfile(props) {
     					</Box>
 					) : ( 
 						<>
-						
-					<Masonry breakpointCols={2} className='my-masonry-grid' columnClassName='my-masonry-grid_column'>
-					{recommendedMethods.map((method) => (
-						<div key={method.id}>
-							{!method.isMethodSet ? (
-								<div className='method'>
-										<>
-											<CardItem profile className='method' data={method}></CardItem>
-										</>
-								</div>
-							) : (
-								<div className='methodset' key={method.id}>
-										<>
-											<CardItem data={method}></CardItem>
-										</>
-								</div>
-							)}
-						</div>
-					))}
-				</Masonry>
 							<Masonry breakpointCols={2} className='my-masonry-grid' columnClassName='my-masonry-grid_column'>
 							{methods.map((method) => (
 								<div key={method.id}>

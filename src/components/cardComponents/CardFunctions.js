@@ -8,11 +8,12 @@ import SvgIcon from "@mui/material/SvgIcon";
 import { ButtonGroup, IconButton } from "@mui/material";
 import { Box, Stack, Typography } from "@mui/material";
 import { useAtom } from "jotai";
-import { userAtom } from "../atoms/userAtom";
+import { userAtom } from "../../atoms/userAtom";
 import {Link} from "react-router-dom";
-import MethodCreatorForm from "./Forms/MethodCreatorForm";
+import MethodCreatorForm from "../formComponents/MethodCreatorForm";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { DeleteMethod } from "../services/Api"
+import { DeleteMethod } from "../../services/Api"
+import BasicDocument from "../BasicDocument";
 
 import * as React from "react";
 
@@ -46,9 +47,10 @@ const handleDelete = () => {
 						variant="contained"
 						aria-label="Disabled elevation buttons">
 							
-						<IconButton aria-label="download" size="medium">
-							<FileDownloadIcon />
-						</IconButton>
+						
+						<BasicDocument data={props?.data}/>
+
+						
 						
 						{user?.data?.userId === props.data?.ownerId ?	
 						<>

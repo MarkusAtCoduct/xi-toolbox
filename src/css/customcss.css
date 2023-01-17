@@ -260,8 +260,17 @@ ol{
   background-color: #282c34;
 }
 
-.selectSort{
-  padding: 16px;
+ol {
+  list-style-type: none;
+}
+
+ol li::before {content: "•"; color: #00afc8; font-weight: bold; display: inline-block; width: 1em; margin-left: -1em;}
+
+/*.selectSort{
   border-radius: 6px;
   border-color: #C4C7C4;
+}*/
+
+.spacer{
+  height: 27px;
 }

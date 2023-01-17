@@ -7,9 +7,9 @@ import * as React from "react";
 import { useAtom } from "jotai";
 import { userAtom } from '../atoms/userAtom';
 import { Link } from "react-router-dom";
-import EditProfileForm from "./Forms/EditProfileForm";
+import EditProfileForm from "./formComponents/EditProfileForm";
 import {Button} from "@mui/material";
-import Badges from "./Badges";
+import Badges from "./detailsComponents/Badges";
 
 export default function ProfileInfo(props) {
 	const [user] = useAtom(userAtom)

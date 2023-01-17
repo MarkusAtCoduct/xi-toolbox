@@ -18,9 +18,9 @@ export default function ListTemplate(props) {
                                 <a href={"https://"+item} sx={{ fontSize:"14px",  fontWeight: "400", textAlign:"left"}}>
                                 {item || "no body set"}
                                 </a>
-                                :<Typography gutterBottom sx={{ fontSize:"14px",  fontWeight: "400", textAlign:"left"}}>
+                                :<span style={{ fontSize:"14px",  fontWeight: "400", textAlign:"left"}}>
                                 {item || "no body set"}
-                                </Typography>
+                                </span>
                                 }
                             </li>
                         ))}

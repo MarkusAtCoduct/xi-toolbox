@@ -28,6 +28,7 @@ import { PointerSensor, useSensor, useSensors } from "@dnd-kit/core"
 
 import Home from "./pages/Home"
 import { phaseAccordionAtom } from "./atoms/phaseAccordionAtom"
+import { dragDisableAtom } from "./atoms/dragDisableAtom"
 import MethodCreator from "./pages/MethodCreator"
 import EditProfile from "./pages/EditProfile"
 import UserProfile from "./pages/UserProfile"
@@ -76,6 +77,7 @@ function App() {
 	const [user, setUser] = useAtom(userAtom)
 	const [loading, setLoading] = useState(false)
 	const [query, setQuery] = useAtom(queryAtom)
+	const [dragDisable, setDragDisable] = useAtom(dragDisableAtom)
 
 	useEffect(() => {
 		if (isLoggedIn()) {
@@ -84,8 +86,12 @@ function App() {
 				.then(() => {
 					return GetUserDetails()
 				})
-				.then((res) => setUser(res))
-				.catch((err) => console.log("refresh token out of date"))
+				.then((res) => {
+					setDragDisable(false)
+					setUser(res)})
+				.catch((err) => {
+					setDragDisable(true)
+					console.log("refresh token out of date")})
 				.then(() => setLoading(false))
 		}
 	}, [])
@@ -103,41 +109,65 @@ function App() {
 
 		const tmp = { ...methods[Index] }
 		const tmpItems = [...phaseItems]
-		console.log(phaseItems[phaseItems.length - 1])
 
 		if (active.data.current?.sortable) {
+			//what happens when you reorder the phase items
 			setPhaseItems(arrayMove(phaseItems, test, newIndex))
 		} else if (methods[Index]?.container != over?.id || recommendedMethods[Index]?.container != over?.id) {
+			//what happens when you drag a method from the method list to the phase list
 			if (tmp.isMethodSet) {
+				//if the method is a method set, we need to create a new id for each method in the set
 				tmp.simpleUsedMethods.forEach((element) => {
 					element.prevId = element.id
-
 					element.id = uuid()
 					element.container = expanded
 				})
+				//we then push the method set and all of its methods into the phase list
 				tmpItems.push(...tmp.simpleUsedMethods)
 				setPhaseItems(tmpItems)
 			} else {
+				//if the method is not a method set, we just need to create a new id for the method
 				tmp.prevId = tmp.id
 				tmp.id = uuid()
 				tmp.container = expanded
 				tmpItems.push(tmp)
+				if(tmp.output[0]){
+				console.table(tmp.output[0])
+				handleGetRecommendedMethods(tmp.output[0])
+				}
 				setPhaseItems(tmpItems)
 			}
 		}
 		setActiveId(null)
-		console.log(phaseItems[phaseItems.length - 1])
+	}
+
+
+	const handleGetRecommendedMethods = (output) => {
+
+		var outputString = output.toString()
+		outputString = outputString.replace(/,/g, " ")
+		
+
+		console.log(outputString)
+
 		GetContent(
-			`/api/method/search?label=${phaseItems[phaseItems.length - 1].output[0]}&pageIndex=0&pageSize=50&sortBy=${query.sortBy}&sortDirection=${
+			`/api/method/search?label=${outputString}&pageIndex=0&pageSize=500&sortBy=${query.sortBy}&sortDirection=${
 				query.sortDirection
 			}&includeMethods=${query.includeMethods}&includeMethodSets=${query.includeMethodSets}`,
 		).then((response) => {
-			response.data.forEach((element) => {
+			console.log(response.data)
+			console.log(output)
+
+
+			var temp = response.data.filter((method) => method.input[0] === output)
+		
+
+			temp.forEach((element) => {
 				element.container = "recommendedMethodContainer"
 				element.type = "method"
 			})
-			setRecommendedMethods(response.data)
-			console.log(response.data)
+			setRecommendedMethods(temp)
+			console.log(temp)
 			setLoading(false)
 		})
 	}

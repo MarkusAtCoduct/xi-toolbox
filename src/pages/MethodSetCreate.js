@@ -3,7 +3,7 @@ import { Container, Typography } from "@mui/material";
 import * as React from "react";
 
 import { useEffect } from "react";
-import MethodCreatorForm from "../components/Forms/MethodCreatorForm";
+import MethodCreatorForm from "../components/formComponents/MethodCreatorForm";
 
 export default function MethodSetCreate() {
 	useEffect(() => {

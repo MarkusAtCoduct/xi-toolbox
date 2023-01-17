@@ -9,17 +9,17 @@ import * as React from "react";
 
 import { useAtom } from "jotai";
 
-import { phaseAtom } from "../atoms/phaseAtom";
-import { privatePhaseAtom } from "../atoms/privatePhaseAtom";
-import { activeAtom } from "../atoms/activeAtom";
-import { methodAtom } from "../atoms/methodAtom";
-import { userAtom } from "../atoms/userAtom";
-import { GetUserDetails } from "../services/Api";
-import { GetContent } from "../services/Api";
+import { phaseAtom } from "../../atoms/phaseAtom";
+import { privatePhaseAtom } from "../../atoms/privatePhaseAtom";
+import { activeAtom } from "../../atoms/activeAtom";
+import { methodAtom } from "../../atoms/methodAtom";
+import { userAtom } from "../../atoms/userAtom";
+import { GetUserDetails } from "../../services/Api";
+import { GetContent } from "../../services/Api";
 import { useState } from "react";
 import { useEffect } from "react";
-import { recommendedMethodAtom } from "../atoms/recommendedMethodAtom";
-import { queryAtom } from "../atoms/queryAtom";
+import { recommendedMethodAtom } from "../../atoms/recommendedMethodAtom";
+import { queryAtom } from "../../atoms/queryAtom";
 
 
 

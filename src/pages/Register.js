@@ -3,7 +3,7 @@ import { Container, Typography } from "@mui/material";
 import * as React from "react";
 
 import { useEffect } from "react";
-import RegistrationForm from "../components/Forms/RegistrationForm";
+import RegistrationForm from "../components/formComponents/RegistrationForm";
 
 export default function Register() {
 	useEffect(() => {

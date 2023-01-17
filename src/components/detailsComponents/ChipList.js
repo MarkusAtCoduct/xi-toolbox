@@ -10,13 +10,13 @@ export default function ChipList(props) {
 			</Typography>
 			{props.listItems ? (
 				<Box> 
-				{/*<Stack direction='row' sx={{overflow: "auto"}} spacing={1} p={1}>*/}
+				<Stack direction='row' sx={{overflow: "auto"}} spacing={1} p={1}>
 					{props.listItems.map((item, index) => (				
-							<Chip sx={{maxWidth: "150px", margin: "8px"}} key={index} label={item || "no body set"}/>
+							<Chip sx={{maxWidth: "150px"}} key={index} label={item || "no body set"}/>
 					)
 					)}
 	
-				{/*</Stack>*/}
+				</Stack>
 				</Box>
 			): null}
 		</Box>

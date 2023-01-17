@@ -9,7 +9,7 @@ import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import { useState } from 'react';
 
-import { rateMethod } from '../services/Api';
+import { rateMethod } from '../../services/Api';
 import EditIcon from '@mui/icons-material/Edit';
 import { FormControlLabel } from "@mui/material"
 

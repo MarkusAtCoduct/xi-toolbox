@@ -88,12 +88,6 @@ export default function AccountMenu() {
 				transformOrigin={{ horizontal: "right", vertical: "top" }}
 				anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
 			>
-				<MenuItem>
-					<ListItemIcon>
-						<Settings fontSize='small' />
-					</ListItemIcon>
-					Settings
-				</MenuItem>
 				<MenuItem onClick={() => handleLogout()} href='/#'>
 					<ListItemIcon>
 						<Logout fontSize='small' />

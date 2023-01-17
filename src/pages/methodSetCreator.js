@@ -5,11 +5,11 @@ import * as React from "react";
 
 import MethodCards from "../components/CardGrid";
 import Heading from "../components/Heading";
-import PhaseSelector from "../components/PhaseSelector";
-import PhaseButtons from "../components/PhaseButtons";
+import PhaseSelector from "../components/phaseComponents/PhaseSelector";
+import PhaseButtons from "../components/phaseComponents/PhaseButtons";
 import Filter from "../components/filter";
 import { Link } from "react-router-dom";
-import MethodCreatorForm from "../components/Forms/MethodCreatorForm";
+import MethodCreatorForm from "../components/formComponents/MethodCreatorForm";
 import { useAtom } from "jotai";
 import { userAtom } from "../atoms/userAtom";
 import { tabAtom } from "../atoms/tabAtom";
@@ -39,7 +39,7 @@ export default function MethodSetCreator() {
 				</div>
 				<div className='content'>
 					<div className='filterWrapper'>
-						<Stack direction='row' justifyContent='space-between' alignItems='center'>
+						<Stack mt={1} direction='row' justifyContent='space-between' alignItems='center'>
 							<Heading heading={"Methods & Method Sets Library"} />
 
 							{user ? (

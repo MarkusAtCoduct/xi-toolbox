@@ -6,7 +6,7 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
-import RegistrationForm from "../Forms/RegistrationForm";
+import RegistrationForm from "../formComponents/RegistrationForm";
 
 
 import Login from "../login";

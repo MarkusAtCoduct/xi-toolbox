@@ -5,6 +5,7 @@ import process from "../images/XI-Lab_Prozessmodell.png";
 import { useAtom } from "jotai";
 import { tabAtom } from "../atoms/tabAtom";
 import ReactImageZoom from 'react-image-zoom';
+import BasicDocument from "../components/BasicDocument";
 
 export default function HowItWorks() {
     const [tab , setTab] = useAtom(tabAtom)
@@ -33,6 +34,7 @@ export default function HowItWorks() {
                 </CardContent>
             </Card>
         </Container>
+        
         </div>
     );
 }

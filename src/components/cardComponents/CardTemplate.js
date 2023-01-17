@@ -12,15 +12,15 @@ import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import ForumIcon from '@mui/icons-material/Forum';
 import { useAtom } from "jotai";
 
-import { phaseAccordionAtom } from "../atoms/phaseAccordionAtom";
-import { phaseAtom } from "../atoms/phaseAtom";
+import { phaseAccordionAtom } from "../../atoms/phaseAccordionAtom";
+import { phaseAtom } from "../../atoms/phaseAtom";
 
 import CardFunctions from "./CardFunctions";
-import MethodList from "./MethodList";
-import Details from "./details";
-import UserProfile from "../pages/UserProfile";
+import MethodList from "../detailsComponents/MethodList";
+import Details from "../detailsComponents/details";
+import UserProfile from "../../pages/UserProfile";
 import { Link } from "react-router-dom";
-import { userAtom } from "../atoms/userAtom";
+import { userAtom } from "../../atoms/userAtom";
 
 export default function BasicCard(props) {
 	const [value, setValue] = React.useState(2);
@@ -35,11 +35,23 @@ export default function BasicCard(props) {
 		let tmp = {...props.data}
 		const tmpItems = [...phaseItems]
 
+		if (tmp.isMethodSet) {
+			//if the method is a method set, we need to create a new id for each method in the set
+			tmp.simpleUsedMethods.forEach((element) => {
+				element.prevId = element.id
+				//element.id = uuid()
+				element.container = expanded
+			})
+			//we then push the method set and all of its methods into the phase list
+			tmpItems.push(...tmp.simpleUsedMethods)
+			setPhaseItems(tmpItems)
+		}else{
 		tmp.id = String(Math.random())
 		tmp.container = expanded
 		tmpItems.push(tmp)
 		setPhaseItems(tmpItems)
 		}
+	}
 	}
 
 	return (
@@ -61,7 +73,10 @@ export default function BasicCard(props) {
 						<Stack direction='row' alignItems='flex-end'>
 							<Typography gutterBottom sx={{width: "max-content", fontSize: 11, fontWeight: "500", paddingTop: "5px" }}>
 								by: 
-								<Link style={{marginLeft:"8px", textDecoration: "none", color: "#00afc8", cursor: "pointer"}} to={props?.data?.ownerId === user?.data?.userId ? "/myProfile" : `/Profile/${props?.data?.ownerId}`} component={<UserProfile />}>
+								<Link 
+									style={{marginLeft:"8px", textDecoration: "none", color: "#00afc8", cursor: "pointer"}} 
+									to={props?.data?.ownerId === user?.data?.userId ? "/myProfile" : `/Profile/${props?.data?.ownerId}`} 
+									component={<UserProfile />}>
 									{ props.data.owner || "Placeholder"}
 								</Link>
 							</Typography>

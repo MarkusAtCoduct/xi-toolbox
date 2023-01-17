@@ -11,7 +11,7 @@ import { useAtom } from "jotai";
 
 import * as React from "react";
 
-import { phaseAtom } from "../atoms/phaseAtom";
+import { phaseAtom } from "../../atoms/phaseAtom";
 
 
 

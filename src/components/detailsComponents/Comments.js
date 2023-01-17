@@ -9,10 +9,9 @@ import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import { useState } from 'react';
 import { useEffect } from 'react'
-import { getMethodDetails } from '../services/Api';
+import { getMethodDetails } from '../../services/Api';
 import CircularProgress from '@mui/material/CircularProgress';
-import SubComment from './SubComment';
-import Rate from "./Rate";
+import Rate from "../Rate";
 import Comment from './Comment';
 
 

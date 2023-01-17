@@ -2,7 +2,7 @@ import { Container, Typography } from "@mui/material";
 
 import * as React from "react";
 
-import EditProfileForm from "../components/Forms/EditProfileForm";
+import EditProfileForm from "../components/formComponents/EditProfileForm";
 
 export default function EditProfile() {
   return (
