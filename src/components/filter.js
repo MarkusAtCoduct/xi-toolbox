@@ -39,6 +39,9 @@ export default function Filter(props) {
 	const [methods, setMethods] = useAtom(methodAtom);
 	const [query, setQuery] = useAtom(queryAtom);
 
+
+	
+
 	const onSubmit = data =>{
 		if (props.user) {
 			console.log(props.user)
@@ -75,6 +78,7 @@ export default function Filter(props) {
 				elevation={0}
 				sx={{ backgroundColor: "#fafafa", borderRadius: "16px" }}>
 				<CardContent>
+					<Box>
 					<Stack
 						direction="row"
 						justifyContent="space-around"
@@ -97,12 +101,11 @@ export default function Filter(props) {
 						/>
 
 
-						<Stack direction="column" >
 							<FormGroup onChange={handleSubmit(onSubmit)}>
-								<FormControlLabel sx={{ fontSize: 11, color: "#5C5F5D" }} control={<Checkbox  checked={query?.includeMethods} {...register("includeMethods")}/>}label="Methods"/>
-								<FormControlLabel control={<Checkbox checked={query?.includeMethodSets} {...register("includeMethodSets")}/>}  label="MethodSets" />
+								<FormControlLabel sx={{ fontSize: 11, color: "#5C5F5D", margin: 0}} control={<Checkbox  checked={query?.includeMethods} {...register("includeMethods")}/>}label="Methods"/>
+								<FormControlLabel sx={{ fontSize: 11, color: "#5C5F5D", margin: 0}} control={<Checkbox checked={query?.includeMethodSets} {...register("includeMethodSets")}/>}  label="MethodSets" />
 							</FormGroup>
-						</Stack>
+						
 						<Box sx={{ width: 125}}>
 							<FormControl fullWidth >
 								<InputLabel id="demo-simple-select-label">Sort By</InputLabel>
@@ -123,7 +126,7 @@ export default function Filter(props) {
 								</FormControl>
 						</Box>
 
-						<Box sx={{ width: 125}}>
+						{/* <Box sx={{ width: 125}}>
 							<FormControl fullWidth >
 								<InputLabel id="sortDirectionLabel">Sort Direction</InputLabel>
 								<Select
@@ -139,8 +142,9 @@ export default function Filter(props) {
 									<MenuItem value={"desc"}>Descending</MenuItem>
 								</Select>
 								</FormControl>
-						</Box>
+						</Box> */}
 					</Stack>
+					</Box>
 				</CardContent>
 			</Card>
 		</Box>
