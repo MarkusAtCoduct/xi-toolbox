@@ -43,31 +43,8 @@ export default function Filter(props) {
 	
 
 	const onSubmit = data =>{
-		if (props.user) {
-			console.log(props.user)
-			GetContent(`/api/method/search?label=${watch("label")}&pageIndex=0&pageSize=${data.pageSize}&sortBy=${watch("sortBy")}&sortDirection=${data.sortDirection}&includeMethods=${watch("includeMethods")}&includeMethodSets=${watch("includeMethodSets")}`)
-			.then((response) => {
-				var temp = response.data.filter((method) => method.ownerId === props?.user?.data?.userId)
-				temp.forEach(element => {
-					element.type = "method"
-				});
-				setMethods(temp)
-			})}
-		else {
-			GetContent(
-				`/api/method/search?label=${watch("label")}&pageIndex=${data.pageIndex}&pageSize=${data.pageSize}&sortBy=${data.sortBy}&sortDirection=${data.sortDirection}&includeMethods=${data.includeMethods}&includeMethodSets=${data.includeMethodSets}`,
-			).then((response) => {
-				response.data.forEach((element) => {
-					element.container = "recommendedMethodContainer"
-					element.type = "method"
-				})
-				console.log(response.data)
-				setMethods(response.data)
-			})
-		}
 		setQuery(data)
 		const tmpItems = [...methods]
-		
 	}
 
 	return (
@@ -96,7 +73,6 @@ export default function Filter(props) {
 									</InputAdornment>
 								),
 							}}
-
 							{...register("label")}
 						/>
 

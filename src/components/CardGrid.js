@@ -68,7 +68,8 @@ export default function CardGrid(props) {
 
 	const fetchData = ({ pageParam = 0 }) => {
 		return GetContent(
-			`/api/method/search?label=&pageIndex=${pageParam}
+			`/api/method/search?label=${query.label}
+				&pageIndex=${pageParam}
 				&pageSize=4&sortBy=${query.sortBy}
 				&sortDirection=${query.sortDirection}
 				&includeMethods=${query.includeMethods}
@@ -76,7 +77,7 @@ export default function CardGrid(props) {
 		)
 	}
 
-	const { data, fetchNextPage, isFetching } = useInfiniteQuery("methods", fetchData, {
+	const { data, fetchNextPage, isFetching } = useInfiniteQuery(["methods", query], fetchData, {
 		getNextPageParam: (lastPage, allPages) => {
 			const maxPages = Math.round(lastPage.pagination.totalItems / lastPage.pagination.itemsPerPage)
 			const nextPage = lastPage.pagination.currentPage + 1
@@ -95,6 +96,7 @@ export default function CardGrid(props) {
 		},
 	})
 
+
 	useEffect(() => {
 		let fetching = false
 		const handleScroll = async (event) => {
@@ -110,6 +112,7 @@ export default function CardGrid(props) {
 			document.removeEventListener("scroll", handleScroll)
 		}
 	}, [])
+
 
 	return (
 		<>
