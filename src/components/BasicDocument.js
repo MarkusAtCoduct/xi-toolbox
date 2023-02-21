@@ -12,8 +12,8 @@ import { useEffect } from "react";
 // Create styles
 const styles = StyleSheet.create({
   page: {
-    backgroundColor: "#E4E4E4",
-    color: "white",
+    backgroundColor: "#fff",
+    color: "black",
   },
   section: {
     margin: 10,
@@ -35,14 +35,21 @@ function BasicDocument(props) {
         <Document>
             <Page size="A4" style={styles.page}>
             <View style={styles.section}>
-                <Text>{props.data.ownerId}</Text>
+                <Text>{props.data.name}</Text>
             </View>
             <View style={styles.section}>
                 <Text>{props.data.description}</Text>
                 <Text>{props.data.owner}</Text>
-                {props.data.input.map((input, index) => {
-                    return <Text key={index}>{input}</Text>
-                })}
+                <>
+                {props.data.input.map((input, index) => 
+                     <Text key={input}>{input}</Text>
+                    )}
+                </>
+                <>
+                {props.data.output.map((output, index) => 
+                     <Text key={output}>{output}</Text>
+                    )}
+                </>
             </View>
             </Page>
         </Document>

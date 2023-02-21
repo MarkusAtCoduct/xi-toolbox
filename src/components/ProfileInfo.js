@@ -13,9 +13,6 @@ import Badges from "./detailsComponents/Badges";
 
 export default function ProfileInfo(props) {
 	const [user] = useAtom(userAtom)
-
-	console.log(user)
-
 	return (
 		<>
 			<Stack

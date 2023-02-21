@@ -24,6 +24,11 @@ import MethodCreatorForm from "../formComponents/MethodCreatorForm";
 import { recommendedMethodAtom } from "../../atoms/recommendedMethodAtom";
 import { GetUserDetails } from "../../services/Api";
 import { GetContent } from "../../services/Api";
+import { queryAtom } from "../../atoms/queryAtom";
+
+import { useQueryClient } from "react-query";
+import { useEffect } from "react";
+import MatchIndicator from "../phaseComponents/MatchIndicator"
 
 
 const Accordion = styled((props) => (
@@ -89,18 +94,21 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 
+
 export default function Phase(props) {
 
 	const [phaseItems, setPhaseItems] = useAtom(phaseAtom);
 	const [loading, setLoading] = React.useState(false);
 	const [recommendedMethods, setRecommendedMethods] = useAtom(recommendedMethodAtom)
 	const [expanded, setExpanded] = useAtom(phaseAccordionAtom);
+	const [query, setQuery] = useAtom(queryAtom);
 
+	
 	const handleChange = (panel) => (event, newExpanded) => {
-	 		setExpanded(newExpanded ? panel : false);
+		setExpanded(newExpanded ? panel : false);
 			setLoading(true)
 			if(newExpanded === true){
-			GetUserDetails().then((res) => GetContent(`/api/method/search?label=${props.phasetext}&pageIndex=0&pageSize=50&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=true`)
+			GetUserDetails().then((res) => GetContent(`/api/method/search?label=${props.phasetext}&pageIndex=0&pageSize=50&sortBy=${query.sortBy}&sortDirection=asc&includeMethods=true&includeMethodSets=false`)
 			.then((response) => {
 				response.data.forEach(element => {
 					element.container = "recommendedMethodContainer"
@@ -110,6 +118,7 @@ export default function Phase(props) {
 				console.log(response.data)
 				setLoading(false)
 			}))
+
 			}else{
 				setRecommendedMethods([])
 				setLoading(false)
@@ -131,7 +140,12 @@ export default function Phase(props) {
 
 	 }
 
+/* 	 
+useEffect(() => {
+	console.log(phaseItems)
+}, [phaseItems])
 
+ */
 
 		return (
 			<div style={{ marginBottom: "8px" }}>
@@ -139,7 +153,7 @@ export default function Phase(props) {
 					<AccordionSummary className='disableTransition' aria-controls='panel1d-content' id='panel1d-header'>
 						<Stack direction='row' spacing={3} alignItems='center'>
 							<Stack direction='column' spacing={0} alignItems='center'>
-								<Typography sx={{ fontWeight: "", fontSize: "0.8rem" }}>Phase</Typography>
+								<Typography sx={{ fontWeight: "", fontSize: "0.7rem" }}>Sub-process</Typography>
 								<Typography variant={"h4"} sx={{ fontWeight: "900" }}>
 									{props.phasenumber}
 								</Typography>
@@ -171,13 +185,18 @@ export default function Phase(props) {
 						<Stack direction='column'>
 							<SortableContext items={phaseItems} strategy={verticalListSortingStrategy}>
 								<Droppable id={props.id}>
-									{phaseItems.map((method, index) => (
+									{phaseItems.map((method, index, array) => (
 										<div key={method.id}>
 											{method.container === props.id ? (
 												<Stack direction={"row"} pr={3} pl={3} spacing={2} mb={1}>
 													<ToolboxStepperPhase index={index}></ToolboxStepperPhase>
 													<Sortable id={method.id}>
-														<SmallCard id={method.id} data={method}></SmallCard>
+														<SmallCard 
+														index={index}
+														last={array.length-1 === index}
+														matchTop={array[index - 1]?.output[0] === method?.input[0]}
+														matchBottom={array[index + 1]?.input[0] === method?.output[0] }
+														id={method.id} data={method}></SmallCard>
 													</Sortable>
 												</Stack>
 											) : null}

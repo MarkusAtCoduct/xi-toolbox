@@ -8,39 +8,41 @@ import { ThemeProvider } from "@emotion/react"
 
 import { Routes, Route, Navigate } from "react-router-dom"
 
-import MethodSetCreator from "./pages/methodSetCreator"
-import MethodSetCreate from "./pages/MethodSetCreate"
-import MyProfile from "./pages/MyProfile"
-import Register from "./pages/Register"
 import { StyledEngineProvider } from "@mui/material/styles"
-
 import { DndContext } from "@dnd-kit/core"
-
 import { useAtom } from "jotai"
+import { arrayMove } from "@dnd-kit/sortable"
+import { PointerSensor, useSensor, useSensors } from "@dnd-kit/core"
+import uuid from "react-uuid"
 
 import { methodAtom } from "./atoms/methodAtom"
 import { recommendedMethodAtom } from "./atoms/recommendedMethodAtom"
 import { phaseAtom } from "./atoms/phaseAtom"
 import { activeAtom } from "./atoms/activeAtom"
 import { userAtom } from "./atoms/userAtom"
-import { arrayMove } from "@dnd-kit/sortable"
-import { PointerSensor, useSensor, useSensors } from "@dnd-kit/core"
-
-import Home from "./pages/Home"
 import { phaseAccordionAtom } from "./atoms/phaseAccordionAtom"
 import { dragDisableAtom } from "./atoms/dragDisableAtom"
+
+
+import Home from "./pages/Home"
 import MethodCreator from "./pages/MethodCreator"
 import EditProfile from "./pages/EditProfile"
+import MethodEdit from "./pages/MethodEdit"
 import UserProfile from "./pages/UserProfile"
 import { isLoggedIn, refreshToken } from "../src/services/authApi"
-
-import uuid from "react-uuid"
+import MethodSetCreator from "./pages/methodSetCreator"
+import MethodSetCreate from "./pages/MethodSetCreate"
+import MyProfile from "./pages/MyProfile"
+import Register from "./pages/Register"
 import { GetUserDetails } from "./services/Api"
 import ResetPassword from "./pages/ResetPassword"
 import HowItWorks from "./pages/HowItWorks"
 import About from "./pages/About"
 import { queryAtom } from "./atoms/queryAtom"
 import { GetContent } from "./services/Api"
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools'
+
 
 const theme = createTheme({
 	typography: {
@@ -49,7 +51,6 @@ const theme = createTheme({
 	palette: {
 		primary: {
 			main: "#00afc8",
-			//main: "#00afc8",
 			contrastText: "#fff",
 		},
 		secondary: {
@@ -79,6 +80,9 @@ function App() {
 	const [query, setQuery] = useAtom(queryAtom)
 	const [dragDisable, setDragDisable] = useAtom(dragDisableAtom)
 
+
+
+
 	useEffect(() => {
 		if (isLoggedIn()) {
 			setLoading(true)
@@ -93,26 +97,42 @@ function App() {
 					setDragDisable(true)
 					console.log("refresh token out of date")})
 				.then(() => setLoading(false))
+		} else {
+			setLoading(false)
 		}
 	}, [])
 
 	const handleDragEnd = (data) => {
 		const { over, active } = data
-		console.log(active)
-		console.log(over)
-		if (!over || over.id === "AllMethodsContainer") {
-			return
-		}
-		const Index = methods.findIndex(({ id }) => id === active.id)
-		const test = phaseItems.findIndex(({ id }) => id === active.id)
-		const newIndex = phaseItems.findIndex(({ id }) => id === over.id)
 
-		const tmp = { ...methods[Index] }
-		const tmpItems = [...phaseItems]
+		var Index = methods.findIndex(({ id }) => id === active.id)
+		var test = phaseItems.findIndex(({ id }) => id === active.id)
+		var newIndex = phaseItems.findIndex(({ id }) => id === over.id)
+	
+	
+		
+		var tmpItems = [...phaseItems]
+		
+		//conditional logic when active.id contains "recommendedMethodContainer"
+
+		if (String(active.id).includes("recommendedMethodContainer")) {
+			
+			console.log(active.id)
+			console.log(recommendedMethods)
+			const IndexRec = recommendedMethods.findIndex(({ id }) => id == active.id.split("-")[0])
+
+			var tmp = { ...recommendedMethods[IndexRec] }
+			console.log(IndexRec)
+		}else{
+			var tmp = { ...methods[Index] }
+		}
+
 
 		if (active.data.current?.sortable) {
 			//what happens when you reorder the phase items
+
 			setPhaseItems(arrayMove(phaseItems, test, newIndex))
+			handleGetRecommendedMethods(arrayMove(phaseItems, test, newIndex)[arrayMove(phaseItems, test, newIndex).length - 1].output[0])
 		} else if (methods[Index]?.container != over?.id || recommendedMethods[Index]?.container != over?.id) {
 			//what happens when you drag a method from the method list to the phase list
 			if (tmp.isMethodSet) {
@@ -146,28 +166,15 @@ function App() {
 
 		var outputString = output.toString()
 		outputString = outputString.replace(/,/g, " ")
-		
 
-		console.log(outputString)
-
-		GetContent(
-			`/api/method/search?label=${outputString}&pageIndex=0&pageSize=500&sortBy=${query.sortBy}&sortDirection=${
-				query.sortDirection
-			}&includeMethods=${query.includeMethods}&includeMethodSets=${query.includeMethodSets}`,
+		GetContent(`/api/method/search?label=${outputString}&pageIndex=0&pageSize=500&sortBy=${query.sortBy}&sortDirection=${query.sortDirection}&includeMethods=${query.includeMethods}&includeMethodSets=false`,
 		).then((response) => {
-			console.log(response.data)
-			console.log(output)
-
-
 			var temp = response.data.filter((method) => method.input[0] === output)
-		
-
 			temp.forEach((element) => {
 				element.container = "recommendedMethodContainer"
 				element.type = "method"
 			})
 			setRecommendedMethods(temp)
-			console.log(temp)
 			setLoading(false)
 		})
 	}
@@ -186,6 +193,9 @@ function App() {
 	)
 
 	return (
+		
+			
+		
 		<ThemeProvider theme={theme}>
 			<DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} sensors={sensors}>
 				<StyledEngineProvider injectFirst>
@@ -198,8 +208,8 @@ function App() {
 							<Route path='/createSet' element={<MethodSetCreator />} />
 							<Route path='/myProfile' element={<MyProfile />} />
 							<Route path='/Profile/:userId' element={<UserProfile />} />
-
 							<Route path='/createMethodSet' element={<MethodSetCreate />} />
+							<Route path='/EditMethod/:methodId' element={<MethodEdit />} />
 							<Route path='/Register' element={<Register />} />
 							<Route path='/editProfile' element={<EditProfile />} />
 							<Route path='/reset-password/:token' element={<ResetPassword />} />
@@ -210,6 +220,7 @@ function App() {
 				</StyledEngineProvider>
 			</DndContext>
 		</ThemeProvider>
+		
 	)
 }
 

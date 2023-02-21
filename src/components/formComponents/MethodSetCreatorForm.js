@@ -27,7 +27,7 @@ import { useQuery, useMutation, useQueryClient } from "react-query";
 
 
 
-export default function MethodCreatorForm(props) {
+export default function MethodSetCreatorForm(props) {
 	const navigate = useNavigate();
 	const [phaseName, setPhaseName] = React.useState([]);
 	const [inputName, setInputName] = React.useState([]);
@@ -74,12 +74,8 @@ export default function MethodCreatorForm(props) {
 		},
 	})
 
-	
-
-
-	const onSubmitMethod = data => {
+	const onSubmitMethodSet = data => {
 		
-
 		data.advantages = data.advantages.map(object => object.name);
     	data.advantages = data.advantages.filter(advantage => advantage !== "");
 		data.disadvantages = data.disadvantages.map(object => object.name);
@@ -97,27 +93,27 @@ export default function MethodCreatorForm(props) {
 		}
 		data.references = data.references.map(object => object.name);
     	data.references = data.references.filter(reference => reference !== "");
-		console.table(data);
+		data.usedMethodIds = state.set;
+		data.isMethodSet = true;
+		console.log(data);
 
 		PostMethod("/api/method/create", data);
 		navigate("/createSet");
 	} 
 
-	const {mutate: createMethod} = useMutation(onSubmitMethod, {
+
+	const {mutate: createMethodSet} = useMutation(onSubmitMethodSet, {
 		onSettled: async() => {
 			console.log("Edited method")
 			await queryClient.invalidateQueries('methods')
 		}
 	})
 
-
 	const { control, watch, register, handleSubmit, setValue, formState: { errors } } = Fields;
 
-	var { move: advantageMove,
-			append: advantageAppend, 
-			remove: advantageRemove,
-			fields: advantageFields }
-			= useFieldArray({control,name: 'advantages'});
+	var { move: advantageMove, append: advantageAppend,remove: advantageRemove,fields: advantageFields } = useFieldArray(
+			{control,
+			name: 'advantages'});
 
 	var { move: disadvantageMove, append: disadvantageAppend, remove: disadvantageRemove, fields: disadvantageFields } = useFieldArray(
 			{control,
@@ -134,6 +130,7 @@ export default function MethodCreatorForm(props) {
 	var {move: referencesMove, append: referencesAppend, remove: referencesRemove, fields: referencesFields } = useFieldArray(
 		{control,
 		name: 'references'});
+
 
 	useEffect(() => {
 
@@ -211,7 +208,7 @@ const handleOutputChange = (event) => {
 
 	return (
 		<form
-			onSubmit={handleSubmit(createMethod)}
+			onSubmit={handleSubmit(createMethodSet)}
 		>
 			<Card sx={{ marginBottom: "32px", borderRadius: "16px" }} elevation={0}>
 				<CardContent
@@ -230,16 +227,14 @@ const handleOutputChange = (event) => {
 									float: "left",
 								}}
 							>
-								{state.isMethodSet ? "Methodset's name" : "Method's name"}
+								Name
 							</Typography>
-							<TextField
-								{...register("name", { required: true })}
+							<TextField {...register("name", { required: true })}
 								fullWidth
 								id='filled-basic'
 								label='name'
 								variant='filled'
-								defaultValue={state.prefill?.name || null}
-							/>
+								defaultValue={state.prefill?.name || null}/>
 						</div>
 
 						<div style={{ width: "100%" }}>

@@ -20,6 +20,8 @@ import { useState } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import { recommendedMethodAtom } from '../atoms/recommendedMethodAtom';
 
+import { useInfiniteQuery } from 'react-query'
+import { queryAtom } from '../atoms/queryAtom';
 
 
 
@@ -30,31 +32,78 @@ export default function CardGridProfile(props) {
   const [activeId, setActiveId] = useAtom(activeAtom);
   const [user, setUser] = useAtom(userAtom);
   const [loading, setLoading] = useState(false);
+  const [query, setQuery] = useAtom(queryAtom);
 
   
-   useEffect(() => { 
-	setLoading(true)
-	GetContent(`/api/method/search?label=&pageIndex=0&pageSize=50&sortBy=cost&sortDirection=desc&includeMethods=true&includeMethodSets=true`)
-	.then((response) => {
-		console.log(response.data)
-		console.log(props?.user?.data?.userId)
 
+
+
+
+  const fetchData = ({ pageParam = 0 }) => {
+	const response =  GetContent(
+		`/api/method/search?label=&pageIndex=${pageParam}
+			&pageSize=4&sortBy=${query.sortBy}
+			&sortDirection=${query.sortDirection}
+			&includeMethods=${query.includeMethods}
+			&includeMethodSets=${query.includeMethodSets}`)
+		return response
+
+	response.then((response) => {
+			
 		var temp = response.data.filter((method) => method.ownerId === props?.user?.data?.userId)
 
 		temp.forEach(element => {
 			element.type = "method"
 		});
-		setMethods(temp)
-		
-		setLoading(false)
+		return temp
 	})
-	
-   }, [props?.user?.data?.userId]);
+}
+
+const { data, fetchNextPage, isFetching } = useInfiniteQuery("userMethods", fetchData, {
+	getNextPageParam: (lastPage, allPages) => {
+		const maxPages = Math.round(lastPage.pagination.totalItems / lastPage.pagination.itemsPerPage)
+		const nextPage = lastPage.pagination.currentPage + 1
+		if (nextPage <= maxPages) {
+			return nextPage
+		} else {
+			return undefined
+		}
+	},
+	onSettled: (data) => {
+		//console.log(data)
+	},
+})
+
+useEffect(() => {
+
+	let fetching = false
+	const handleScroll = async (event) => {
+		const { scrollTop, clientHeight, scrollHeight } = event.target.scrollingElement
+		if (!fetching && scrollHeight - scrollTop <= clientHeight * 1.2) {
+			fetching = true
+			await fetchNextPage()
+			fetching = false
+		}
+	}
+	document.addEventListener("scroll", handleScroll)
+	return () => {
+		document.removeEventListener("scroll", handleScroll)
+	}
+}, [])
 
 
+if (data) {
+	var temp = []
+		data.pages.forEach((page) => {
+			temp = temp.concat(page.data)
+
+		})
+		temp = temp.filter((method) => method.ownerId === props?.user?.data?.userId)
+}
    
   return (
-	<><Typography gutterBottom ml={4} sx={{ textAlign: "left", fontSize: "28px", fontWeight: "400", color: "#5C5F5D" }}>
+	<>
+		<Typography gutterBottom ml={4} sx={{ textAlign: "left", fontSize: "28px", fontWeight: "400", color: "#5C5F5D" }}>
 				All Methods / Method Sets
 			</Typography>
 	{loading ? 
@@ -76,7 +125,8 @@ export default function CardGridProfile(props) {
 					) : ( 
 						<>
 							<Masonry breakpointCols={2} className='my-masonry-grid' columnClassName='my-masonry-grid_column'>
-							{methods.map((method) => (
+							{
+								temp?.map((method) => (
 								<div key={method.id}>
 									{!method.isMethodSet ? (
 										<div className='method'>
@@ -92,7 +142,9 @@ export default function CardGridProfile(props) {
 										</div>
 									)}
 								</div>
-							))}
+							))
+						}
+							
 						</Masonry>
 						</>
 						)}

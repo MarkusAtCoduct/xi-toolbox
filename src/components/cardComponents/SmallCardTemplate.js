@@ -21,14 +21,13 @@ export default function SmallCard(props) {
 	const [value, setValue] = React.useState(2);
 	const [phaseItems, setPhaseItems] = useAtom(phaseAtom)
 
-
 	const handleDelete = () => {
 		const Index = phaseItems.findIndex(({id}) => id == props.id);
 		let tmpItems = [...phaseItems] 
 		tmpItems.splice(Index,1);
 		setPhaseItems(tmpItems)
 	}
-
+	
 	return (
 		<Card
 			elevation={3}
@@ -39,11 +38,13 @@ export default function SmallCard(props) {
 				minHeight: "140px",
 				maxHeight: "140px",
 				maxWidth: "254px",
-				overflow: "hidden"
-			}}
-		>
+				overflow: "hidden",
+				borderTop: props.index > 0 ? (props.matchTop ? "3px solid #b1f4ff" : "3px solid #ff4f4f") : "none",
+				borderBottom: props.last ? ("none") : (props.matchBottom ? "3px solid #b1f4ff" : "3px solid #ff4f4f") ,
+				}}
+				>
+			
 			<CardContent>
-				
 			<Stack direction='column' spacing={1} justifyContent='center' alignItems="flex-start">
 
 			<Stack sx={{width: "100%"}} direction="row" justifyContent="space-between" alignItems="center">
@@ -53,7 +54,7 @@ export default function SmallCard(props) {
 				<RemoveCircleOutlineIcon />
 			</IconButton>
 			</Stack>
-						<Typography sx={{textOverflow: "ellipsis"}}>{props.data?.description || "lorem"} </Typography>
+						<Typography sx={{textOverflow: "ellipsis"}}>{props.data?.descriptionBrief || "lorem"} </Typography>
 			</Stack>
 			</CardContent>
 			

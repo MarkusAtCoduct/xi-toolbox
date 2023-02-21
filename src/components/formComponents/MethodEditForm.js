@@ -4,16 +4,13 @@ import TextField from "@mui/material/TextField";
 
 import * as React from "react";
 import { useForm, useFieldArray} from 'react-hook-form';
-import { PostMethod, UpdateMethod } from "../../services/Api";
+import { UpdateMethod } from "../../services/Api";
 import { Checkbox} from "@mui/material";
 import { useLocation} from "react-router-dom"
 import { useNavigate } from "react-router-dom";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import { OutlinedInput } from "@mui/material";
-import Chip from '@mui/material/Chip';
 
 import InputList from "./InputList";
 import { GetContent } from "../../services/Api";
@@ -22,12 +19,12 @@ import { useAtom } from "jotai";
 import { methodAtom } from "../../atoms/methodAtom";
 
 import { useEffect } from "react";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
+import { ToggleButton } from "@mui/material";
+import { ToggleButtonGroup } from "@mui/material";
+import InformationPopover from "../InformationPopover";
 
-
-
-
-export default function MethodCreatorForm(props) {
+export default function MethodEditForm(props) {
 	const navigate = useNavigate();
 	const [phaseName, setPhaseName] = React.useState([]);
 	const [inputName, setInputName] = React.useState([]);
@@ -35,8 +32,7 @@ export default function MethodCreatorForm(props) {
 	const [methods, setMethods] = useAtom(methodAtom);
   	const [inputOutput, setInputOutput] = React.useState({inputs: [], outputs: []});
   	const [query, setQuery] = useAtom(queryAtom)
-
-	const queryClient = useQueryClient();
+	const queryClient = useQueryClient()
 
 	const location = useLocation()
 	const state = location.state || ""
@@ -74,12 +70,10 @@ export default function MethodCreatorForm(props) {
 		},
 	})
 
-	
 
 
-	const onSubmitMethod = data => {
-		
 
+	const onSubmitMethodUpdate = data => {
 		data.advantages = data.advantages.map(object => object.name);
     	data.advantages = data.advantages.filter(advantage => advantage !== "");
 		data.disadvantages = data.disadvantages.map(object => object.name);
@@ -87,7 +81,7 @@ export default function MethodCreatorForm(props) {
 		data.howToConduct = data.howToConduct.map(object => object.name);
     	data.howToConduct = data.howToConduct.filter(howToConduct => howToConduct !== "");
 		data.whenToConduct = data.whenToConduct.map(object => object.name);
-		data.whenToConduct = data.whenToConduct.filter(whenToConduct => whenToConduct !== "");
+    	data.whenToConduct = data.whenToConduct.filter(whenToConduct => whenToConduct !== "");
 		if(data.input == "Other"){
 		data.input = [data.inputOther]
 		}
@@ -95,29 +89,31 @@ export default function MethodCreatorForm(props) {
 		if(data.output == "Other"){
 		data.output = [data.outputOther]
 		}
+		data.relevantPhases = phaseName;
+		//data.relevantPhases = data.relevantPhases.filter(relevantPhase => relevantPhase !== "");
+
 		data.references = data.references.map(object => object.name);
     	data.references = data.references.filter(reference => reference !== "");
-		console.table(data);
+		console.table(data)
 
-		PostMethod("/api/method/create", data);
+		UpdateMethod(`/api/method/${state.prefill.id}/update/`, data);	
 		navigate("/createSet");
-	} 
+	}
 
-	const {mutate: createMethod} = useMutation(onSubmitMethod, {
+	
+	const {mutate: updateMethod} = useMutation(onSubmitMethodUpdate, {
 		onSettled: async() => {
 			console.log("Edited method")
 			await queryClient.invalidateQueries('methods')
+			await queryClient.invalidateQueries('userMethods')
 		}
 	})
 
-
 	const { control, watch, register, handleSubmit, setValue, formState: { errors } } = Fields;
 
-	var { move: advantageMove,
-			append: advantageAppend, 
-			remove: advantageRemove,
-			fields: advantageFields }
-			= useFieldArray({control,name: 'advantages'});
+	var { move: advantageMove, append: advantageAppend,remove: advantageRemove,fields: advantageFields } = useFieldArray(
+			{control,
+			name: 'advantages'});
 
 	var { move: disadvantageMove, append: disadvantageAppend, remove: disadvantageRemove, fields: disadvantageFields } = useFieldArray(
 			{control,
@@ -134,6 +130,41 @@ export default function MethodCreatorForm(props) {
 	var {move: referencesMove, append: referencesAppend, remove: referencesRemove, fields: referencesFields } = useFieldArray(
 		{control,
 		name: 'references'});
+
+		useEffect(() => {
+		if(state.prefill){
+			console.log(state.prefill);
+			if(advantageFields.length  < 1){advantageRemove();}
+			if(disadvantageFields.length  < 1){disadvantageRemove();}
+			if(howToConductFields.length  < 1){howToConductRemove();}
+			if(whenToConductFields.length  < 1){whenToConductRemove();}
+			if(referencesFields.length  < 1){referencesRemove();}
+
+			setValue("input", state.prefill.input);
+			setValue("output", state.prefill.output);
+			setValue("relevantPhases", state.prefill.relevantPhases);
+			setInputName(state.prefill.input);
+			setOutputName(state.prefill.output);
+			setPhaseName(state.prefill.relevantPhases);
+
+			state.prefill.advantages.forEach(advantage => {
+				advantageAppend({name: advantage})
+			})
+			state.prefill.disadvantages.forEach(disadvantage => {
+				disadvantageAppend({name: disadvantage})
+			})
+			state.prefill.howToConduct.forEach(howToConduct => {
+				howToConductAppend({name: howToConduct})
+			})
+			state.prefill.whenToConduct.forEach(whenToConduct => {
+				whenToConductAppend({name: whenToConduct})
+			})
+			state.prefill.references.forEach(reference => {
+				referencesAppend({name: reference})
+			})
+
+			}
+	}, [])
 
 	useEffect(() => {
 
@@ -178,22 +209,20 @@ export default function MethodCreatorForm(props) {
 		'Deliver & Listen'
 	]
 
-const handlePhaseChange = (event) => {
-  const {
-    target: { value },
-  } = event;
-  setPhaseName(
-    // On autofill we get a stringified value.
-    typeof value === 'string' ? value.split(',') : value,
-  );
+
+const handleChange = (event, newPhases) => {
+	  console.log(newPhases)
+      setPhaseName(newPhases);
+    
   };
+
+
 
 const handleInputChange = (event) => {
   const {
     target: { value },
   } = event;
   setInputName(
-    // On autofill we get a stringified value.
     typeof value === 'string' ? value.split(',') : value,
     
   );
@@ -204,23 +233,24 @@ const handleOutputChange = (event) => {
     target: { value },
   } = event;
   setOutputName(
-    // On autofill we get a stringified value.
     typeof value === 'string' ? value.split(',') : value,
   );
   };
 
 	return (
 		<form
-			onSubmit={handleSubmit(createMethod)}
+		onSubmit={handleSubmit(updateMethod)}
 		>
 			<Card sx={{ marginBottom: "32px", borderRadius: "16px" }} elevation={0}>
 				<CardContent
 					sx={{
-						paddingBottom: "32px",
-						paddingLeft: "96px",
-						paddingRight: "96px",
+						paddingTop: "64px",
+						paddingBottom: "56px",
+						paddingLeft: "64px",
+						paddingRight: "64px",
 					}}
-				>
+					>
+					
 					<Stack direction='column' spacing={4}>
 						<div style={{ width: "100%" }}>
 							<Typography
@@ -230,7 +260,7 @@ const handleOutputChange = (event) => {
 									float: "left",
 								}}
 							>
-								{state.isMethodSet ? "Methodset's name" : "Method's name"}
+								Name
 							</Typography>
 							<TextField
 								{...register("name", { required: true })}
@@ -250,7 +280,9 @@ const handleOutputChange = (event) => {
 									float: "left",
 								}}
 							>
-								Brief
+								<Stack direction={"row"} alignItems="center">
+								Brief <InformationPopover infoText="fökjasdkönjnaökjfdnaö ajsfnök janfökajsdfnkjgasdö lj"/>
+								</Stack>
 							</Typography>
 							<TextField
 								{...register("descriptionBrief", { required: true })}
@@ -455,41 +487,39 @@ const handleOutputChange = (event) => {
                 <TextField {...register("outputOther")} fullWidth variant='filled' label='Output' />}
 							</div>
 						</Stack>
-
-						<Stack direction='row' spacing={4}>
-							<div style={{ width: "100%" }}>
-								<Typography
+						<div>
+						<Typography
 									sx={{
 										fontSize: 22,
 										fontWeight: "400",
 										float: "left",
 									}}
+									gutterBottom
 								>
-									Relevant Phases
+									Sub Processes
 								</Typography>
-								<FormControl fullWidth >
-									<InputLabel id='demo-multiple-name-label'>Relevant Phases</InputLabel>
-									<Select
-										{...register("relevantPhases")}
-										value={phaseName}
-										defaultValue='Phases'
-										multiple
-										input={<OutlinedInput label='Relevant Phases' />}
-										onChange={handlePhaseChange}
-									>
-										{phases.map((name) => (
-											<MenuItem key={name} value={name}>
-												{name}
-											</MenuItem>
-										))}
-									</Select>
-								</FormControl>
-								{phaseName.map((name) => (
-									<Chip key={name} label={name} sx={{ mt: 1, mr: 1 }} />
-								))}
+							<ToggleButtonGroup
+								fullWidth
+     							color="primary"
+								orientation="horizontal"
+      							value={phaseName}
+      							onChange={handleChange}
+      							aria-label="Platform"
+    							>
+									{phases.map((phase, index) => (
+											<ToggleButton
+											sx={{padding: "16px"}}
+											value={phase}>
+												<Typography>
+													{phase}
+												</Typography>
+											</ToggleButton>
+										)
+										)}
+							</ToggleButtonGroup>
+
 							</div>
 						
-						</Stack>
 						<InputList
 							header='References'
 							addHint='Add more References'

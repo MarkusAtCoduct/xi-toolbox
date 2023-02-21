@@ -37,7 +37,7 @@ export default function MethodSetCreator() {
 						{user ? <PhaseSelector type='lib' /> : <PhaseSelector />}
 					</div>
 				</div>
-				<div className='content'>
+				<div className='content' >
 					<div className='filterWrapper'>
 						<Stack mt={1} direction='row' justifyContent='space-between' alignItems='center'>
 							<Heading heading={"Methods & Method Sets Library"} />
@@ -50,7 +50,7 @@ export default function MethodSetCreator() {
 						</Stack>
 						<Filter />
 					</div>
-					<div className='cardsWrapper'>
+					<div className='cardsWrapper' >
 						<div className='cards'>
 							<MethodCards />
 						</div>
@@ -60,23 +60,3 @@ export default function MethodSetCreator() {
 		</Container>
 	)
 }
-
-
-/*		<Grid container spacing={2} mt={0}>
-			<Grid item xs={4} sx={{backgroundColor: "#EFF1EE"}} >
-				<Heading heading={"Cross Innovation Process"} />
-				<PhaseSelector type="lib"/>
-			</Grid>
-			<Grid item xs={8} sx={{backgroundColor: "#E1E3E0"}}>
-				<Box>
-				<Stack direction="row"  justifyContent="space-between" alignItems="center">
-					<Heading heading={"Methods & Method Sets Library"}/>
-
-					<Link className="LinkButton" to="/createMethod" state={{methodupdate: true, isMethodSet:false}} component={<MethodCreatorForm />} >Create new Method</Link>
-	
-				</Stack>
-				<Filter/>
-				<MethodCards columns={6} />
-				</Box>
-			</Grid>
-		</Grid>*/

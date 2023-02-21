@@ -11,17 +11,27 @@ import './css/customcss.css'
 import { Suspense } from "react"
 import AppLoader from './components/AppLoader';
 
+import { QueryClient, QueryClientProvider } from 'react-query'
 import LinearProgress from '@mui/material/LinearProgress';
 import { Box, CircularProgress } from "@mui/material"
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
+const queryClient = new QueryClient({
+    defaultOptions: {
+    },
+  })
+
 root.render(
+    <QueryClientProvider client={queryClient}>
     <Suspense fallback={<AppLoader/>}>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
     </Suspense>
+    <ReactQueryDevtools initialIsOpen={true} />
+    </QueryClientProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

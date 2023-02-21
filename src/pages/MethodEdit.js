@@ -3,9 +3,8 @@ import { Container, Typography } from "@mui/material";
 import * as React from "react";
 
 import { useEffect } from "react";
-import MethodSetCreatorForm from "../components/formComponents/MethodSetCreatorForm";
-
-export default function MethodSetCreate() {
+import MethodEditForm from "../components/formComponents/MethodEditForm";
+export default function EditMethod() {
 	useEffect(() => {
 		window.scrollTo(0, 0)
 	}, [])
@@ -30,9 +29,9 @@ export default function MethodSetCreate() {
 						textAlign: "center",
 					}}
 				>
-					Create new Methodset
+					Edit Method
 					</Typography>
-				<MethodSetCreatorForm />
+				<MethodEditForm />
 			</Container>
 			</div>
 		</>
