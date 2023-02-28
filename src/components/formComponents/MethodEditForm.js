@@ -23,6 +23,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { ToggleButton } from "@mui/material";
 import { ToggleButtonGroup } from "@mui/material";
 import InformationPopover from "../InformationPopover";
+import TitleWithInfo from "../TitleWithInfo";
 
 export default function MethodEditForm(props) {
 	const navigate = useNavigate();
@@ -260,7 +261,7 @@ const handleOutputChange = (event) => {
 									float: "left",
 								}}
 							>
-								Name
+								<TitleWithInfo title="Name" infoText="The Name of your Method"/>
 							</Typography>
 							<TextField
 								{...register("name", { required: true })}
@@ -281,7 +282,7 @@ const handleOutputChange = (event) => {
 								}}
 							>
 								<Stack direction={"row"} alignItems="center">
-								Brief <InformationPopover infoText="fökjasdkönjnaökjfdnaö ajsfnök janfökajsdfnkjgasdö lj"/>
+								<TitleWithInfo title="Brief" infoText="The Name of your Method"/>
 								</Stack>
 							</Typography>
 							<TextField

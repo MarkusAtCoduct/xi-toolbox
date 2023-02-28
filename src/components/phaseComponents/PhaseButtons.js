@@ -4,25 +4,14 @@ import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
-
 import * as React from "react";
-
 import { useAtom } from "jotai";
-
-import { phaseAtom } from "../../atoms/phaseAtom";
 import { privatePhaseAtom } from "../../atoms/privatePhaseAtom";
-import { activeAtom } from "../../atoms/activeAtom";
 import { methodAtom } from "../../atoms/methodAtom";
-import { userAtom } from "../../atoms/userAtom";
-import { GetUserDetails } from "../../services/Api";
 import { GetContent } from "../../services/Api";
 import { useState } from "react";
-import { useEffect } from "react";
 import { recommendedMethodAtom } from "../../atoms/recommendedMethodAtom";
 import { queryAtom } from "../../atoms/queryAtom";
-
-
-
 
 
 const Accordion = styled((props) => (
@@ -82,7 +71,6 @@ export default function PhaseButtons(props) {
 	const [expanded, setExpanded] = useAtom(privatePhaseAtom);
 	const [recommendedMethods, setRecommendedMethods] = useAtom(recommendedMethodAtom);
 	const [loading, setLoading] = useState(false);
-	const [methods, setMethods] = useAtom(methodAtom);
 	const [query, setQuery] = useAtom(queryAtom);
 
 
@@ -90,37 +78,15 @@ export default function PhaseButtons(props) {
 	 	setExpanded(newExpanded ? panel : false);
 		if(newExpanded === true) {
 		setLoading(true)
-		GetContent(`/api/method/search?label=${props.phasetext}&pageIndex=0&pageSize=50&sortBy=${query.sortBy}&sortDirection=${query.sortDirection}&includeMethods=${query.includeMethods}&includeMethodSets=${query.includeMethodSets}`)
-		.then((response) => {
-			if(props?.user){
-				var temp = response.data.filter((method) => method.ownerId === props?.user?.data?.userId)
-				setMethods(temp)
-				setLoading(false)
-				return
-			}
-			setMethods(response.data)
-			setLoading(false)
-		})
+			setQuery({...query, sortBy: "phase", certainPhase: props.phasenumber-1})
 		}
 
 		else{
 			setRecommendedMethods([])
-			setLoading(true)
-		GetContent(`/api/method/search?label=&pageIndex=0&pageSize=50&sortBy=${query.sortBy}&sortDirection=${query.sortDirection}&includeMethods=${query.includeMethods}&includeMethodSets=${query.includeMethodSets}`)
-		.then((response) => {
-			if(props.user){
-				var temp = response.data.filter((method) => method.ownerId === props?.user?.data?.userId)
-				setMethods(temp)
-				setLoading(false)
-				return
-			}
-			setMethods(response.data)
-			setLoading(false)
-		})
+			setQuery({...query, sortBy: "name", certainPhase: 0})
+		}
 		}
 		
-	 };
-
 		return (
 			<div style={{marginBottom: "8px"}} >
 				<Accordion id={props.id} expanded={expanded === props.id} className='phase disableTransition' onChange={handleChange(props.id)} square={true}>

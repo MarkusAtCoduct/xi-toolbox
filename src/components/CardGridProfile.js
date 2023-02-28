@@ -41,26 +41,18 @@ export default function CardGridProfile(props) {
 
   const fetchData = ({ pageParam = 0 }) => {
 	const response =  GetContent(
-		`/api/method/search?label=&pageIndex=${pageParam}
+		`/api/method/search?label=${query.label}
+			&pageIndex=${pageParam}
 			&pageSize=4&sortBy=${query.sortBy}
 			&sortDirection=${query.sortDirection}
 			&includeMethods=${query.includeMethods}
-			&includeMethodSets=${query.includeMethodSets}`)
+			&includeMethodSets=${query.includeMethodSets}
+			&certainPhase=${query.certainPhase}`)
 		return response
-
-	response.then((response) => {
-			
-		var temp = response.data.filter((method) => method.ownerId === props?.user?.data?.userId)
-
-		temp.forEach(element => {
-			element.type = "method"
-		});
-		return temp
-	})
 }
 
-const { data, fetchNextPage, isFetching } = useInfiniteQuery("userMethods", fetchData, {
-	getNextPageParam: (lastPage, allPages) => {
+const { data, fetchNextPage, isFetching } = useInfiniteQuery(["userMethods", query], fetchData, {
+	getNextPageParam: (lastPage) => {
 		const maxPages = Math.round(lastPage.pagination.totalItems / lastPage.pagination.itemsPerPage)
 		const nextPage = lastPage.pagination.currentPage + 1
 		if (nextPage <= maxPages) {
@@ -71,8 +63,17 @@ const { data, fetchNextPage, isFetching } = useInfiniteQuery("userMethods", fetc
 	},
 	onSettled: (data) => {
 		//console.log(data)
-	},
-})
+		
+			var temp = []
+
+				data.pages.forEach((page) => {
+					temp = temp.concat(page.data)
+		
+				})
+				temp = temp.filter((method) => method.ownerId === props?.user?.data?.userId)
+
+			setMethods(temp)
+}})
 
 useEffect(() => {
 
@@ -92,14 +93,8 @@ useEffect(() => {
 }, [])
 
 
-if (data) {
-	var temp = []
-		data.pages.forEach((page) => {
-			temp = temp.concat(page.data)
 
-		})
-		temp = temp.filter((method) => method.ownerId === props?.user?.data?.userId)
-}
+
    
   return (
 	<>
@@ -126,7 +121,7 @@ if (data) {
 						<>
 							<Masonry breakpointCols={2} className='my-masonry-grid' columnClassName='my-masonry-grid_column'>
 							{
-								temp?.map((method) => (
+								methods?.map((method) => (
 								<div key={method.id}>
 									{!method.isMethodSet ? (
 										<div className='method'>

@@ -96,7 +96,6 @@ export default function CardGrid(props) {
 		},
 	})
 
-
 	useEffect(() => {
 		let fetching = false
 		const handleScroll = async (event) => {
@@ -112,7 +111,6 @@ export default function CardGrid(props) {
 			document.removeEventListener("scroll", handleScroll)
 		}
 	}, [])
-
 
 	return (
 		<>
@@ -146,8 +144,7 @@ export default function CardGrid(props) {
 					<div className='loading'>
 						<CircularProgress />
 					</div>
-				) : 
-				null}
+				) : null}
 			</Droppable>
 			<DragOverlay dropAnimation={null} style={{ width: 270 }} modifiers={[snapCenterToCursor]}>
 				{activeId ? (
