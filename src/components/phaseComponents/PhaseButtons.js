@@ -78,12 +78,12 @@ export default function PhaseButtons(props) {
 	 	setExpanded(newExpanded ? panel : false);
 		if(newExpanded === true) {
 		setLoading(true)
-			setQuery({...query, sortBy: "phase", certainPhase: props.phasenumber-1})
+			setQuery({...query, Phase: props.phasetext})
 		}
 
 		else{
 			setRecommendedMethods([])
-			setQuery({...query, sortBy: "name", certainPhase: 0})
+			setQuery({...query, Phase: 0})
 		}
 		}
 		

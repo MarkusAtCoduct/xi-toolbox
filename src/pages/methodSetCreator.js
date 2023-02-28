@@ -29,7 +29,7 @@ export default function MethodSetCreator() {
 		window.scrollTo(0, 0)
 	}, [])
 	return (
-		<Container >
+		<Container>
 			<div className='setMakerWrapper'>
 				<div className='sidebarWrapper'>
 					<div className='sidebar'>
@@ -57,6 +57,6 @@ export default function MethodSetCreator() {
 					</div>
 				</div>
 			</div>
-		</Container>
+			</Container>
 	)
 }

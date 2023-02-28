@@ -95,6 +95,7 @@ export default function MethodSetCreatorForm(props) {
     	data.references = data.references.filter(reference => reference !== "");
 		data.usedMethodIds = state.set;
 		data.isMethodSet = true;
+		
 		console.log(data);
 
 		PostMethod("/api/method/create", data);

@@ -97,6 +97,7 @@ export default function MethodCreatorForm(props) {
 		}
 		data.references = data.references.map(object => object.name);
     	data.references = data.references.filter(reference => reference !== "");
+		data.certainPhase = 1;
 		console.table(data);
 
 		PostMethod("/api/method/create", data);

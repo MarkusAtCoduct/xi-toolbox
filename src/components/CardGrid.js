@@ -1,62 +1,24 @@
 import { DragOverlay } from "@dnd-kit/core"
 import { snapCenterToCursor } from "@dnd-kit/modifiers"
-import { styled } from "@mui/material/styles"
-
-import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp"
-import MuiAccordion from "@mui/material/Accordion"
-import MuiAccordionSummary from "@mui/material/AccordionSummary"
-import MuiAccordionDetails from "@mui/material/AccordionDetails"
-
-import Grid from "@mui/material/Grid"
+import Masonry from '@mui/lab/Masonry'
 import { Typography } from "@mui/material"
 import CircularProgress from "@mui/material/CircularProgress"
-
+import { useAtom } from "jotai"
 import * as React from "react"
 import { useEffect } from "react"
-
-import { useAtom } from "jotai"
+import { useInfiniteQuery } from "react-query"
 
 import { activeAtom } from "../atoms/activeAtom"
+import { dragDisableAtom } from "../atoms/dragDisableAtom"
 import { methodAtom } from "../atoms/methodAtom"
 import { phaseAtom } from "../atoms/phaseAtom"
 import { queryAtom } from "../atoms/queryAtom"
-import { dragDisableAtom } from "../atoms/dragDisableAtom"
-
+import { recommendedMethodAtom } from "../atoms/recommendedMethodAtom"
+import { GetContent } from "../services/Api"
 import CardItem from "./cardComponents/CardTemplate"
+import SmallCard from "./cardComponents/SmallCardTemplate"
 import { Draggable } from "./Draggable"
 import { Droppable } from "./Droppable"
-import SmallCard from "./cardComponents/SmallCardTemplate"
-
-import Masonry from "react-masonry-css"
-
-import { GetContent } from "../services/Api"
-
-import Skeleton from "@mui/material/Skeleton"
-import { recommendedMethodAtom } from "../atoms/recommendedMethodAtom"
-import { useQuery, useQueryClient, useInfiniteQuery } from "react-query"
-
-const Accordion = styled((props) => <MuiAccordion disableGutters elevation={0} {...props} />)(({ theme }) => ({
-	"&:not(:last-child)": {
-		borderBottom: "solid 1px #c2c2c2",
-	},
-	"&:before": {
-		display: "none",
-	},
-}))
-
-const AccordionSummary = styled((props) => <MuiAccordionSummary expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />} {...props} />)(
-	({ theme }) => ({
-		flexDirection: "row-reverse",
-		"& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-			transform: "rotate(90deg)",
-		},
-		"& .MuiAccordionSummary-content": {},
-	}),
-)
-
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-	padding: theme.spacing(0),
-}))
 
 export default function CardGrid(props) {
 	const [phaseItems] = useAtom(phaseAtom)
@@ -96,6 +58,7 @@ export default function CardGrid(props) {
 		},
 	})
 
+
 	useEffect(() => {
 		let fetching = false
 		const handleScroll = async (event) => {
@@ -112,6 +75,7 @@ export default function CardGrid(props) {
 		}
 	}, [])
 
+
 	return (
 		<>
 			<div className='spacer'></div>
@@ -119,22 +83,22 @@ export default function CardGrid(props) {
 				All Methods / Method Sets
 			</Typography>
 			<Droppable id='allMethodsContainer'>
-				<Masonry className='my-masonry-grid' columnClassName='my-masonry-grid_column'>
+				<Masonry columns={2} spacing={2}>
 					{data?.pages.map((page) =>
 						page?.data.map((method) => (
 							<div key={method.id}>
 								{method.type === "method" ? (
-									<div className='method' item key={method.id} mb={1} mr={-1} xs={props.columns || 3}>
+									<div className='method' item key={method.id}>
 										<Draggable disabled={dragDisable} key={method.id} id={method.id}>
 											<CardItem className='method' data={method} header={method.header}></CardItem>
 										</Draggable>
 									</div>
 								) : (
-									<Grid className='methodset' item key={method.id} mb={1} mr={-1} xs={props.columns || 3}>
+									<div className='methodset' item key={method.id}>
 										<Draggable disabled={dragDisable} data={method} key={method.id} id={method.id}>
 											<CardItem data={method} header={method.header}></CardItem>
 										</Draggable>
-									</Grid>
+									</div>
 								)}
 							</div>
 						)),
@@ -144,7 +108,8 @@ export default function CardGrid(props) {
 					<div className='loading'>
 						<CircularProgress />
 					</div>
-				) : null}
+				) : 
+				null}
 			</Droppable>
 			<DragOverlay dropAnimation={null} style={{ width: 270 }} modifiers={[snapCenterToCursor]}>
 				{activeId ? (

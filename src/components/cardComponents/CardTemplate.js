@@ -60,8 +60,8 @@ export default function BasicCard(props) {
 			elevation={0}
 			sx={{
 				borderRadius: "16px",
-				width: "344px",
-				minWidth: "300px",
+				/* width: "344px",
+				minWidth: "300px", */
 			}}
 			style={props.drag ? { outline: " solid 2px #00afc8" } : null}
 		>

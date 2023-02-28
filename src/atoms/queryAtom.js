@@ -7,5 +7,4 @@ export const queryAtom = atom({
 	sortDirection: "asc",
 	includeMethods: true,
 	includeMethodSets: true,
-	certainPhase: 0,
   })
