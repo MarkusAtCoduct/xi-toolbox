@@ -1,18 +1,18 @@
 import * as React from "react"
 
 import { Container } from "@mui/material"
-import Filter from "../components/filter"
-import Heading from "../components/Heading"
-import PhaseSelector from "../components/phaseComponents/PhaseSelector"
-import ProfileInfo from "../components/ProfileInfo"
-import MethodCards from "../components/CardGridProfile"
-import { useAtom } from "jotai"
-import { userAtom } from "../atoms/userAtom"
 import Stack from "@mui/material/Stack"
-import { Link } from "react-router-dom"
-import MethodCreatorForm from "../components/formComponents/MethodCreatorForm"
-import { tabAtom } from "../atoms/tabAtom"
+import { useAtom } from "jotai"
 import { useEffect } from "react"
+import { Link } from "react-router-dom"
+import { tabAtom } from "../atoms/tabAtom"
+import { userAtom } from "../atoms/userAtom"
+import MethodCards from "../components/CardGridProfile"
+import Filter from "../components/filter"
+import MethodCreatorForm from "../components/formComponents/MethodCreatorForm"
+import Heading from "../components/misc/Heading"
+import PhaseSelector from "../components/phaseComponents/PhaseSelector"
+import ProfileInfo from "../components/ProfileComponents/ProfileInfo"
 
 export default function MyProfile() {
 	const [user, setUser] = useAtom(userAtom)

@@ -50,7 +50,6 @@ body{
   }
 .method:hover, .methodSet:hover{
   border-radius: 16px;
-  /*transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.6s;*/
   transform: translate(0px, -2px);
   filter: drop-shadow(0 5px 5px #b0b7b89c); 
 }
@@ -69,18 +68,19 @@ body{
 
 .sidebarWrapper{
     position: sticky;
-    top: 0px;
-    padding-top: 5vh;
+    top: 56px;
+    align-self: start;
+    
     display: flex;
-     height: 95vh;
+    height: 94vh;
+    
     overflow-x: hidden;
     overflow-y: auto;
-    /* width: fit-content; */
     background-color: #eff1ee;    
 }
-
 .sidebar{ 
-  padding: 16px;
+  padding: 0px 16px 0px 16px;
+  grid-column: 1;
   z-index: 1;
   background-color: #eff1ee;
 }
@@ -95,17 +95,19 @@ body{
 
 .filterWrapper{
   position: sticky;
+  align-self: start;
   top: 56px;
-  align-self: flex-start;
-  /* width: 100%; */
+  width: 100%;
   z-index: 1;
   background-color: #e1e3e0;
 }
+
+
 .content{
-  /* height: 100%; */
   display: flex;
   flex-flow: column;
-  /* width: 66.6%; */
+  grid-column: 2;
+  width: 66.6%; 
 }
 
 .cardsWrapper{
@@ -113,12 +115,10 @@ body{
   display: flex;
   overflow-y: hidden;
   flex-flow: column;
-  /* height: 100%; */
 }
 
 .cards{
-  padding: 16px;
-  /* height: 100%; */
+  padding: 0px 16px 16px 16px;
   overflow: auto;
   flex-grow : 1;
 }
@@ -161,7 +161,7 @@ ol{
 
 
 .MuiAccordion-root.Mui-expanded.phase{
-    background-color: #757875;
+    background-color: #C4C7C4;
     box-shadow: none;
 }
 
@@ -216,11 +216,40 @@ ol{
   color: #ffffff;
   background-color: #00afc8;
   border-radius: 100px;
+  padding: 10px 16px;
+  font-weight: 500;
+  font-size: 14px;
+  transition-duration: 100ms;
+}
+
+
+.LinkButtonOutlined{
+  margin-top: 24px;
+  text-decoration: none;
+  color: #fff;
+  border: 2px solid #00afc8;
+  border-radius: 100px;
   padding: 8px 16px;
   font-weight: 500;
   font-size: 14px;
   transition-duration: 100ms;
+}
 
+.LinkButtonNone{
+  margin-top: 24px;
+  text-decoration: none;
+  color: #00afc8;
+  padding: 8px 16px;
+  font-weight: 500;
+  font-size: 14px;
+  transition-duration: 100ms;
+}
+
+.LinkButton:hover, .LinkButtonOutlined:hover , .LinkButtonNone:hover{
+  border-radius: 100px;
+  background-color: #00afc8;
+  color: #ffffff;
+  outline: 2px solid #00afc8;
 }
 .MuiCardContent-root:last-child{
   overflow: auto;
@@ -257,19 +286,16 @@ ol{
   background-color: #282c34;
 }
 
-ol {
+ol li{
   list-style-type: none;
+  list-style-position: inside;
+  text-align: left;
 }
 
 ol li::before {content: "•"; color: #00afc8; font-weight: bold; display: inline-block; width: 1em; margin-left: -1em;}
 
-/*.selectSort{
-  border-radius: 6px;
-  border-color: #C4C7C4;
-}*/
-
 .spacer{
-  height: 27px;
+  height: 10px;
 }
 
 .MuiTooltip-tooltip{
@@ -285,4 +311,14 @@ ol li::before {content: "•"; color: #00afc8; font-weight: bold; display: inlin
 
 .MuiTooltip-arrow{
   color: #ffffff;
+}
+
+
+
+
+.wrapper{
+  display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 1rem;
+    align-items: start;
 }

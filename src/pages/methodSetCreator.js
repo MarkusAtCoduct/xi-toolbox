@@ -1,19 +1,18 @@
-import { Container } from "@mui/system";
 import { Stack } from "@mui/material";
+import { Container } from "@mui/system";
 
 import * as React from "react";
 
-import MethodCards from "../components/CardGrid";
-import Heading from "../components/Heading";
-import PhaseSelector from "../components/phaseComponents/PhaseSelector";
-import PhaseButtons from "../components/phaseComponents/PhaseButtons";
-import Filter from "../components/filter";
-import { Link } from "react-router-dom";
-import MethodCreatorForm from "../components/formComponents/MethodCreatorForm";
 import { useAtom } from "jotai";
-import { userAtom } from "../atoms/userAtom";
-import { tabAtom } from "../atoms/tabAtom";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { tabAtom } from "../atoms/tabAtom";
+import { userAtom } from "../atoms/userAtom";
+import MethodCards from "../components/CardGrid";
+import Filter from "../components/filter";
+import MethodCreatorForm from "../components/formComponents/MethodCreatorForm";
+import Heading from "../components/misc/Heading";
+import PhaseSelector from "../components/phaseComponents/PhaseSelector";
 
 
 
@@ -21,7 +20,7 @@ import { useEffect } from "react";
 
 export default function MethodSetCreator() {
 
-	const [user, setUser] = useAtom(userAtom)
+	const [user] = useAtom(userAtom)
 	const [tab, setTab] = useAtom(tabAtom)
 
 	setTab(1)
@@ -39,7 +38,7 @@ export default function MethodSetCreator() {
 				</div>
 				<div className='content' >
 					<div className='filterWrapper'>
-						<Stack mt={1} direction='row' justifyContent='space-between' alignItems='center'>
+						<Stack direction='row' justifyContent='space-between' alignItems='center'>
 							<Heading heading={"Methods & Method Sets Library"} />
 
 							{user ? (

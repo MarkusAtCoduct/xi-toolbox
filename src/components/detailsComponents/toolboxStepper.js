@@ -1,8 +1,6 @@
-import { Box, Stack, Typography, Divider } from "@mui/material";
-import AdjustIcon from '@mui/icons-material/Adjust';
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import RadioButtonCheckedRoundedIcon from '@mui/icons-material/RadioButtonCheckedRounded';
 import CircleIcon from '@mui/icons-material/Circle';
+import RadioButtonCheckedRoundedIcon from '@mui/icons-material/RadioButtonCheckedRounded';
+import { Box, Stack } from "@mui/material";
 
 import * as React from "react";
 

@@ -1,14 +1,11 @@
-import React, {useState, useEffect} from "react";
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import { UploadImage } from "../services/Api";
-import { useAtom } from "jotai";
-import { userAtom } from "../atoms/userAtom";
-import { GetUserDetails } from "../services/Api";
 import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { useAtom } from "jotai";
+import React, { useEffect, useState } from "react";
+import { userAtom } from "../../atoms/userAtom";
+import { GetUserDetails, UploadImage } from "../../services/Api";
 
 
 

@@ -2,16 +2,14 @@
 import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
-import * as React from "react";
+import Typography from "@mui/material/Typography";
 import { useAtom } from "jotai";
-import { privatePhaseAtom } from "../../atoms/privatePhaseAtom";
-import { methodAtom } from "../../atoms/methodAtom";
-import { GetContent } from "../../services/Api";
+import * as React from "react";
 import { useState } from "react";
-import { recommendedMethodAtom } from "../../atoms/recommendedMethodAtom";
+import { privatePhaseAtom } from "../../atoms/privatePhaseAtom";
 import { queryAtom } from "../../atoms/queryAtom";
+import { recommendedMethodAtom } from "../../atoms/recommendedMethodAtom";
 
 
 const Accordion = styled((props) => (
@@ -93,7 +91,6 @@ export default function PhaseButtons(props) {
 					<AccordionSummary className='disableTransition' aria-controls='panel1d-content' id='panel1d-header'>
 						<Stack direction='row' spacing={3} alignItems='center'>
 							<Stack direction='column' spacing={0} alignItems='center'>
-								<Typography sx={{ fontWeight: "", fontSize: "0.8rem" }}>Phase</Typography>
 								<Typography variant={"h4"} sx={{ fontWeight: "900" }}>
 									{props.phasenumber}
 								</Typography>

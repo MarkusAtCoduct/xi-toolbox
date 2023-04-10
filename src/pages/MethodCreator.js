@@ -3,11 +3,9 @@ import { Container, Typography } from "@mui/material";
 import * as React from "react";
 import { useEffect } from "react";
 
-import MethodCreatorForm from "../components/formComponents/MethodCreatorForm";
 import { useAtom } from "jotai";
 import { tabAtom } from "../atoms/tabAtom";
-import { queryAtom } from "../atoms/queryAtom";
-import { GetContent } from "../services/Api";
+import MethodCreatorForm from "../components/formComponents/MethodCreatorForm";
 
 export default function MethodCreator() {
 
@@ -15,7 +13,6 @@ export default function MethodCreator() {
 
 
 	const [tab , setTab] = useAtom(tabAtom)
-	const [query, setQuery] = useAtom(queryAtom)
 
 
 	var inputsOutputs = { inputs: [], outputs: []}
@@ -29,8 +26,6 @@ export default function MethodCreator() {
 		<>
 			<div
 				style={{
-					marginTop: "56px",
-					width: "100%",
 					backgroundColor: "#EFF1EE",
 					zIndex: "-1",
 				}}

@@ -40,6 +40,7 @@ export default function CardGridProfile(props) {
 				return undefined
 			}
 		},
+		keepPreviousData: true,
 		onSettled: (data) => {
 			console.log(data)
 

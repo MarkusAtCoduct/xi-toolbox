@@ -1,26 +1,24 @@
+import { Stack, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Chip from "@mui/material/Chip";
-import Grid from "@mui/material/Unstable_Grid2";
-import MilitaryTech from "@mui/icons-material/MilitaryTechOutlined";
 import Rating from "@mui/material/Rating";
-import { Typography, Stack } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2";
 
-import * as React from "react";
-import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import ForumIcon from '@mui/icons-material/Forum';
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import { useAtom } from "jotai";
+import * as React from "react";
 
 import { phaseAccordionAtom } from "../../atoms/phaseAccordionAtom";
 import { phaseAtom } from "../../atoms/phaseAtom";
 
-import CardFunctions from "./CardFunctions";
-import MethodList from "../detailsComponents/MethodList";
-import Details from "../detailsComponents/details";
-import UserProfile from "../../pages/UserProfile";
 import { Link } from "react-router-dom";
 import { userAtom } from "../../atoms/userAtom";
+import UserProfile from "../../pages/UserProfile";
+import MethodList from "../detailsComponents/MethodList";
+import CardFunctions from "./CardFunctions";
 
 export default function BasicCard(props) {
 	const [value, setValue] = React.useState(2);
@@ -169,8 +167,11 @@ export default function BasicCard(props) {
 					) : (
 						<MethodList listItems={props.data.simpleUsedMethods} heading='Methods used' />
 					)}
+					<Link to={`/MethodDetails/${props?.data?.id}`} state={{data: props.data}} className="LinkButtonNone">
+						Details
+					</Link>
 
-					<Details style={{position: "absolute"}} data={props.data} />
+					{/* <Details style={{position: "absolute"}} data={props.data} /> */}
 				</Box>
 			</CardContent>
 		</Card>

@@ -1,40 +1,36 @@
-import { Stack } from "@mui/system";
-import { Typography, Button, Card, CardContent } from "@mui/material";
+import { Button, Card, CardContent, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import { Stack } from "@mui/system";
 
-import * as React from "react";
-import { useForm, useFieldArray} from 'react-hook-form';
-import { PostMethod, UpdateMethod } from "../../services/Api";
-import { Checkbox} from "@mui/material";
-import { useLocation} from "react-router-dom"
-import { useNavigate } from "react-router-dom";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import { OutlinedInput } from "@mui/material";
+import { Checkbox, OutlinedInput } from "@mui/material";
 import Chip from '@mui/material/Chip';
+import FormControl from "@mui/material/FormControl";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from "@mui/material/Select";
+import * as React from "react";
+import { useFieldArray, useForm } from 'react-hook-form';
+import { useLocation, useNavigate } from "react-router-dom";
+import { PostMethod } from "../../services/Api";
 
-import InputList from "./InputList";
-import { GetContent } from "../../services/Api";
-import { queryAtom } from "../../atoms/queryAtom";
 import { useAtom } from "jotai";
-import { methodAtom } from "../../atoms/methodAtom";
+import { queryAtom } from "../../atoms/queryAtom";
+import { GetContent } from "../../services/Api";
+import InputList from "./InputList";
 
 import { useEffect } from "react";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 
 
 
-export default function MethodSetCreatorForm(props) {
+export default function MethodSetCreatorForm() {
 	const navigate = useNavigate();
 	const [phaseName, setPhaseName] = React.useState([]);
 	const [inputName, setInputName] = React.useState([]);
 	const [outputName, setOutputName] = React.useState([]);
-	const [methods, setMethods] = useAtom(methodAtom);
   	const [inputOutput, setInputOutput] = React.useState({inputs: [], outputs: []});
-  	const [query, setQuery] = useAtom(queryAtom)
+  	const [query] = useAtom(queryAtom)
 
 	const queryClient = useQueryClient();
 
@@ -84,11 +80,11 @@ export default function MethodSetCreatorForm(props) {
     	data.howToConduct = data.howToConduct.filter(howToConduct => howToConduct !== "");
 		data.whenToConduct = data.whenToConduct.map(object => object.name);
 		data.whenToConduct = data.whenToConduct.filter(whenToConduct => whenToConduct !== "");
-		if(data.input == "Other"){
+		if(data.input === "Other"){
 		data.input = [data.inputOther]
 		}
 
-		if(data.output == "Other"){
+		if(data.output === "Other"){
 		data.output = [data.outputOther]
 		}
 		data.references = data.references.map(object => object.name);

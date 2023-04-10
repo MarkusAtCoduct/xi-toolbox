@@ -1,18 +1,13 @@
-import * as React from 'react';
+import { Avatar, Divider } from '@mui/material';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import { Avatar, Divider, TextField } from '@mui/material';
-import { FormProvider, useForm, useFieldArray, Controller } from 'react-hook-form';
+import CircularProgress from '@mui/material/CircularProgress';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
-import { useState } from 'react';
-import { useEffect } from 'react'
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { getMethodDetails } from '../../services/Api';
-import CircularProgress from '@mui/material/CircularProgress';
 import Rate from "../Rate";
-import Comment from './Comment';
 
 
 export default function Comments(props) {
@@ -32,21 +27,22 @@ export default function Comments(props) {
    
 
     const fetchComments = (rates) => {
-      //console.log(rates)
-      //console.log(ratings)
       setLoading(true);
         setRatings([rates,...ratings])
         setLoading(false);
     }
 
-
-console.log(ratings)
   return (
     <>
-    <Box sx={{maxHeight: "200px", overflowY: "scroll", overflowX: "hidden"}}>
-      Reviews 
+    <Typography gutterBottom sx={{ fontSize:"20px",  fontWeight: "600", textAlign:"left"}}>
+					Reviews
+				</Typography>
+    <Box sx={{maxHeight: "200px", overflowY: "auto", alignSelf: "stretch"}}>
+                
       {loading ? <Box><CircularProgress/></Box> : 
     <ol style={{listStyleType: "none", padding: "0 0 0 8px"}}>
+      {ratings?.length === 0 ? <Typography variant="body2" color="text.secondary">No reviews yet</Typography> :
+      <>
       {ratings?.map((rating) => (
         <li key={rating?.id}>
           <Stack spacing={1}  direction="row" alignItems="center">
@@ -66,8 +62,8 @@ console.log(ratings)
           <Divider variant="middle" sx={{marginBottom: "8px"}}/>
         </li>
       ))}
-    
-
+    </>
+}
     </ol>
     }
     </Box>

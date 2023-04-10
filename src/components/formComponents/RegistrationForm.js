@@ -1,39 +1,25 @@
-import Avatar from "@mui/material/Avatar";
-import FormControlLabel from '@mui/material/FormControlLabel';
+import { Button, Card, CardContent, Typography } from "@mui/material";
 import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { Stack } from "@mui/system";
-import Select from "@mui/material/Select";
-import { Typography, Button, Card, CardContent } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { FormProvider, useForm, useFieldArray, Controller } from 'react-hook-form';
-import {registerUser} from "../../services/authApi"
-import { useNavigate } from "react-router-dom";
-import AvatarUpload from "../AvatarUpload";
-import { useLocation} from "react-router-dom"
+import { Stack } from "@mui/system";
+import { useForm } from 'react-hook-form';
+import { useLocation, useNavigate } from "react-router-dom";
+import { registerUser } from "../../services/authApi";
 
 
 import * as React from "react";
 
 
-export default function RegistrationForm(props) {
+export default function RegistrationForm() {
 	const navigate = useNavigate();
-	
 	const location = useLocation()
 	const state = location.state || ""
 
 
 	const { register, handleSubmit, formState: { errors } } = useForm();
-
-    const [age, setAge] = React.useState('');
-
-
-    const handleChange = (event) => {
-      setAge(event.target.value);
-    };
 
 const onSubmit = (data) => {	
 			console.log(data)
@@ -46,7 +32,6 @@ const onSubmit = (data) => {
 	return (
         <form onSubmit={handleSubmit(onSubmit)}>
 		<Card sx={{borderRadius: "16px"}} elevation={0}>
-			{/*<AvatarUpload/>*/}
 				<CardContent sx={{paddingLeft: "96px", paddingRight: "96px" }}>
 					<Stack direction="column" spacing={4}>
 						<FormControl>

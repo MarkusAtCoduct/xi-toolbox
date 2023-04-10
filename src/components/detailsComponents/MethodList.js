@@ -3,7 +3,7 @@ import { Stack } from "@mui/system"
 
 import * as React from "react"
 
-import ToolboxStepper from "../toolboxStepper"
+import ToolboxStepper from "./toolboxStepper"
 
 export default function MethodList(props) {
 	return (

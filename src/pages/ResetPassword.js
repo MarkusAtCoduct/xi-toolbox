@@ -1,15 +1,9 @@
 import { Container } from "@mui/material";
 
 import * as React from "react";
-import ForgotPassword from "../components/ForgotPassword";
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    useParams
-  } from "react-router-dom";
 import { useEffect } from "react";
+import { BrowserRouter as useParams } from "react-router-dom";
+import ForgotPassword from "../components/ForgotPassword";
 
 export default function ResetPassword() {
     useEffect(() => {

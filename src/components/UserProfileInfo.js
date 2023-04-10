@@ -1,23 +1,12 @@
+import { Skeleton, Typography } from "@mui/material"
 import Avatar from "@mui/material/Avatar"
 import Divider from "@mui/material/Divider"
 import { Stack } from "@mui/system"
-import { Typography, Skeleton } from "@mui/material"
 import * as React from "react"
 
-import Badges from "./detailsComponents/Badges"
 import Box from "@mui/material/Box"
+import Badges from "./detailsComponents/Badges"
 
-const style = {
-	position: "absolute",
-	top: "50%",
-	left: "50%",
-	transform: "translate(-50%, -50%)",
-	width: 400,
-	bgcolor: "background.paper",
-	borderRadius: "16px",
-	boxShadow: 24,
-	p: 8,
-}
 
 export default function UserProfileInfo(props) {
 

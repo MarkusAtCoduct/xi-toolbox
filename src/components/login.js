@@ -1,23 +1,17 @@
-import { Card, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import { Box, Stack } from '@mui/system';
-import {CardContent} from '@mui/material';
-import { AddBox, CheckBox } from '@mui/icons-material';
 
-import { useForm } from 'react-hook-form';
 import * as React from 'react';
+import { useForm } from 'react-hook-form';
 
-import { userForgotPassword } from '../services/Api';
-import { login} from "../services/authApi";
+import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import { useAtom } from "jotai";
+import { Navigate, useNavigate } from 'react-router-dom';
 import { userAtom } from '../atoms/userAtom';
-import { Navigate } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { GetUserDetails } from '../services/Api';
-import {FormGroup, FormControlLabel, Checkbox} from '@mui/material';
+import { GetUserDetails, userForgotPassword } from '../services/Api';
+import { login } from "../services/authApi";
 
 
 export default function Login() {

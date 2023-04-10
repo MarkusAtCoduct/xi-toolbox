@@ -1,40 +1,25 @@
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
-import CancelIcon from "@mui/icons-material/Cancel";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import MediationIcon from "@mui/icons-material/Mediation";
+import { Box, ButtonGroup, IconButton, Stack, Typography } from "@mui/material";
 import SvgIcon from "@mui/material/SvgIcon";
-import { ButtonGroup, IconButton } from "@mui/material";
-import { Box, Stack, Typography } from "@mui/material";
 import { useAtom } from "jotai";
+import { Link } from "react-router-dom";
 import { userAtom } from "../../atoms/userAtom";
-import {Link} from "react-router-dom";
+import { DeleteMethod } from "../../services/Api";
 import MethodEditForm from "../formComponents/MethodEditForm";
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { DeleteMethod } from "../../services/Api"
-import BasicDocument from "../BasicDocument";
+import BasicDocument from "../misc/BasicDocument";
 
-import { queryAtom } from "../../atoms/queryAtom";
 
 import * as React from "react";
-import { methodAtom } from "../../atoms/methodAtom";
-import { useEffect } from "react";
 
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 export default function CardFunctions(props) {
 const [user] = useAtom(userAtom);
-const [query, setQuery] = useAtom(queryAtom);
-
-
-//const methods = useQuery("methods", GetContent(`/api/method/search?label=&pageIndex=0&pageSize=500&sortBy=${query.sortBy}&sortDirection=${query.sortDirection}&includeMethods=${query.includeMethods}&includeMethodSets=${query.includeMethodSets}`));
-const [methods, setMethods] = useAtom(methodAtom)
-
 
 const queryClient = useQueryClient()
-//const {data, loading, getData} = useGetMethods();
-
-
-
 
 
 	const {mutate: HandleDelete} = useMutation(
@@ -99,9 +84,7 @@ const queryClient = useQueryClient()
 												) : null}
 											</>
 										) : (
-											<IconButton onClick={() => props.close()} aria-label='close modal' size='medium' color='black' sx={{ paddingRight: "0" }}>
-												<CancelIcon />
-											</IconButton>
+											null
 										)}
 									</ButtonGroup>
 								</div>

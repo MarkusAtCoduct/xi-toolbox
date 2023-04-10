@@ -80,7 +80,7 @@ export async function GetUserDetails(user){
     user = ""
   }
   const token = getCurrentUser()
-  const response = await fetch(url+"?"+ "userId="+user|| "",{
+  const response = await fetch(url+"?userId="+user|| "",{
     method: "GET",
     headers: {
       'Access-Control-Allow-Origin' : "*",

@@ -2,7 +2,7 @@ import { useDroppable } from '@dnd-kit/core';
 
 import React from 'react';
 
-export function Droppable(props) {
+export function DroppableRecommended(props) {
   
   const {isOver, setNodeRef} = useDroppable({
     id: props.id,

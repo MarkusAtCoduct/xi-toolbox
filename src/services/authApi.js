@@ -22,9 +22,7 @@
   };
 
   export const logout = () => {
-  	return localStorage.removeItem("token"),
-	localStorage.removeItem("refreshToken"),
-	localStorage.removeItem("UId");
+  	return (localStorage.removeItem("token"),localStorage.removeItem("refreshToken"), localStorage.removeItem("UId"))
   };
 
   export const getCurrentUser = () => {

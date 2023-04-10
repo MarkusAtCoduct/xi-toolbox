@@ -1,5 +1,5 @@
-import React from 'react';
 import { Stack } from '@mui/material';
+import React from 'react';
 import InformationPopover from './InformationPopover';
 
 export default function TitleWithInfo(props) {

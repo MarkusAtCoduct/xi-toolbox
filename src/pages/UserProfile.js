@@ -1,17 +1,16 @@
 import * as React from "react";
 
 import { Container } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import { useAtom } from "jotai";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { tabAtom } from "../atoms/tabAtom";
+import MethodCards from "../components/CardGridProfile";
 import Filter from "../components/filter";
-import Heading from "../components/Heading";
+import Heading from "../components/misc/Heading";
 import PhaseSelector from "../components/phaseComponents/PhaseSelector";
 import UserProfileInfo from "../components/UserProfileInfo";
-import MethodCards from "../components/CardGridProfile";
-import { useAtom } from "jotai";
-import Stack from "@mui/material/Stack";
-import { tabAtom } from "../atoms/tabAtom";
-import {useEffect} from "react";
-import { useParams} from "react-router-dom";
-import { useState } from "react";
 import { GetSpecificUserDetails } from "../services/Api";
 
 

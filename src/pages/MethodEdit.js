@@ -12,10 +12,6 @@ export default function EditMethod() {
 		<>
 			<div
 				style={{
-					
-					marginTop: "56px",
-					width: "100%",
-					
 					backgroundColor: "#EFF1EE",
 					zIndex: "-1",
 				}}

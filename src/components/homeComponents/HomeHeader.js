@@ -1,10 +1,8 @@
 import * as React from "react";
-import Title from "./Title";
+import Logos from "../../images/Logos.png";
 import Methods from "./Methods";
 import SignInHome from "./SignInHome";
-import Fakten from "./Fakten";
-import Logos from "../../images/Logos.png";
-import background from "../../images/headerBackground.png";
+import Title from "./Title";
 
 export default function HomeHeader() {
     return (

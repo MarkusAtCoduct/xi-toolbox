@@ -1,13 +1,12 @@
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined"
 import Box from "@mui/material/Box"
 import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
 import Checkbox from "@mui/material/Checkbox"
-import FormGroup from "@mui/material/FormGroup"
-import FormControlLabel from "@mui/material/FormControlLabel"
 import FormControl from "@mui/material/FormControl"
+import FormControlLabel from "@mui/material/FormControlLabel"
 import InputAdornment from "@mui/material/InputAdornment"
 import InputLabel from "@mui/material/InputLabel"
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined"
 import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
 
@@ -17,10 +16,10 @@ import { useForm } from "react-hook-form"
 import * as React from "react"
 
 import { IconButton, MenuItem } from "@mui/material"
-import { queryAtom } from "../atoms/queryAtom"
 import Select from "@mui/material/Select"
+import { queryAtom } from "../atoms/queryAtom"
 
-export default function Filter(props) {
+export default function Filter() {
 	const Search = useForm({
 		defaultValues: {
 			label: "",
@@ -34,8 +33,6 @@ export default function Filter(props) {
 	})
 
 	const {
-		control,
-		watch,
 		register,
 		handleSubmit,
 		formState: { errors },
@@ -129,7 +126,7 @@ export default function Filter(props) {
 											</Select>
 										</FormControl>
 									</Box>
-
+{/* 
 									<Box sx={{ width: 125 }}>
 										<FormControl fullWidth>
 											<InputLabel id='sortDirectionLabel'>Sort Direction</InputLabel>
@@ -146,7 +143,7 @@ export default function Filter(props) {
 												<MenuItem value={"desc"}>Descending</MenuItem>
 											</Select>
 										</FormControl>
-									</Box>
+									</Box> */}
 								</Stack>
 							</Box>
 						</CardContent>

@@ -1,13 +1,13 @@
 import { DragOverlay } from "@dnd-kit/core"
 import { snapCenterToCursor } from "@dnd-kit/modifiers"
-import Masonry from '@mui/lab/Masonry'
-import { Typography } from "@mui/material"
+import Masonry from "@mui/lab/Masonry"
 import CircularProgress from "@mui/material/CircularProgress"
 import { useAtom } from "jotai"
 import * as React from "react"
 import { useEffect } from "react"
 import { useInfiniteQuery } from "react-query"
 
+import { Typography } from "@mui/material"
 import { activeAtom } from "../atoms/activeAtom"
 import { dragDisableAtom } from "../atoms/dragDisableAtom"
 import { methodAtom } from "../atoms/methodAtom"
@@ -19,6 +19,7 @@ import CardItem from "./cardComponents/CardTemplate"
 import SmallCard from "./cardComponents/SmallCardTemplate"
 import { Draggable } from "./Draggable"
 import { Droppable } from "./Droppable"
+import RecommendedGrid from "./RecommendedGrid"
 
 export default function CardGrid(props) {
 	const [phaseItems] = useAtom(phaseAtom)
@@ -40,7 +41,7 @@ export default function CardGrid(props) {
 	}
 
 	const { data, fetchNextPage, isFetching } = useInfiniteQuery(["methods", query], fetchData, {
-		getNextPageParam: (lastPage, allPages) => {
+		getNextPageParam: (lastPage) => {
 			const maxPages = Math.round(lastPage.pagination.totalItems / lastPage.pagination.itemsPerPage)
 			const nextPage = lastPage.pagination.currentPage + 1
 			if (nextPage <= maxPages) {
@@ -49,6 +50,7 @@ export default function CardGrid(props) {
 				return undefined
 			}
 		},
+		keepPreviousData: true,
 		onSuccess: (data) => {
 			let temp = []
 			data.pages.forEach((page) => {
@@ -57,7 +59,6 @@ export default function CardGrid(props) {
 			setMethods(temp)
 		},
 	})
-
 
 	useEffect(() => {
 		let fetching = false
@@ -75,10 +76,11 @@ export default function CardGrid(props) {
 		}
 	}, [])
 
-
 	return (
 		<>
 			<div className='spacer'></div>
+			<RecommendedGrid></RecommendedGrid>
+			
 			<Typography gutterBottom ml={4} mt={2} sx={{ textAlign: "left", fontSize: "28px", fontWeight: "400", color: "#5C5F5D" }}>
 				All Methods / Method Sets
 			</Typography>
@@ -108,132 +110,19 @@ export default function CardGrid(props) {
 					<div className='loading'>
 						<CircularProgress />
 					</div>
-				) : 
-				null}
+				) : null}
 			</Droppable>
 			<DragOverlay dropAnimation={null} style={{ width: 270 }} modifiers={[snapCenterToCursor]}>
 				{activeId ? (
 					<>
 						<SmallCard
 							last={true}
-							data={
-								methods[methods.findIndex(({ id }) => id === activeId)] ||
-								phaseItems[phaseItems.findIndex(({ id }) => id === activeId)] ||
-								recommendedMethods[recommendedMethods.findIndex(({ id }) => id == activeId.split("-")[0])]
-							}
+							data={methods[methods.findIndex(({ id }) => id === activeId)] ||
+							 phaseItems[phaseItems.findIndex(({ id }) => id === activeId)]}
 						/>
 					</>
 				) : null}
 			</DragOverlay>
 		</>
 	)
-
-	{
-		/* 
-  return (
-		<>			
-					<div className="spacer"></div>
-					<Accordion  sx={{ background: "none"}} elevation={0}>
-						<AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls='panel1a-content' id='panel1a-header'>
-							<Typography gutterBottom ml={2} sx={{ textAlign: "left", fontSize: "28px", fontWeight: "400", color: "#5C5F5D" }}>
-								Top Recommended
-							</Typography>
-						</AccordionSummary>
-						<AccordionDetails>
-						<Stack direction='row'>
-							<Droppable id='recommendedMethodContainer'>
-								{loading ? (
-									<Masonry breakpointCols={2} className='my-masonry-grid' columnClassName='my-masonry-grid_column'>
-										<Skeleton animation='wave' height={"700px"} sx={{ borderRadius: "16px", marginBottom: "16px"}}  variant='rectangular' />
-										<Skeleton animation='wave' height={"350px"} sx={{ borderRadius: "16px", marginBottom: "16px" }} mb={2} variant='rectangular' />
-										<Skeleton animation='wave' height={"350px"} sx={{ borderRadius: "16px", marginBottom: "16px" }} mb={2}variant='rectangular' />
-										<Skeleton animation='wave' height={"700px"} sx={{ borderRadius: "16px", marginBottom: "16px" }} mb={2}variant='rectangular' />
-									</Masonry>
-								) : (
-									<Masonry breakpointCols={2} className='my-masonry-grid' columnClassName='my-masonry-grid_column'>
-										{recommendedMethods.map((method) => (
-											<div key={method.id}>
-												{!method.isMethodSet ? (
-													<div className='method'>
-														<Draggable disabled={dragDisable} key={method.id + "-recommendedMethodContainer"} data={method} id={method.id + "-recommendedMethodContainer"}>
-															<CardItem className='method' data={method}></CardItem>
-														</Draggable>
-													</div>
-												) : (
-													<div className='methodset' key={method.id}>
-														<Draggable disabled={dragDisable} data={method} key={method.id} id={method.id}>
-															<CardItem data={method}></CardItem>
-														</Draggable>
-													</div>
-												)}
-											</div>
-										))}
-									</Masonry>
-								)}
-							</Droppable>
-						</Stack>
-						</AccordionDetails>
-					</Accordion>
-					
-					<Typography gutterBottom ml={4} mt={2} sx={{ textAlign: "left", fontSize: "28px", fontWeight: "400", color: "#5C5F5D" }}>
-						All Methods / Method Sets
-					</Typography>
-					<InfiniteScroll
-    style={{ overflow: "none" }}
-    dataLength={data.data.length} //This is important field to render the next data
-    next={fetchMoreData}
-    hasMore={hasMore}
-    initialScrollY={0}
-    loader={<Stack p={3} justifyContent={"center"} alignItems={"center"} direction={"row"} spacing={2}><CircularProgress/><p>Loading...</p></Stack>}
-    endMessage={
-        <p style={{ textAlign: "center" }}>
-            <b>No more Methods to show you! maybe go and create one!</b>
-        </p>
-    }
->
-						<Droppable id='allMethodsContainer'>
-
-						{loading ? (
-							<>
-									<Masonry  className='my-masonry-grid' columnClassName='my-masonry-grid_column'>
-										<Skeleton animation='wave' height={"700px"} sx={{ borderRadius: "16px", marginBottom: "16px"}}  variant='rectangular' />
-										<Skeleton animation='wave' height={"350px"} sx={{ borderRadius: "16px", marginBottom: "16px" }} mb={2} variant='rectangular' />
-										<Skeleton animation='wave' height={"350px"} sx={{ borderRadius: "16px", marginBottom: "16px" }} mb={2}variant='rectangular' />
-										<Skeleton animation='wave' height={"700px"} sx={{ borderRadius: "16px", marginBottom: "px" }} mb={2}variant='rectangular' />
-									</Masonry>
-									</>
-								): (
-
-							<Masonry breakpointCols={2} className='my-masonry-grid' columnClassName='my-masonry-grid_column'>
-								{data?.data?.map((method) => (
-									<div key={method.id}>
-										{method.type === "method" ? (
-											<Grid className='method' item key={method.id} mb={1} mr={-1} xs={props.columns || 3}>
-												<Draggable disabled={dragDisable} key={method.id} data={method} id={method.id}>
-													<CardItem className='method' data={method} header={method.header}></CardItem>
-												</Draggable>
-											</Grid>
-										) : (
-											<Grid className='methodset' item key={method.id} mb={1} mr={-1} xs={props.columns || 3}>
-												<Draggable disabled={dragDisable} data={method} key={method.id} id={method.id}>
-													<CardItem data={method} header={method.header}></CardItem>
-												</Draggable>
-											</Grid>
-										)}
-									</div>
-								))}
-							</Masonry>)}
-						</Droppable>
-						<DragOverlay dropAnimation={null} style={{ width: 270 }} modifiers={[snapCenterToCursor]}>
-								{activeId ? (
-									<>
-									<SmallCard data={methods[methods.findIndex(({ id }) => id === activeId)] || phaseItems[phaseItems.findIndex(({ id }) => id === activeId)] || recommendedMethods[recommendedMethods.findIndex(({ id }) => id == activeId.split("-")[0])] }/>
-									</>
-								) : null}
-							</DragOverlay>
-					</InfiniteScroll>
-				</>
-	)
-	*/
-	}
 }

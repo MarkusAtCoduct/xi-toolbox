@@ -5,7 +5,7 @@ import * as React from "react";
 export default function ChipList(props) {
 	return (
 		<Box mt={2} >
-			<Typography gutterBottom sx={{ fontSize: "22px", fontWeight: "900", textAlign: "left" }}>
+			<Typography gutterBottom sx={{ fontSize: "20px", fontWeight: "600", textAlign: "left" }}>
 			{props.heading || "no heading set"}
 			</Typography>
 			{props.listItems ? (

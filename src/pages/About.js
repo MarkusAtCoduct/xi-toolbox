@@ -1,8 +1,7 @@
 import { Card, CardContent, Container } from "@mui/material";
-import { useEffect } from "react";
-import * as React from "react";
-import process from "../images/XI-Lab_Prozessmodell.png";
 import { useAtom } from "jotai";
+import * as React from "react";
+import { useEffect } from "react";
 import { tabAtom } from "../atoms/tabAtom";
 
 export default function About() {

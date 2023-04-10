@@ -1,15 +1,14 @@
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import { Button, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Stack } from "@mui/system";
-import { Typography} from "@mui/material";
-import * as React from "react";
 import { useAtom } from "jotai";
-import { userAtom } from '../atoms/userAtom';
+import * as React from "react";
 import { Link } from "react-router-dom";
-import EditProfileForm from "./formComponents/EditProfileForm";
-import {Button} from "@mui/material";
-import Badges from "./detailsComponents/Badges";
+import { userAtom } from '../../atoms/userAtom';
+import Badges from "../detailsComponents/Badges";
+import EditProfileForm from "../formComponents/EditProfileForm";
 
 export default function ProfileInfo(props) {
 	const [user] = useAtom(userAtom)

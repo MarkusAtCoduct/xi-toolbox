@@ -1,24 +1,21 @@
-import AdbIcon from "@mui/icons-material/Adb";
+import { Button } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Stack from "@mui/material/Stack";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import Typography from "@mui/material/Typography";
-import { Button } from "@mui/material";
 import { Container } from "@mui/system";
 
 import * as React from "react";
 
-import { Link } from "react-router-dom";
-import Login from "./login"
+import { styled } from '@mui/material/styles';
 import { useAtom } from "jotai";
-import { userAtom } from "../atoms/userAtom";
-import { tabAtom } from "../atoms/tabAtom";
-import AccountMenu from "./AccountMenu";
-import { Box } from "@mui/system";
+import { Link } from "react-router-dom";
+import { tabAtom } from "../../atoms/tabAtom";
+import { userAtom } from "../../atoms/userAtom";
+import Login from "../login";
+import AccountMenu from "../ProfileComponents/AccountMenu";
 
-
-import logo from "../images/logo.png" 
+import logo from "../../images/logo.png";
 
 
 function LinkTab(props) {
@@ -42,9 +39,11 @@ export default function MainNav(props) {
 	  setTab(newValue);
 	}
 
+	const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
+
 
 	return (
-	
+	<React.Fragment>
 		<AppBar position="fixed" color="neutral" elevation={0}>
 			<Container>
 				<Stack
@@ -87,7 +86,8 @@ export default function MainNav(props) {
 				</Stack>
 			</Container>
 		</AppBar>
-		
+		<Offset style={{minHeight:"56px"}} />
+		</React.Fragment>
 	);
 };
 

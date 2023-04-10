@@ -1,16 +1,14 @@
-import { Card, Container } from "@mui/material";
 
 import * as React from "react";
 import { useEffect } from "react";
 
 
-import hp from "../images/howItWorks.png";
-import HomeHeader from "../components/homeComponents/HomeHeader";
-import CreateProcess from "../components/homeComponents/CreateProcess";
-import FAQ from "../components/homeComponents/FAQ";
+import { Stack } from "@mui/system";
 import { useAtom } from "jotai";
 import { tabAtom } from "../atoms/tabAtom";
-import { Stack } from "@mui/system";
+import CreateProcess from "../components/homeComponents/CreateProcess";
+import FAQ from "../components/homeComponents/FAQ";
+import HomeHeader from "../components/homeComponents/HomeHeader";
 
 
 export default function Methods() {

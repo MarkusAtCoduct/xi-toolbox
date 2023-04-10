@@ -1,17 +1,14 @@
-import * as React from 'react';
+import { TextField } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { FormLabel, TextField } from '@mui/material';
-import { FormProvider, useForm, useFieldArray, Controller } from 'react-hook-form';
-import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
-import { useState } from 'react';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import { useForm } from 'react-hook-form';
 
-import { rateMethod } from '../../services/Api';
 import EditIcon from '@mui/icons-material/Edit';
-import { FormControlLabel } from "@mui/material"
+import { rateMethod } from '../../services/Api';
 
 const style = {
   position: 'absolute',
@@ -30,7 +27,7 @@ export default function Comment(props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { control, register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit } = useForm();
 
 
   const onSubmit = (data) => {	

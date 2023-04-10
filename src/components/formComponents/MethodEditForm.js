@@ -1,29 +1,26 @@
-import { Stack } from "@mui/system";
-import { Typography, Button, Card, CardContent } from "@mui/material";
+import { Button, Card, CardContent, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import { Stack } from "@mui/system";
 
-import * as React from "react";
-import { useForm, useFieldArray} from 'react-hook-form';
-import { UpdateMethod } from "../../services/Api";
-import { Checkbox} from "@mui/material";
-import { useLocation} from "react-router-dom"
-import { useNavigate } from "react-router-dom";
+import { Checkbox } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import MenuItem from '@mui/material/MenuItem';
+import Select from "@mui/material/Select";
+import * as React from "react";
+import { useFieldArray, useForm } from 'react-hook-form';
+import { useLocation, useNavigate } from "react-router-dom";
+import { UpdateMethod } from "../../services/Api";
 
-import InputList from "./InputList";
-import { GetContent } from "../../services/Api";
-import { queryAtom } from "../../atoms/queryAtom";
 import { useAtom } from "jotai";
 import { methodAtom } from "../../atoms/methodAtom";
+import { queryAtom } from "../../atoms/queryAtom";
+import { GetContent } from "../../services/Api";
+import InputList from "./InputList";
 
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { useEffect } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { ToggleButton } from "@mui/material";
-import { ToggleButtonGroup } from "@mui/material";
-import InformationPopover from "../InformationPopover";
-import TitleWithInfo from "../TitleWithInfo";
+import TitleWithInfo from "../misc/TitleWithInfo";
 
 export default function MethodEditForm(props) {
 	const navigate = useNavigate();
