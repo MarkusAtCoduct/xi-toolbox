@@ -1,0 +1,64 @@
+const baseUrl = "https://xi-lab.codeleap.net/api/";
+
+export const login = async (email, password) => {
+  const response = await fetch(baseUrl + "user/log-in", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: email,
+      password: password,
+    }),
+  });
+  const data = await response.json();
+  localStorage.setItem("token", data.token);
+  localStorage.setItem("refreshToken", data.refreshToken);
+  localStorage.setItem("UId", data.id);
+  return data;
+};
+
+export const logout = () => {
+  return (
+    localStorage.removeItem("token"),
+    localStorage.removeItem("refreshToken"),
+    localStorage.removeItem("UId")
+  );
+};
+
+export const getCurrentUser = () => {
+  return localStorage.getItem("token");
+};
+
+export const isLoggedIn = () => {
+  const user = getCurrentUser();
+  return user ? true : false;
+};
+
+export const refreshToken = async () => {
+  const response = await fetch(baseUrl + "user/refresh-token", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      refreshToken: localStorage.getItem("refreshToken"),
+    }),
+  });
+  const data = await response.json();
+  localStorage.setItem("token", data.token);
+  localStorage.setItem("refreshToken", data.refreshToken);
+  localStorage.setItem("UId", data.id);
+  return data;
+};
+
+export const registerUser = async (data = {}) => {
+  const response = await fetch(baseUrl + "user/sign-up", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  return await response.json();
+};

@@ -1,0 +1,322 @@
+*{
+    font-family: 'Roboto', sans-serif;
+}
+
+
+body{
+    //background: linear-gradient(90deg, rgba(239,241,238,1) 0%, rgba(239,241,238,1) 50%, rgba(225,227,224,1) 50%, rgba(225,227,224,1) 100%);
+    background-color: #EFF1EE;
+    //position: relative;
+  }
+
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #9a989a #ffffff;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: rgba(225,227,224,1);
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #9a989a;
+    border-radius: 10px;
+    
+  }
+
+
+  .methodSet{
+    z-index: 9;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.6s;
+
+  }
+
+  .method{
+    transition-duration: 100ms;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.6s;
+
+
+  }
+.method:hover, .methodSet:hover{
+  border-radius: 16px;
+  transform: translate(0px, -2px);
+  filter: drop-shadow(0 5px 5px #b0b7b89c); 
+}
+
+.dragHandle{
+  cursor: n-resize;
+  cursor: -webkit-n-resize;
+  cursor: -moz-n-resize;
+  cursor: -o-n-resize;
+  cursor: -ms-n-resize;
+}
+
+.disableTransition{
+    transition: none
+}
+
+.sidebarWrapper{
+    position: sticky;
+    top: 56px;
+    align-self: start;
+    
+    display: flex;
+    height: 94vh;
+    
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #eff1ee;    
+}
+.sidebar{ 
+  padding: 0px 16px 0px 16px;
+  grid-column: 1;
+  z-index: 1;
+  background-color: #eff1ee;
+}
+
+.setMakerWrapper{
+    position: relative;
+    /* height: 100%; */
+    display: flex;
+    background-color: #e1e3e0;
+    
+}
+
+.filterWrapper{
+  position: sticky;
+  align-self: start;
+  top: 56px;
+  width: 100%;
+  z-index: 1;
+  background-color: #e1e3e0;
+}
+
+
+.content{
+  display: flex;
+  flex-flow: column;
+  grid-column: 2;
+  width: 66.6%; 
+}
+
+.cardsWrapper{
+  position: relative;
+  display: flex;
+  overflow-y: hidden;
+  flex-flow: column;
+}
+
+.cards{
+  padding: 0px 16px 16px 16px;
+  overflow: auto;
+  flex-grow : 1;
+}
+
+ol{
+    padding-left: 24px;
+}
+
+
+.MuiButton-contained{
+    border-radius: 100px;
+}
+
+.MuiButton-outlined{
+    border-radius: 100px;
+    border-width: 2px;
+}
+.MuiButton-outlined:hover{
+    border-width: 2px;
+}
+
+.MuiChip-root{
+    border-radius: 8px;
+    background-Color: #b0f4ff;
+    font-Size: 14px;
+    
+}
+.MuiChip-label{
+    font-Weight: 500;
+}
+
+
+.MuiTabs-indicator{
+    height: 10px;
+}
+
+.MuiCardContent-root:last-child{
+    padding-bottom: 16px; 
+}
+
+
+.MuiAccordion-root.Mui-expanded.phase{
+    background-color: #C4C7C4;
+    box-shadow: none;
+}
+
+
+
+
+.MuiDivider-root::before, .MuiDivider-root::after {
+    border-color: #00afc8;
+    border-width: 2px;
+}
+
+.StepperCircle{
+    width: 100%;
+    height: 100%;
+    border-radius: 16px; 
+    background-color: #00afc8;
+}
+
+
+.phaseDrop{
+    width: 270px;
+}
+
+.circle{
+  min-height: 8px;
+  min-width: 8px;
+  background-color: #00afc8;
+  border: solid 6px  #C4C7C4;
+  outline: solid 4px #ffffff;
+  border-radius: 24px;
+  z-index: 3;
+}
+
+.circlePlaceholder{
+  min-height: 20px;
+  min-width: 20px;
+}
+
+.stick{
+  position: sticky;
+}
+
+
+.MuiModal-root{
+  max-height: 100vh;
+  
+}
+
+.LinkButton{
+  margin-top: 24px;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #00afc8;
+  border-radius: 100px;
+  padding: 10px 16px;
+  font-weight: 500;
+  font-size: 14px;
+  transition-duration: 100ms;
+}
+
+
+.LinkButtonOutlined{
+  margin-top: 24px;
+  text-decoration: none;
+  color: #fff;
+  border: 2px solid #00afc8;
+  border-radius: 100px;
+  padding: 8px 16px;
+  font-weight: 500;
+  font-size: 14px;
+  transition-duration: 100ms;
+}
+
+.LinkButtonNone{
+  margin-top: 24px;
+  text-decoration: none;
+  color: #00afc8;
+  padding: 8px 16px;
+  font-weight: 500;
+  font-size: 14px;
+  transition-duration: 100ms;
+}
+
+.LinkButton:hover, .LinkButtonOutlined:hover , .LinkButtonNone:hover{
+  border-radius: 100px;
+  background-color: #00afc8;
+  color: #ffffff;
+  outline: 2px solid #00afc8;
+}
+.MuiCardContent-root:last-child{
+  overflow: auto;
+}
+
+
+.fade{
+  position: absolute;
+  bottom: -8px;
+  align-self: flex-start;
+  z-index: 3; 
+  height: 8px;
+  width: 100%;
+  background: linear-gradient(180deg, rgba(225,227,224,1) 0%, rgba(228, 25, 25, 0) 100%);
+}
+
+.HomeHeader{
+  height: 100vh;
+  background-image: url(../assets/headerBackground.png);
+  background-size: 100% 100%;
+}
+
+
+.app-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vh;
+  height: 100%;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #282c34;
+}
+
+ol li{
+  list-style-type: none;
+  list-style-position: inside;
+  text-align: left;
+}
+
+ol li::before {content: "•"; color: #00afc8; font-weight: bold; display: inline-block; width: 1em; margin-left: -1em;}
+
+.spacer{
+  height: 10px;
+}
+
+.MuiTooltip-tooltip{
+  padding: 2em;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.2);
+  font-size: 14px;
+  font-weight: 500;
+  color: #000000;
+
+}
+
+.MuiTooltip-arrow{
+  color: #ffffff;
+}
+
+
+
+
+.wrapper{
+  display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 1rem;
+    align-items: start;
+}
